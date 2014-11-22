@@ -4,6 +4,10 @@
 #include <GL/freeglut.h>
 int iGLUTWindowHandle = 0;          // handle to the GLUT window
 
+
+// test github
+
+
 static const int NUM_METHODS = 4;
 static const int STENCIL_ROW_HEIGHT = 8;
 static int method = 0;
