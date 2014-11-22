@@ -41,3 +41,19 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+calibrateRenderCamera.opensdf
+*.sdf
+*.exe
+*.manifest
+*.res
+*.ilk
+*.lastbuildstate
+*.log
+*.obj
+*.pdb
+*.cache
+*.tlog
+*.rc
+*.idb
+*.ipch
