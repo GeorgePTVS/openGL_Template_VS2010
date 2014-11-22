@@ -1,0 +1,36 @@
+ here 
+hereNOW 6.543000
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
+In the stencilBuffer fn, method = 3
+In the stencilBuffer fn, method = 0
+In the stencilBuffer fn, method = 1
+In the stencilBuffer fn, method = 2
