@@ -58,3 +58,4 @@ calibrateRenderCamera.opensdf
 *.idb
 *.ipch
 *.suo
+calibrateRenderCameraHOLD.cpp
