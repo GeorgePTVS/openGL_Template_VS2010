@@ -57,3 +57,4 @@ calibrateRenderCamera.opensdf
 *.rc
 *.idb
 *.ipch
+*.suo
