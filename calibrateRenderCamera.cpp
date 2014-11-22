@@ -28,10 +28,31 @@
 static float eangle = 0.0;
 static float eangleDelta = 0.5;
 int mainWindow;
+static const int TIMER_CONST_MSEC = 1;
 
 /**********************************************************************************************************************************/
 void displayCall() {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+ 
+  static const float redColorIncrement = 0.001f;
+  static const float greenColorIncrement = 0.0012f;
+  static const float blueColorIncrement = -0.001f;
+  static float redClear = 0.0f;
+  static float greenClear = 0.2f;
+  static float blueClear = 0.8f;
+  glClearColor(redClear,greenClear,1,1);
+
+  redClear = redClear + redColorIncrement;
+  if ( redClear > 1.0f ) redClear = 0.f;
+ 
+  greenClear = greenClear + greenColorIncrement;
+  if ( greenClear > 1.0f ) greenClear = 0.f;
+
+  blueClear = blueClear + blueColorIncrement;
+  if ( blueClear > 1.0f ) blueClear = 0.f;
+  if ( blueClear < 0.0f ) blueClear = 1.0f;
+  //printf( "redClear = %f\n", redClear );
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glEnable(GL_DEPTH_TEST);
 
   glMatrixMode(GL_PROJECTION);
@@ -46,18 +67,6 @@ void displayCall() {
   glTranslatef(-300, 0, 0);
     
   glColor3f(1,0,0);
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'H');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
-
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'W');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'r');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'd');
-  //glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
 
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'H');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
@@ -281,7 +290,7 @@ void timerCall(int value) {
     eangle -= 360.0;
    glutPostRedisplay();
    /* Note we have to start the timer up again after it fires. */
-   glutTimerFunc(3 /*msecs*/, timerCall, 0 /*value to pass*/);
+   glutTimerFunc(TIMER_CONST_MSEC /*msecs*/, timerCall, 0 /*value to pass*/);
    /*printf("TIMER CALL\n");*/
 } /* end func timerCall */
 
@@ -294,7 +303,7 @@ int main(int argc, char *argv[]) {
   mainWindow = glutCreateWindow("User Interaction Demo");
   glutDisplayFunc(displayCall);
 /*  glutIdleFunc(idleCall); */
-  glutTimerFunc(3 /*msecs*/, timerCall, 0 /*value to pass*/);
+  glutTimerFunc(TIMER_CONST_MSEC /*msecs*/, timerCall, 0 /*value to pass*/);
   glutKeyboardFunc(keyboardCall);
 
 /* Use the following to detect key releases
