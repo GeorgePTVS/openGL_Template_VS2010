@@ -45,18 +45,31 @@ void displayCall() {
   glRotatef(eangle, 0, 1, 0);
   glTranslatef(-300, 0, 0);
     
-  glColor3f(1,1,1);
+  glColor3f(1,0,0);
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'H');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
+
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'W');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'r');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'd');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
+
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'H');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
 
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'W');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'r');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'R');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'i');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'd');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'y');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
         
   glutSwapBuffers();
@@ -268,7 +281,7 @@ void timerCall(int value) {
     eangle -= 360.0;
    glutPostRedisplay();
    /* Note we have to start the timer up again after it fires. */
-   glutTimerFunc(5 /*msecs*/, timerCall, 0 /*value to pass*/);
+   glutTimerFunc(3 /*msecs*/, timerCall, 0 /*value to pass*/);
    /*printf("TIMER CALL\n");*/
 } /* end func timerCall */
 
@@ -281,7 +294,7 @@ int main(int argc, char *argv[]) {
   mainWindow = glutCreateWindow("User Interaction Demo");
   glutDisplayFunc(displayCall);
 /*  glutIdleFunc(idleCall); */
-  glutTimerFunc(50 /*msecs*/, timerCall, 0 /*value to pass*/);
+  glutTimerFunc(3 /*msecs*/, timerCall, 0 /*value to pass*/);
   glutKeyboardFunc(keyboardCall);
 
 /* Use the following to detect key releases
