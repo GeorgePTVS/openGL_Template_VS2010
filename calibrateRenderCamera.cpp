@@ -192,11 +192,11 @@ void displayCall() {
 
   glColor3f(1.f, 0.f, 0.f);
   float rotAngle = 360.f/NUM_FLAKE_BLADES;
-  for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
+  for ( unsigned int s = 0; s < shapeVector.size(); s++ )
   {
-    glRotatef( rotAngle, 0.f, 0.f, 1.f);
-    for ( unsigned int s = 0; s < shapeVector.size(); s++ )
+    for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
     {
+      glRotatef( rotAngle, 0.f, 0.f, 1.f);
       switch ( shapeVector[s].shapeType )
       {
       case (SHAPE_TRIANGLE):
@@ -216,9 +216,9 @@ void displayCall() {
         drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       }
-//      glFlush();  // this didnt work to keep shapes in order.  Why?
+//      glFlush();  // this didnt work to keep shapes in order.  Why? 
 
-    }
+    }  // for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
 
 // #define DRAW_TEST_SHAPES
 #ifdef DRAW_TEST_SHAPES
@@ -231,7 +231,7 @@ void displayCall() {
 #endif  // DRAW_TEST_SHAPES
 
 
-  }  // for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
+  }  // for ( unsigned int s = 0; s < shapeVector.size(); s++ )
 
   // draw mouse with shape. 
   glFlush();  // flush first so mouse is on top. hmm that's no guarantee.
