@@ -1,3 +1,7 @@
+// I based flakey on some glut examples.  The following author provided the primary example of glut infrastructure. Thank you Mitch Richling.
+// I used freeglut instead of glut though.
+// gcp Nov 22, 2014
+//
 /* -*- Mode:C; Coding:us-ascii-unix; fill-column:132 -*- */
 /**********************************************************************************************************************************/
 /**
@@ -49,7 +53,7 @@ static int mouseY = 200;
 static float mouseRotZ = 0.f;
 static const float MOUSE_ROT_DELTA = 3.f;  // degrees
 static float mouseScale = 1.0f;
-static const float MOUSE_SCALE_DELTA = 0.01f;
+static const float MOUSE_SCALE_DELTA = 0.1f;
 static bool useMultiMouse = true;
 
 enum ShapeType
