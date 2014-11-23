@@ -50,7 +50,7 @@ static float mouseRotZ = 0.f;
 static const float MOUSE_ROT_DELTA = 3.f;  // degrees
 static float mouseScale = 1.0f;
 static const float MOUSE_SCALE_DELTA = 0.01f;
-
+static bool useMultiMouse = true;
 
 enum ShapeType
 {
@@ -216,6 +216,8 @@ void displayCall() {
         drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       }
+//      glFlush();  // this didnt work to keep shapes in order.  Why?
+
     }
 
 // #define DRAW_TEST_SHAPES
@@ -228,11 +230,27 @@ void displayCall() {
     glEnd();
 #endif  // DRAW_TEST_SHAPES
 
-    // draw mouse with shape. 
-    glFlush();  // flush first so mouse is on top.
-    drawMouse();
 
+  }  // for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
+
+  // draw mouse with shape. 
+  glFlush();  // flush first so mouse is on top. hmm that's no guarantee.
+
+  if ( useMultiMouse )
+  {
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
+    {
+      glRotatef( rotAngle, 0.f, 0.f, 1.f);
+      drawMouse();
+    }
   }
+  else
+  {
+    drawMouse();
+  }
+
   glutSwapBuffers();
 } /* end func displayCall */
 
