@@ -91,9 +91,10 @@ void displayCall() {
   glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 
   glColor3f(1.f, 0.f, 0.f);
+  float rotAngle = 360.f/NUM_FLAKE_BLADES;
   for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
   {
-    glRotatef( i*360.f/NUM_FLAKE_BLADES, 0.f, 0.f, 1.f);
+    glRotatef( rotAngle, 0.f, 0.f, 1.f);
     glBegin(GL_QUADS);
     glVertex2f( -0.5f,  0.2f );
     glVertex2f( -0.3f,  0.2f );
