@@ -46,6 +46,8 @@ static int mouseX = 100;
 static int mouseY = 200;
 static float mouseRotZ = 0.f;
 static const float MOUSE_ROT_DELTA = 3.f;  // degrees
+static float mouseScale = 1.0f;
+static const float MOUSE_SCALE_DELTA = 0.01f;
 
 enum ShapeType
 {
@@ -78,15 +80,15 @@ typedef struct ShapeDef
 
 static vector<Shape> shapeVector;
 
-void mouseWheel( int dir );
+void mouseWheel( int _dir, int _shift );
 void init();
 void close();
 void drawMouse();
-void addShape( float _x, float _y, float _rotZ );
-void drawTriangle( float _x, float _y, float _rotZ );
-void drawSquare( float _x, float _y, float _rotZ );
-void drawLine( float _x, float _y, float _rotZ );
-void drawCircle( float _x, float _y, float _rotZ );
+void addShape( float _x, float _y, float _rotZ, float _scale );
+void drawTriangle( float _x, float _y, float _rotZ, float _scale );
+void drawSquare( float _x, float _y, float _rotZ, float _scale );
+void drawLine( float _x, float _y, float _rotZ, float _scale );
+void drawCircle( float _x, float _y, float _rotZ, float _scale );
 void screenToOrtho( float& _screenX, float& _screenY );
 
 /**********************************************************************************************************************************/
@@ -175,17 +177,17 @@ void displayCall() {
       switch ( shapeVector[s].shapeType )
       {
       case (SHAPE_TRIANGLE):
-        drawTriangle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
+        drawTriangle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
         break;
       case (SHAPE_LINE):
-        drawLine( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
+        drawLine( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
         break;
       case (SHAPE_CIRCLE):
-        drawCircle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
+        drawCircle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
         break;
       default:
       case (SHAPE_SQUARE):
-        drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
+        drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
         break;
       }
     }
@@ -308,7 +310,7 @@ void mouseCall(int button, int state, int x, int y) {
       float screenX = (float)x;
       float screenY = (float)y;
       screenToOrtho( screenX, screenY );
-      addShape( screenX, screenY, mouseRotZ );
+      addShape( screenX, screenY, mouseRotZ, mouseScale );
     }
 
   } else if(state == GLUT_UP) {
@@ -317,15 +319,30 @@ void mouseCall(int button, int state, int x, int y) {
     printf("Unknown Mouse Click Event: b(%d/%s)@(%d,%d)\n", button, m, x, y);
   } /* end if/else */
 
+  // these control numbers were determined empirically from printf's
   if ( button == 3 )
   {
     int up = 1;
-    mouseWheel( up );
+    int noShift = 0;
+    mouseWheel( up, noShift );
   }
   else if ( button == 4 )
   {
     int down = 0;
-    mouseWheel( down );
+    int noShift = 0;
+    mouseWheel( down, noShift );
+  }
+  else if ( button == 11 ) 
+  {
+    int up = 1;
+    int shift = 1;
+    mouseWheel( up, shift );
+  }
+  else if ( button == 12 )
+  {
+    int down = 0;
+    int shift = 1;
+    mouseWheel( down, shift );
   }
 }  /* end func mouseCall */
 
@@ -452,17 +469,27 @@ void timerCall(int value) {
 
 /**********************************************************************************************************************************/
 
-void mouseWheel( int dir )
+void mouseWheel( int _dir, int _shift )
 {
-  if ( dir == 0 )
+  if ( _dir == 0  && _shift == 0 )
   {
     // mousewheel down
     mouseRotZ -= MOUSE_ROT_DELTA;
   }
-  else if ( dir == 1 )
+  else if ( _dir == 1 && _shift == 0 )
   {
     // mousewheel up
     mouseRotZ += MOUSE_ROT_DELTA;
+  }
+  else if ( _dir == 0  && _shift == 1 )
+  {
+    // SHIFT + mousewheel down
+    mouseScale -= MOUSE_SCALE_DELTA;
+  }
+  else if ( _dir == 1 && _shift == 1 )
+  {
+    // SHIFT + mousewheel up
+    mouseScale += MOUSE_SCALE_DELTA;
   }
 }
 
@@ -483,21 +510,21 @@ void drawMouse()
   float screenMouseY = (float)mouseY;
   screenToOrtho( screenMouseX, screenMouseY );
 
-  printf("mouseXY %d %d,  screenMouseXY %f %f\n", mouseX, mouseY, screenMouseX, screenMouseY );
+//  printf("mouseXY %d %d,  screenMouseXY %f %f\n", mouseX, mouseY, screenMouseX, screenMouseY );
 
   switch (static_cast<int>(mouseShape))
   {
   case (static_cast<int>(SHAPE_TRIANGLE)):
-    drawTriangle( screenMouseX, screenMouseY, mouseRotZ );
+    drawTriangle( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
     break;
   case (static_cast<int>(SHAPE_LINE)):
-    drawLine( screenMouseX, screenMouseY, mouseRotZ );
+    drawLine( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
     break;
   case (static_cast<int>(SHAPE_CIRCLE)):
-    drawCircle( screenMouseX, screenMouseY, mouseRotZ );
+    drawCircle( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
     break;
   case (static_cast<int>(SHAPE_SQUARE)):
-    drawSquare( screenMouseX, screenMouseY, mouseRotZ );
+    drawSquare( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
   default:
     break;
   }
@@ -523,7 +550,7 @@ int main(int argc, char *argv[])
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
   glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
   glutInitWindowPosition(650, 200);
-  mainWindow = glutCreateWindow("User Interaction Demo");
+  mainWindow = glutCreateWindow("Flakey!");
   glutDisplayFunc(displayCall);
 /*  glutIdleFunc(idleCall); */
   glutTimerFunc(TIMER_CONST_MSEC /*msecs*/, timerCall, 0 /*value to pass*/);
@@ -550,7 +577,7 @@ int main(int argc, char *argv[])
 } /* end func main */
 
 
-void addShape( float _x, float _y, float _rotZ )
+void addShape( float _x, float _y, float _rotZ, float _scale )
 {
   printf("Add shape: %d\n", mouseShape );
   Shape shape;
@@ -558,12 +585,13 @@ void addShape( float _x, float _y, float _rotZ )
   shape.x = _x;
   shape.y = _y;
   shape.rotZ = _rotZ;
+  shape.scale = _scale;
 
   shapeVector.push_back( shape );
 
 }
 
-void drawTriangle( float _x, float _y, float _rotZ )
+void drawTriangle( float _x, float _y, float _rotZ, float _scale )
 {
   static const float rad3Over2 = 0.8660254f;
   static const float rad3Over4 = rad3Over2/2.f;
@@ -572,6 +600,7 @@ void drawTriangle( float _x, float _y, float _rotZ )
   glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
+  glScalef( _scale, _scale, 1.0f );
   glBegin(GL_TRIANGLES);
   glVertex2f( -BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
   glVertex2f(  0.f       ,   BRUSH_SIZE * rad3Over2 );
@@ -580,12 +609,13 @@ void drawTriangle( float _x, float _y, float _rotZ )
   glPopMatrix();
 }
 
-void drawSquare(float _x, float _y, float _rotZ)
+void drawSquare(float _x, float _y, float _rotZ, float _scale)
 {
   glColor3f(1.f, 0.f, 0.f);
   glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
+  glScalef( _scale, _scale, 1.0f );
   glBegin(GL_QUADS);
   glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
   glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
@@ -596,12 +626,13 @@ void drawSquare(float _x, float _y, float _rotZ)
 
 }
 
-void drawLine(float _x, float _y, float _rotZ)
+void drawLine(float _x, float _y, float _rotZ, float _scale)
 {
   glColor3f(1.f, 0.f, 0.f);
   glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
+  glScalef( _scale, _scale, 1.0f );
   glBegin(GL_QUADS);
   glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR );
   glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR);
@@ -611,9 +642,9 @@ void drawLine(float _x, float _y, float _rotZ)
   glPopMatrix();
 }
 
-void drawCircle(float _x, float _y, float _rotZ)
+void drawCircle(float _x, float _y, float _rotZ, float _scale)
 {
-  drawSquare(_x, _y, _rotZ);
+  drawSquare(_x, _y, _rotZ, _scale);
 }
 
 void screenToOrtho( float& _screenX, float& _screenY )
