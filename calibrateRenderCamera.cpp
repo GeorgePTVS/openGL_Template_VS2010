@@ -40,7 +40,7 @@ int mainWindow;
 static const int WINDOW_WIDTH  = 500;
 static const int WINDOW_HEIGHT = 500;
 
-static const int MOUSE_IDLE_TIMER_CONST_MSEC = 5000;  
+static const int MOUSE_IDLE_TIMER_CONST_MSEC = 3000;  
 static const int ANIMATAION_TIMER_CONST_MSEC = 30;
 static const int NUM_FLAKE_BLADES = 6;
 
@@ -146,23 +146,6 @@ void displayCall() {
   blueClear = blueClear + blueColorIncrement;
   if ( blueClear > 1.0f ) blueClear = 0.f;
   if ( blueClear < 0.0f ) blueClear = 1.0f;
-  //printf( "redClear = %f\n", redClear );
-
-  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  //glEnable(GL_DEPTH_TEST);
-
-  //glMatrixMode(GL_PROJECTION);
-  //glLoadIdentity();
-  //glOrtho(-2.0, 2.0, -2.0, 2.0, -2.0, 500.0);
-
-  //glMatrixMode(GL_MODELVIEW);
-  //glLoadIdentity();
-  //gluLookAt(2, 2, 2, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-  //glScalef(.005,.005,.005);
-  //glRotatef(eangle, 0, 1, 0);
-  //glTranslatef(-300, 0, 0);
-  //  
-  //glColor3f(1,0,0);
 
   //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'H');
   //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
@@ -185,7 +168,6 @@ void displayCall() {
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-//  glOrtho(0, 500-1, 500-1, 0, -100.0, 100.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -225,7 +207,6 @@ void displayCall() {
         drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       }
-//      glFlush();  // this didnt work to keep shapes in order.  Why? 
 
     }  // for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
 
@@ -565,12 +546,19 @@ void animationTimer(int value)
   glutPostRedisplay();
   glutTimerFunc(ANIMATAION_TIMER_CONST_MSEC, animationTimer, 0);
 
-} /* end func mouseIdleTimer */
+} /* end func animationTimer */
 
 void mouseIdleTimer(int value) 
 {
 
-  mouseActive = false;
+  if ( prevMouseX == mouseX && prevMouseY == mouseY )
+  {
+    mouseActive = false;
+  }
+
+  prevMouseX = mouseX;
+  prevMouseY = mouseY;
+
   glutPostRedisplay();
   glutTimerFunc(MOUSE_IDLE_TIMER_CONST_MSEC /*msecs*/, mouseIdleTimer, 0 /*value to pass*/);
 
