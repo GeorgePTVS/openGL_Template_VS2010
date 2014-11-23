@@ -33,6 +33,7 @@ static const int NUM_FLAKE_BLADES = 6;
 /**********************************************************************************************************************************/
 void displayCall() {
  
+  // vary the background color over time.
   static const float redColorIncrement = 0.001f;
   static const float greenColorIncrement = 0.0012f;
   static const float blueColorIncrement = -0.001f;
@@ -90,6 +91,7 @@ void displayCall() {
   glLoadIdentity();
   glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 
+  // draw the (same) design on each of the blades
   glColor3f(1.f, 0.f, 0.f);
   float rotAngle = 360.f/NUM_FLAKE_BLADES;
   for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
@@ -161,6 +163,8 @@ void specialCall(int key, int x, int y) {
 /**********************************************************************************************************************************/
 /* Mouse clicks */
 void mouseCall(int button, int state, int x, int y) {
+
+  printf("MouseCall\n");
   char *b, *m;
   int kbMod;
 
@@ -334,7 +338,7 @@ int main(int argc, char *argv[]) {
 
   glutSpecialFunc(specialCall);
   glutMotionFunc(motionCall);
-/*  glutPassiveMotionFunc(passiveMotionCall); */
+  glutPassiveMotionFunc(passiveMotionCall);
   glutMouseFunc(mouseCall);
   glutEntryFunc(entryCall);
 /*  glutJoystickFunc(joystickCall, 1000); */
