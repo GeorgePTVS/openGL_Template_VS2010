@@ -160,12 +160,35 @@ void displayCall() {
   for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
   {
     glRotatef( rotAngle, 0.f, 0.f, 1.f);
+    for ( unsigned int s = 0; s < shapeVector.size(); s++ )
+    {
+      switch ( shapeVector[s].shapeType )
+      {
+      case (SHAPE_TRIANGLE):
+        drawTriangle();
+        break;
+      case (SHAPE_LINE):
+        drawLine();
+        break;
+      case (SHAPE_CIRCLE):
+        drawCircle();
+        break;
+      default:
+      case (SHAPE_SQUARE):
+        drawSquare();
+        break;
+      }
+    }
+
+// #define DRAW_TEST_SHAPES
+#ifdef DRAW_TEST_SHAPES
     glBegin(GL_QUADS);
     glVertex2f( -0.5f,  0.2f );
     glVertex2f( -0.3f,  0.2f );
     glVertex2f( -0.3f,  0.f );
     glVertex2f( -0.5f,  0.f );
     glEnd();
+#endif  // DRAW_TEST_SHAPES
   }
   glutSwapBuffers();
 } /* end func displayCall */
@@ -510,7 +533,7 @@ int main(int argc, char *argv[])
 
 void addShape( int _x, int _y )
 {
-
+  printf("Add shape: %d\n", mouseShape );
   Shape shape;
   shape.shapeType = mouseShape;
   shape.x = _x;
