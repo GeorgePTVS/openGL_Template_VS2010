@@ -28,7 +28,7 @@
 static float eangle = 0.0;
 static float eangleDelta = 0.5;
 int mainWindow;
-static const int TIMER_CONST_MSEC = 1;
+static const int TIMER_CONST_MSEC = 15;
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -39,7 +39,7 @@ void displayCall() {
   static float redClear = 0.0f;
   static float greenClear = 0.2f;
   static float blueClear = 0.8f;
-  glClearColor(redClear,greenClear,1,1);
+  glClearColor(redClear,greenClear,blueClear,1);
 
   redClear = redClear + redColorIncrement;
   if ( redClear > 1.0f ) redClear = 0.f;
@@ -74,11 +74,11 @@ void displayCall() {
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
 
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'R');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'i');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'D');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'n');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'y');
+  glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
   glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
         
   glutSwapBuffers();
