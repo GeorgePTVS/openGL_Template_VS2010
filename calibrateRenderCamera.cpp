@@ -30,6 +30,10 @@ static float eangleDelta = 0.5;
 int mainWindow;
 static const int TIMER_CONST_MSEC = 15;
 static const int NUM_FLAKE_BLADES = 6;
+static const int BRUSH_SIZE = 15;
+static int mouseX = 100;
+static int mouseY = 200;
+
 /**********************************************************************************************************************************/
 void displayCall() {
  
@@ -89,9 +93,28 @@ void displayCall() {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+  glOrtho(0, 500-1, 500-1, 0, -100.0, 100.0);
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
+  // draw mouse
+  glColor3f(1.f, 0.f, 0.f);
+  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+  glBegin(GL_QUADS);
+  glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
+  glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
+  glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
+  glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
+  glEnd();
 
   // draw the (same) design on each of the blades
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
   glColor3f(1.f, 0.f, 0.f);
   float rotAngle = 360.f/NUM_FLAKE_BLADES;
   for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
@@ -259,6 +282,9 @@ void menuCall(int value) {
 /**********************************************************************************************************************************/
 void passiveMotionCall(int x, int y) { 
   printf("PASSIVE MOTION: (%d,%d)\n", x, y);  
+  mouseX = x;
+  mouseY = y;
+  displayCall();
 } /* end func passiveMotionCall */
 
 /**********************************************************************************************************************************/
