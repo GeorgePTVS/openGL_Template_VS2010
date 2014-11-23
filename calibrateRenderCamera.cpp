@@ -57,13 +57,13 @@ typedef struct ShapeDef
   int x;
   int y;
   float scale;
-  ShapeType shape;
+  ShapeType shapeType;
   ShapeDef()
   {
     x = 0;
     y = 0;
     scale = 1.f;
-    shape = mouseShape;
+    shapeType = mouseShape;
   }
 
 } Shape;
@@ -74,6 +74,11 @@ void mouseWheel( int dir );
 void init();
 void close();
 void drawMouse();
+void addShape( int _x, int _y );
+void drawTriangle();
+void drawSquare();
+void drawLine();
+void drawCircle();
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -264,6 +269,12 @@ void mouseCall(int button, int state, int x, int y) {
 
   if(state == GLUT_DOWN) {
     printf("Mouse Depress: b(%s/%d/%s)@(%d,%d)\n", b, button, m, x, y);
+
+    if ( button == GLUT_LEFT_BUTTON )
+    {
+      addShape( x, y );
+    }
+
   } else if(state == GLUT_UP) {
     printf("Mouse Release: b(%s/%d/%s)@(%d,%d)\n", b, button, m, x, y);
   } else {
@@ -404,36 +415,6 @@ void timerCall(int value) {
 } /* end func timerCall */
 
 /**********************************************************************************************************************************/
-int main(int argc, char *argv[]) {
-  glutInit(&argc, argv);
-  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-  glutInitWindowSize(500, 500);
-  glutInitWindowPosition(300, 200);
-  mainWindow = glutCreateWindow("User Interaction Demo");
-  glutDisplayFunc(displayCall);
-/*  glutIdleFunc(idleCall); */
-  glutTimerFunc(TIMER_CONST_MSEC /*msecs*/, timerCall, 0 /*value to pass*/);
-  glutKeyboardFunc(keyboardCall);
-
-/* Use the following to detect key releases
-  glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
-  glutKeyboardUpFunc(keyboardUpCall);
-*/
-
-  glutSpecialFunc(specialCall);
-  glutMotionFunc(motionCall);
-  glutPassiveMotionFunc(passiveMotionCall);
-  glutMouseFunc(mouseCall);
-  glutEntryFunc(entryCall);
-/*  glutJoystickFunc(joystickCall, 1000); */
-  glutSpaceballMotionFunc(spaceballMotionCall);
-  glutSpaceballRotateFunc(spaceballRotateFunc);
-  glutSpaceballButtonFunc(spaceballButtonFunc);
-  buildMenu();
-  init();
-  glutMainLoop();
-  return 0;
-} /* end func main */
 
 void mouseWheel( int dir )
 {
@@ -462,54 +443,127 @@ void close()
 void drawMouse()
 {
 
-  static const float rad3Over2 = 0.8660254f;
-  static const float rad3Over4 = rad3Over2/2.f;
   switch (static_cast<int>(mouseShape))
   {
   case (static_cast<int>(SHAPE_TRIANGLE)):
-    glColor3f(1.f, 0.f, 0.f);
-    glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
-    glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
-    glBegin(GL_TRIANGLES);
-    glVertex2f( -BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
-    glVertex2f(  0.f       ,   BRUSH_SIZE * rad3Over2 );
-    glVertex2f(  BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
-    glEnd();
+    drawTriangle();
     break;
   case (static_cast<int>(SHAPE_LINE)):
-    glColor3f(1.f, 0.f, 0.f);
-    glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
-    glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
-    glBegin(GL_QUADS);
-    glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR );
-    glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR);
-    glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
-    glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
-    glEnd();
+    drawLine();
     break;
   case (static_cast<int>(SHAPE_CIRCLE)):
-    glColor3f(1.f, 0.f, 0.f);
-    glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
-    glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
-    glBegin(GL_QUADS);
-    glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
-    glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
-    glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
-    glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
-    glEnd();
+    drawCircle();
     break;
   case (static_cast<int>(SHAPE_SQUARE)):
-    glColor3f(1.f, 0.f, 0.f);
-    glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
-    glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
-    glBegin(GL_QUADS);
-    glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
-    glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
-    glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
-    glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
-    glEnd();
+    drawSquare();
   default:
     break;
   }
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main(int argc, char *argv[]) 
+{
+  glutInit(&argc, argv);
+  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+  glutInitWindowSize(500, 500);
+  glutInitWindowPosition(650, 200);
+  mainWindow = glutCreateWindow("User Interaction Demo");
+  glutDisplayFunc(displayCall);
+/*  glutIdleFunc(idleCall); */
+  glutTimerFunc(TIMER_CONST_MSEC /*msecs*/, timerCall, 0 /*value to pass*/);
+  glutKeyboardFunc(keyboardCall);
+
+/* Use the following to detect key releases
+  glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+  glutKeyboardUpFunc(keyboardUpCall);
+*/
+
+  glutSpecialFunc(specialCall);
+  glutMotionFunc(motionCall);
+  glutPassiveMotionFunc(passiveMotionCall);
+  glutMouseFunc(mouseCall);
+  glutEntryFunc(entryCall);
+/*  glutJoystickFunc(joystickCall, 1000); */
+  glutSpaceballMotionFunc(spaceballMotionCall);
+  glutSpaceballRotateFunc(spaceballRotateFunc);
+  glutSpaceballButtonFunc(spaceballButtonFunc);
+  buildMenu();
+  init();
+  glutMainLoop();
+  return 0;
+} /* end func main */
+
+
+void addShape( int _x, int _y )
+{
+
+  Shape shape;
+  shape.shapeType = mouseShape;
+  shape.x = _x;
+  shape.y = _y;
+  
+  shapeVector.push_back( shape );
+
+}
+
+void drawTriangle()
+{
+  static const float rad3Over2 = 0.8660254f;
+  static const float rad3Over4 = rad3Over2/2.f;
+
+  glColor3f(1.f, 0.f, 0.f);
+  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+  glBegin(GL_TRIANGLES);
+  glVertex2f( -BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
+  glVertex2f(  0.f       ,   BRUSH_SIZE * rad3Over2 );
+  glVertex2f(  BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
+  glEnd();
+}
+
+void drawSquare()
+{
+  glColor3f(1.f, 0.f, 0.f);
+  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+  glBegin(GL_QUADS);
+  glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
+  glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
+  glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
+  glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
+  glEnd();
+
+}
+
+void drawLine()
+{
+  glColor3f(1.f, 0.f, 0.f);
+  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+  glBegin(GL_QUADS);
+  glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR );
+  glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR);
+  glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
+  glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
+  glEnd();
+
+}
+
+void drawCircle()
+{
+  drawSquare();
 }
