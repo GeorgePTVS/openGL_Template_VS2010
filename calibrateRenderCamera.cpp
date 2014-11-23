@@ -15,6 +15,7 @@
 /**********************************************************************************************************************************/
 #include <stdio.h>              /* I/O lib         ISOC  */
 #include <stdlib.h>             /* Standard Lib    ISOC  */
+#include <vector>
 
 /**********************************************************************************************************************************/
 /* Apple puts GLUT into a framework named GLUT, while the rest of the world just sticks GLUT into the GL include directory... */
@@ -25,16 +26,45 @@
 #endif
 
 /**********************************************************************************************************************************/
+using namespace std;
+
+
 static float eangle = 0.0;
 static float eangleDelta = 0.5;
 int mainWindow;
 static const int TIMER_CONST_MSEC = 15;
 static const int NUM_FLAKE_BLADES = 6;
-static const int BRUSH_SIZE = 15;
+static const float BRUSH_SIZE = 15.f;
 static int mouseX = 100;
 static int mouseY = 200;
 static float mouseRotZ = 0.f;
 static const float MOUSE_ROT_DELTA = 3.f;  // degrees
+
+enum ShapeType
+{
+  SHAPE_SQUARE = 0,
+  SHAPE_TRIANGLE,
+  SHAPE_CIRCLE,
+  SHAPE_LINE
+};
+
+typedef struct ShapeDef
+{
+  int x;
+  int y;
+  float scale;
+  ShapeType shape;
+  ShapeDef()
+  {
+    x = 0;
+    y = 0;
+    scale = 1.f;
+    shape = SHAPE_SQUARE;
+  }
+
+} Shape;
+
+static vector<Shape> shapeVector;
 
 void mouseWheel( int dir );
 
