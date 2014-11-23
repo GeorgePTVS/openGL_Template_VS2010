@@ -45,8 +45,11 @@ enum ShapeType
   SHAPE_SQUARE = 0,
   SHAPE_TRIANGLE,
   SHAPE_CIRCLE,
-  SHAPE_LINE
+  SHAPE_LINE,
+  SHAPE_COUNT
 };
+
+static ShapeType mouseShape = SHAPE_SQUARE;
 
 typedef struct ShapeDef
 {
@@ -59,7 +62,7 @@ typedef struct ShapeDef
     x = 0;
     y = 0;
     scale = 1.f;
-    shape = SHAPE_SQUARE;
+    shape = mouseShape;
   }
 
 } Shape;
@@ -67,6 +70,9 @@ typedef struct ShapeDef
 static vector<Shape> shapeVector;
 
 void mouseWheel( int dir );
+void init();
+void close();
+void drawMouse();
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -133,15 +139,7 @@ void displayCall() {
   glLoadIdentity();
 
   // draw mouse with shape 
-  glColor3f(1.f, 0.f, 0.f);
-  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
-  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
-  glBegin(GL_QUADS);
-  glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
-  glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
-  glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
-  glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
-  glEnd();
+  drawMouse();
 
   // We are drawing snowflakes!
   // draw the (same) design on each of the (presumably 6) snowflake blades
@@ -188,6 +186,17 @@ void keyboardCall(unsigned char key, int x, int y) {
     m = "NONE";
   } /* end if */
   printf("KEY: %c with mod: %s\n", key, m);
+
+  // ESC or q is quit
+  if( (key == 'q') || (key == 0x1B)) 
+  {
+    close();
+  }
+  else if ( key == 's' )
+  {
+    mouseShape = static_cast<ShapeType>(static_cast<int>(mouseShape) + 1);
+    mouseShape = static_cast<ShapeType>(static_cast<int>(mouseShape) % SHAPE_COUNT); 
+  }
 } /* end func keyboardCall */
 
 /**********************************************************************************************************************************/
@@ -419,6 +428,7 @@ int main(int argc, char *argv[]) {
   glutSpaceballRotateFunc(spaceballRotateFunc);
   glutSpaceballButtonFunc(spaceballButtonFunc);
   buildMenu();
+  init();
   glutMainLoop();
   return 0;
 } /* end func main */
@@ -435,4 +445,28 @@ void mouseWheel( int dir )
     // mousewheel up
     mouseRotZ += MOUSE_ROT_DELTA;
   }
+}
+
+void init()
+{
+  shapeVector.clear();
+}
+
+void close()
+{
+  exit(0);
+}
+
+void drawMouse()
+{
+  glColor3f(1.f, 0.f, 0.f);
+  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+  glBegin(GL_QUADS);
+  glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
+  glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
+  glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
+  glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
+  glEnd();
+
 }
