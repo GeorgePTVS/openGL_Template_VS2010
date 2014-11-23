@@ -483,6 +483,8 @@ void drawMouse()
   float screenMouseY = (float)mouseY;
   screenToOrtho( screenMouseX, screenMouseY );
 
+  printf("mouseXY %d %d,  screenMouseXY %f %f\n", mouseX, mouseY, screenMouseX, screenMouseY );
+
   switch (static_cast<int>(mouseShape))
   {
   case (static_cast<int>(SHAPE_TRIANGLE)):
@@ -567,6 +569,7 @@ void drawTriangle( float _x, float _y, float _rotZ )
   static const float rad3Over4 = rad3Over2/2.f;
 
   glColor3f(1.f, 0.f, 0.f);
+  glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
   glBegin(GL_TRIANGLES);
@@ -574,11 +577,13 @@ void drawTriangle( float _x, float _y, float _rotZ )
   glVertex2f(  0.f       ,   BRUSH_SIZE * rad3Over2 );
   glVertex2f(  BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
   glEnd();
+  glPopMatrix();
 }
 
 void drawSquare(float _x, float _y, float _rotZ)
 {
   glColor3f(1.f, 0.f, 0.f);
+  glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
   glBegin(GL_QUADS);
@@ -587,12 +592,14 @@ void drawSquare(float _x, float _y, float _rotZ)
   glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
   glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
   glEnd();
+  glPopMatrix();
 
 }
 
 void drawLine(float _x, float _y, float _rotZ)
 {
   glColor3f(1.f, 0.f, 0.f);
+  glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
   glBegin(GL_QUADS);
@@ -601,7 +608,7 @@ void drawLine(float _x, float _y, float _rotZ)
   glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
   glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
   glEnd();
-
+  glPopMatrix();
 }
 
 void drawCircle(float _x, float _y, float _rotZ)
