@@ -42,6 +42,8 @@ static const int NUM_FLAKE_BLADES = 6;
 static const float BRUSH_SIZE = 15.f/WINDOW_WIDTH;  // assuming square window for now
 
 static const float LINE_HEIGHT_SCALAR = 0.1f;
+static const int NUM_CIRCLE_SECTIONS = 12;
+
 static int mouseX = 100;
 static int mouseY = 200;
 static float mouseRotZ = 0.f;
@@ -49,12 +51,14 @@ static const float MOUSE_ROT_DELTA = 3.f;  // degrees
 static float mouseScale = 1.0f;
 static const float MOUSE_SCALE_DELTA = 0.01f;
 
+
 enum ShapeType
 {
   SHAPE_SQUARE = 0,
   SHAPE_TRIANGLE,
   SHAPE_CIRCLE,
   SHAPE_LINE,
+  SHAPE_SCALENE,
   SHAPE_COUNT
 };
 
@@ -74,7 +78,7 @@ enum ColorType
   COLOR_COUNT
 };
 
-static ColorType drawColorEnum = COLOR_RED;
+static ColorType drawColorEnum = COLOR_WHITE;
 typedef struct ShapeDef
 {
   float x;
@@ -90,7 +94,7 @@ typedef struct ShapeDef
     scale = 1.f;
     rotZ = 0.f;
     shapeType = mouseShape;
-    drawColorEnum = COLOR_RED;
+    drawColorEnum = COLOR_WHITE;
   }
 
 } Shape;
@@ -108,6 +112,7 @@ void drawTriangle( float _x, float _y, float _rotZ, float _scale, ColorType _dra
 void drawSquare( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
 void drawLine( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
 void drawCircle( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
+void drawScalene(float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum);
 void screenToOrtho( float& _screenX, float& _screenY );
 void setColor( ColorType _drawColorEnum );
 
@@ -204,6 +209,9 @@ void displayCall() {
         break;
       case (SHAPE_CIRCLE):
         drawCircle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
+        break;
+      case (SHAPE_SCALENE):
+        drawScalene( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       default:
       case (SHAPE_SQUARE):
@@ -701,9 +709,52 @@ void drawLine(float _x, float _y, float _rotZ, float _scale, ColorType _drawColo
   glPopMatrix();
 }
 
+void drawScalene(float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum)
+{
+  setColor( _drawColorEnum );
+  glPushMatrix();
+  glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
+  glRotatef( _rotZ, 0.f, 0.f, 1.f );  // this rot is prob superfluous
+  glScalef( _scale, _scale, 1.0f );
+
+  float rotAngle = 360.f/NUM_CIRCLE_SECTIONS;
+  glBegin(GL_TRIANGLES);
+  for ( int i = 0; i < NUM_CIRCLE_SECTIONS; i++ )
+  {
+    glRotatef( rotAngle, 0.f, 0.f, 1.f);
+    glVertex2f( 0.f, 0.f );
+    glVertex2f( 0.f, -BRUSH_SIZE );
+    //glPushMatrix();
+    //glRotatef( rotAngle, 0.f, 0.f, 1.f);
+    glVertex2f( BRUSH_SIZE, -BRUSH_SIZE );
+    //glPopMatrix();
+  }
+  glEnd();
+  glPopMatrix();
+}
+
 void drawCircle(float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum)
 {
-  drawSquare(_x, _y, _rotZ, _scale, _drawColorEnum);
+  setColor( _drawColorEnum );
+  glPushMatrix();
+  glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
+  glRotatef( _rotZ, 0.f, 0.f, 1.f );  // this rot is prob superfluous
+  glScalef( _scale, _scale, 1.0f );
+
+  float rotAngle = 360.f/NUM_CIRCLE_SECTIONS;
+  for ( int i = 0; i < NUM_CIRCLE_SECTIONS; i++ )
+  {
+    glRotatef( rotAngle, 0.f, 0.f, 1.f);
+    glBegin(GL_TRIANGLES);
+    glVertex2f( 0.f, 0.f );
+    glVertex2f( 0.f, -BRUSH_SIZE );
+    //glPushMatrix();
+    //glRotatef( rotAngle, 0.f, 0.f, 1.f);
+    glVertex2f( BRUSH_SIZE, -BRUSH_SIZE );
+    //glPopMatrix();
+    glEnd();
+  }
+  glPopMatrix();
 }
 
 void screenToOrtho( float& _screenX, float& _screenY )
