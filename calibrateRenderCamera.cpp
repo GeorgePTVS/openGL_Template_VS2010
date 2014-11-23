@@ -60,6 +60,20 @@ enum ShapeType
 
 static ShapeType mouseShape = SHAPE_SQUARE;
 
+enum ColorType
+{
+  COLOR_RED = 0,
+  COLOR_GREEN,
+  COLOR_BLUE,
+  COLOR_MAGENTA,
+  COLOR_YELLOW,
+  COLOR_CYAN,
+  COLOR_WHITE,
+  COLOR_BLACK,
+  COLOR_COUNT
+};
+
+static ColorType drawColorEnum = COLOR_RED;
 typedef struct ShapeDef
 {
   float x;
@@ -67,6 +81,7 @@ typedef struct ShapeDef
   float scale;
   float rotZ;
   ShapeType shapeType;
+  ColorType drawColorEnum;
   ShapeDef()
   {
     x = 0.f;
@@ -74,22 +89,26 @@ typedef struct ShapeDef
     scale = 1.f;
     rotZ = 0.f;
     shapeType = mouseShape;
+    drawColorEnum = COLOR_RED;
   }
 
 } Shape;
 
 static vector<Shape> shapeVector;
 
+
+
 void mouseWheel( int _dir, int _shift );
 void init();
 void close();
 void drawMouse();
-void addShape( float _x, float _y, float _rotZ, float _scale );
-void drawTriangle( float _x, float _y, float _rotZ, float _scale );
-void drawSquare( float _x, float _y, float _rotZ, float _scale );
-void drawLine( float _x, float _y, float _rotZ, float _scale );
-void drawCircle( float _x, float _y, float _rotZ, float _scale );
+void addShape( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
+void drawTriangle( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
+void drawSquare( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
+void drawLine( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
+void drawCircle( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum );
 void screenToOrtho( float& _screenX, float& _screenY );
+void setColor( ColorType _drawColorEnum );
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -177,17 +196,17 @@ void displayCall() {
       switch ( shapeVector[s].shapeType )
       {
       case (SHAPE_TRIANGLE):
-        drawTriangle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
+        drawTriangle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       case (SHAPE_LINE):
-        drawLine( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
+        drawLine( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       case (SHAPE_CIRCLE):
-        drawCircle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
+        drawCircle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       default:
       case (SHAPE_SQUARE):
-        drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale );
+        drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ, shapeVector[s].scale, shapeVector[s].drawColorEnum );
         break;
       }
     }
@@ -239,6 +258,39 @@ void keyboardCall(unsigned char key, int x, int y) {
     mouseShape = static_cast<ShapeType>(static_cast<int>(mouseShape) % SHAPE_COUNT); 
     printf("mouseShape = %d\n", mouseShape );
   }
+  else if ( key == '1' )
+  {
+    drawColorEnum = COLOR_RED;
+  }
+  else if ( key == '2' )
+  {
+    drawColorEnum = COLOR_GREEN;
+  }
+  else if ( key == '3' )
+  {
+    drawColorEnum = COLOR_BLUE;
+  }
+  else if ( key == '4' )
+  {
+    drawColorEnum = COLOR_MAGENTA;
+  }
+  else if ( key == '5' )
+  {
+    drawColorEnum = COLOR_YELLOW;
+  }
+  else if ( key == '6' )
+  {
+    drawColorEnum = COLOR_CYAN;
+  }
+  else if ( key == '9' )
+  {
+    drawColorEnum = COLOR_WHITE;
+  }
+  else if ( key == '0' )
+  {
+    drawColorEnum = COLOR_BLACK;
+  }
+
 } /* end func keyboardCall */
 
 /**********************************************************************************************************************************/
@@ -310,7 +362,7 @@ void mouseCall(int button, int state, int x, int y) {
       float screenX = (float)x;
       float screenY = (float)y;
       screenToOrtho( screenX, screenY );
-      addShape( screenX, screenY, mouseRotZ, mouseScale );
+      addShape( screenX, screenY, mouseRotZ, mouseScale, drawColorEnum );
     }
 
   } else if(state == GLUT_UP) {
@@ -515,16 +567,16 @@ void drawMouse()
   switch (static_cast<int>(mouseShape))
   {
   case (static_cast<int>(SHAPE_TRIANGLE)):
-    drawTriangle( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
+    drawTriangle( screenMouseX, screenMouseY, mouseRotZ, mouseScale, drawColorEnum );
     break;
   case (static_cast<int>(SHAPE_LINE)):
-    drawLine( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
+    drawLine( screenMouseX, screenMouseY, mouseRotZ, mouseScale, drawColorEnum );
     break;
   case (static_cast<int>(SHAPE_CIRCLE)):
-    drawCircle( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
+    drawCircle( screenMouseX, screenMouseY, mouseRotZ, mouseScale, drawColorEnum );
     break;
   case (static_cast<int>(SHAPE_SQUARE)):
-    drawSquare( screenMouseX, screenMouseY, mouseRotZ, mouseScale );
+    drawSquare( screenMouseX, screenMouseY, mouseRotZ, mouseScale, drawColorEnum );
   default:
     break;
   }
@@ -577,7 +629,7 @@ int main(int argc, char *argv[])
 } /* end func main */
 
 
-void addShape( float _x, float _y, float _rotZ, float _scale )
+void addShape( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum )
 {
   printf("Add shape: %d\n", mouseShape );
   Shape shape;
@@ -586,17 +638,19 @@ void addShape( float _x, float _y, float _rotZ, float _scale )
   shape.y = _y;
   shape.rotZ = _rotZ;
   shape.scale = _scale;
+  shape.drawColorEnum = _drawColorEnum;
 
   shapeVector.push_back( shape );
 
 }
 
-void drawTriangle( float _x, float _y, float _rotZ, float _scale )
+void drawTriangle( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum )
 {
   static const float rad3Over2 = 0.8660254f;
   static const float rad3Over4 = rad3Over2/2.f;
 
-  glColor3f(1.f, 0.f, 0.f);
+
+  setColor( _drawColorEnum );
   glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
@@ -609,9 +663,9 @@ void drawTriangle( float _x, float _y, float _rotZ, float _scale )
   glPopMatrix();
 }
 
-void drawSquare(float _x, float _y, float _rotZ, float _scale)
+void drawSquare(float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum)
 {
-  glColor3f(1.f, 0.f, 0.f);
+  setColor( _drawColorEnum );
   glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
@@ -626,9 +680,9 @@ void drawSquare(float _x, float _y, float _rotZ, float _scale)
 
 }
 
-void drawLine(float _x, float _y, float _rotZ, float _scale)
+void drawLine(float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum)
 {
-  glColor3f(1.f, 0.f, 0.f);
+  setColor( _drawColorEnum );
   glPushMatrix();
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( _rotZ, 0.f, 0.f, 1.f );
@@ -642,9 +696,9 @@ void drawLine(float _x, float _y, float _rotZ, float _scale)
   glPopMatrix();
 }
 
-void drawCircle(float _x, float _y, float _rotZ, float _scale)
+void drawCircle(float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum)
 {
-  drawSquare(_x, _y, _rotZ, _scale);
+  drawSquare(_x, _y, _rotZ, _scale, _drawColorEnum);
 }
 
 void screenToOrtho( float& _screenX, float& _screenY )
@@ -654,4 +708,36 @@ void screenToOrtho( float& _screenX, float& _screenY )
 
   float orthoValY = -((_screenY) * 2.0f/(WINDOW_HEIGHT-1) - 1.0f);
   _screenY = orthoValY;
+}
+
+void setColor( ColorType _drawColorEnum )
+{
+  switch ( _drawColorEnum )
+  {
+  case (COLOR_GREEN):
+    glColor3f( 0.f, 1.f, 0.f );
+    break;
+  case (COLOR_BLUE):
+    glColor3f( 0.f, 0.f, 1.f );
+    break;
+  case (COLOR_MAGENTA):
+    glColor3f( 1.f, 0.f, 1.f );
+    break;
+  case (COLOR_YELLOW):
+    glColor3f( 1.f, 1.f, 0.f );
+    break;
+  case (COLOR_CYAN):
+    glColor3f( 0.f, 1.f, 1.f );
+    break;
+  case (COLOR_BLACK):
+    glColor3f( 0.f, 0.f, 0.f );
+    break;
+  case (COLOR_WHITE):
+    glColor3f( 1.f, 1.f, 1.f );
+    break;
+  case (COLOR_RED):
+  default:
+    glColor3f( 1.0f, 0.0f, 0.0f );
+    break;
+  }
 }
