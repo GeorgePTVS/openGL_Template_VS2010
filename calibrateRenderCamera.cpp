@@ -196,6 +196,7 @@ void keyboardCall(unsigned char key, int x, int y) {
   {
     mouseShape = static_cast<ShapeType>(static_cast<int>(mouseShape) + 1);
     mouseShape = static_cast<ShapeType>(static_cast<int>(mouseShape) % SHAPE_COUNT); 
+    printf("mouseShape = %d\n", mouseShape );
   }
 } /* end func keyboardCall */
 
@@ -469,12 +470,23 @@ void drawMouse()
     glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
     glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
     glBegin(GL_TRIANGLES);
-    glVertex2f( -BRUSH_SIZE * 0.5f,  -BRUSH_SIZE * rad3Over4 );
-    glVertex2f(  0.f              ,   BRUSH_SIZE * rad3Over4 );
-    glVertex2f(  BRUSH_SIZE * 0.5f,  -BRUSH_SIZE * rad3Over4 );
+    glVertex2f( -BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
+    glVertex2f(  0.f       ,   BRUSH_SIZE * rad3Over2 );
+    glVertex2f(  BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
     glEnd();
     break;
   case (static_cast<int>(SHAPE_LINE)):
+    glColor3f(1.f, 0.f, 0.f);
+    glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+    glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+    glBegin(GL_QUADS);
+    glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
+    glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
+    glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
+    glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
+    glEnd();
+    break;
+  case (static_cast<int>(SHAPE_CIRCLE)):
     glColor3f(1.f, 0.f, 0.f);
     glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
     glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
