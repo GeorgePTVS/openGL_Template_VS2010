@@ -33,6 +33,10 @@ static const int NUM_FLAKE_BLADES = 6;
 static const int BRUSH_SIZE = 15;
 static int mouseX = 100;
 static int mouseY = 200;
+static float mouseRotZ = 0.f;
+static const float MOUSE_ROT_DELTA = 3.f;  // degrees
+
+void mouseWheel( int dir );
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -98,9 +102,10 @@ void displayCall() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  // draw mouse
+  // draw mouse with shape 
   glColor3f(1.f, 0.f, 0.f);
   glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
   glBegin(GL_QUADS);
   glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
   glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
@@ -108,7 +113,8 @@ void displayCall() {
   glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
   glEnd();
 
-  // draw the (same) design on each of the blades
+  // We are drawing snowflakes!
+  // draw the (same) design on each of the (presumably 6) snowflake blades
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
@@ -222,6 +228,17 @@ void mouseCall(int button, int state, int x, int y) {
   } else {
     printf("Unknown Mouse Click Event: b(%d/%s)@(%d,%d)\n", button, m, x, y);
   } /* end if/else */
+
+  if ( button == 3 )
+  {
+    int up = 1;
+    mouseWheel( up );
+  }
+  else if ( button == 4 )
+  {
+    int down = 0;
+    mouseWheel( down );
+  }
 }  /* end func mouseCall */
 
 /**********************************************************************************************************************************/
@@ -375,3 +392,17 @@ int main(int argc, char *argv[]) {
   glutMainLoop();
   return 0;
 } /* end func main */
+
+void mouseWheel( int dir )
+{
+  if ( dir == 0 )
+  {
+    // mousewheel down
+    mouseRotZ -= MOUSE_ROT_DELTA;
+  }
+  else if ( dir == 1 )
+  {
+    // mousewheel up
+    mouseRotZ += MOUSE_ROT_DELTA;
+  }
+}
