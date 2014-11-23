@@ -496,7 +496,7 @@ void passiveMotionCall(int x, int y) {
   printf("PASSIVE MOTION: (%d,%d)\n", x, y);  
   mouseX = x;
   mouseY = y;
-  displayCall();
+  glutPostRedisplay();
 } /* end func passiveMotionCall */
 
 /**********************************************************************************************************************************/
@@ -535,6 +535,9 @@ void buildMenu() {
 /* Call when we do nothing...  Don't do too much in this function.  It is best to use the timerFunction to do things like rotate as
  that gives precise control over call rate..*/
 void idleCall() {
+  static int count = 0;
+  printf("idle %d\n", count++);
+
   /* 
   eangle += eangleDelta;
   if(eangle >= 360.0)
