@@ -29,7 +29,7 @@ static float eangle = 0.0;
 static float eangleDelta = 0.5;
 int mainWindow;
 static const int TIMER_CONST_MSEC = 15;
-
+static const int NUM_FLAKE_BLADES = 6;
 /**********************************************************************************************************************************/
 void displayCall() {
  
@@ -52,35 +52,55 @@ void displayCall() {
   if ( blueClear < 0.0f ) blueClear = 1.0f;
   //printf( "redClear = %f\n", redClear );
 
+  //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  //glEnable(GL_DEPTH_TEST);
+
+  //glMatrixMode(GL_PROJECTION);
+  //glLoadIdentity();
+  //glOrtho(-2.0, 2.0, -2.0, 2.0, -2.0, 500.0);
+
+  //glMatrixMode(GL_MODELVIEW);
+  //glLoadIdentity();
+  //gluLookAt(2, 2, 2, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  //glScalef(.005,.005,.005);
+  //glRotatef(eangle, 0, 1, 0);
+  //glTranslatef(-300, 0, 0);
+  //  
+  //glColor3f(1,0,0);
+
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'H');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
+
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'D');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'n');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
+  //glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
+
+
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glEnable(GL_DEPTH_TEST);
+  glDisable(GL_DEPTH_TEST);
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(-2.0, 2.0, -2.0, 2.0, -2.0, 500.0);
+  glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
 
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
-  gluLookAt(2, 2, 2, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-  glScalef(.005,.005,.005);
-  glRotatef(eangle, 0, 1, 0);
-  glTranslatef(-300, 0, 0);
-    
-  glColor3f(1,0,0);
-
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'H');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'l');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'o');
-
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'D');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'a');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'n');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, 'e');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
-  glutStrokeCharacter(GLUT_STROKE_ROMAN, '!');
-        
+  glColor3f(1.f, 0.f, 0.f);
+  for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
+  {
+    glRotatef( i*360.f/NUM_FLAKE_BLADES, 0.f, 0.f, 1.f);
+    glBegin(GL_QUADS);
+    glVertex2f( -0.5f,  0.2f );
+    glVertex2f( -0.3f,  0.2f );
+    glVertex2f( -0.3f,  0.f );
+    glVertex2f( -0.5f,  0.f );
+    glEnd();
+  }
   glutSwapBuffers();
 } /* end func displayCall */
 
