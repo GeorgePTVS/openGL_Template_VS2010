@@ -181,8 +181,6 @@ void displayCall() {
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  // draw mouse with shape 
-  drawMouse();
 
   // We are drawing snowflakes!
   // draw the (same) design on each of the (presumably 6) snowflake blades
@@ -229,6 +227,11 @@ void displayCall() {
     glVertex2f( -0.5f,  0.f );
     glEnd();
 #endif  // DRAW_TEST_SHAPES
+
+    // draw mouse with shape. 
+    glFlush();  // flush first so mouse is on top.
+    drawMouse();
+
   }
   glutSwapBuffers();
 } /* end func displayCall */
