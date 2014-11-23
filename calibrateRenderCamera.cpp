@@ -35,6 +35,7 @@ int mainWindow;
 static const int TIMER_CONST_MSEC = 15;
 static const int NUM_FLAKE_BLADES = 6;
 static const float BRUSH_SIZE = 15.f;
+static const float LINE_HEIGHT_SCALAR = 0.1f;
 static int mouseX = 100;
 static int mouseY = 200;
 static float mouseRotZ = 0.f;
@@ -480,10 +481,10 @@ void drawMouse()
     glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
     glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
     glBegin(GL_QUADS);
-    glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
-    glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
-    glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE );
-    glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE );
+    glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR );
+    glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR);
+    glVertex2f(  BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
+    glVertex2f( -BRUSH_SIZE, -BRUSH_SIZE * LINE_HEIGHT_SCALAR);
     glEnd();
     break;
   case (static_cast<int>(SHAPE_CIRCLE)):
