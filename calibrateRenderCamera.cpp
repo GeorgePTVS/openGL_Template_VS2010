@@ -70,6 +70,7 @@ enum ColorType
   COLOR_CYAN,
   COLOR_WHITE,
   COLOR_BLACK,
+  COLOR_ERASE,
   COLOR_COUNT
 };
 
@@ -282,13 +283,17 @@ void keyboardCall(unsigned char key, int x, int y) {
   {
     drawColorEnum = COLOR_CYAN;
   }
-  else if ( key == '9' )
+  else if ( key == '8' )
   {
     drawColorEnum = COLOR_WHITE;
   }
-  else if ( key == '0' )
+  else if ( key == '9' )
   {
     drawColorEnum = COLOR_BLACK;
+  }
+  else if ( key == '0' )
+  {
+    drawColorEnum = COLOR_ERASE; 
   }
 
 } /* end func keyboardCall */
@@ -715,29 +720,32 @@ void setColor( ColorType _drawColorEnum )
   switch ( _drawColorEnum )
   {
   case (COLOR_GREEN):
-    glColor3f( 0.f, 1.f, 0.f );
+    glColor4f( 0.f, 1.f, 0.f, 1.0f );
     break;
   case (COLOR_BLUE):
-    glColor3f( 0.f, 0.f, 1.f );
+    glColor4f( 0.f, 0.f, 1.f, 1.0f );
     break;
   case (COLOR_MAGENTA):
-    glColor3f( 1.f, 0.f, 1.f );
+    glColor4f( 1.f, 0.f, 1.f, 1.0f );
     break;
   case (COLOR_YELLOW):
-    glColor3f( 1.f, 1.f, 0.f );
+    glColor4f( 1.f, 1.f, 0.f, 1.0f );
     break;
   case (COLOR_CYAN):
-    glColor3f( 0.f, 1.f, 1.f );
+    glColor4f( 0.f, 1.f, 1.f, 1.0f );
+    break;
+  case (COLOR_ERASE):
+    glColor4f( 0.f, 0.f, 0.f, 0.0f );  // // oops I need to be more sophisticated than this. draw shapes to framebuffer object then blend fbo onto background.
     break;
   case (COLOR_BLACK):
-    glColor3f( 0.f, 0.f, 0.f );
+    glColor4f( 0.f, 0.f, 0.f, 1.0f );
     break;
   case (COLOR_WHITE):
-    glColor3f( 1.f, 1.f, 1.f );
+    glColor4f( 1.f, 1.f, 1.f, 1.0f );
     break;
   case (COLOR_RED):
   default:
-    glColor3f( 1.0f, 0.0f, 0.0f );
+    glColor4f( 1.0f, 0.0f, 0.0f, 1.0f );
     break;
   }
 }
