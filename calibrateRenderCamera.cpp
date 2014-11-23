@@ -40,7 +40,8 @@ int mainWindow;
 static const int WINDOW_WIDTH  = 500;
 static const int WINDOW_HEIGHT = 500;
 
-static const int TIMER_CONST_MSEC = 15;
+static const int MOUSE_IDLE_TIMER_CONST_MSEC = 5000;  
+static const int ANIMATAION_TIMER_CONST_MSEC = 30;
 static const int NUM_FLAKE_BLADES = 6;
 
 static const float BRUSH_SIZE = 15.f/WINDOW_WIDTH;  // assuming square window for now
@@ -50,6 +51,10 @@ static const int NUM_CIRCLE_SECTIONS = 12;
 
 static int mouseX = 100;
 static int mouseY = 200;
+static int prevMouseX = 100;
+static int prevMouseY = 200;
+static bool mouseActive = true;
+
 static float mouseRotZ = 0.f;
 static const float MOUSE_ROT_DELTA = 3.f;  // degrees
 static float mouseScale = 1.0f;
@@ -240,20 +245,23 @@ void displayCall() {
   // draw mouse with shape. 
   glFlush();  // flush first so mouse is on top. hmm that's no guarantee.
 
-  if ( useMultiMouse )
+  if ( mouseActive ) 
   {
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
+    if ( useMultiMouse )
     {
-      glRotatef( rotAngle, 0.f, 0.f, 1.f);
+      glMatrixMode(GL_MODELVIEW);
+      glLoadIdentity();
+      for (int i = 0; i < NUM_FLAKE_BLADES; i++ )
+      {
+        glRotatef( rotAngle, 0.f, 0.f, 1.f);
+        drawMouse();
+      }
+    }
+    else
+    {
       drawMouse();
     }
-  }
-  else
-  {
-    drawMouse();
-  }
+  } // if drawMouse
 
   glutSwapBuffers();
 } /* end func displayCall */
@@ -496,6 +504,7 @@ void passiveMotionCall(int x, int y) {
   printf("PASSIVE MOTION: (%d,%d)\n", x, y);  
   mouseX = x;
   mouseY = y;
+  mouseActive = true;
   glutPostRedisplay();
 } /* end func passiveMotionCall */
 
@@ -550,15 +559,22 @@ void idleCall() {
 /* call periodically called -- can have lots of them, and they must be re-registered each time they are called.  Using a timer for
    animation, instead of glutIdleFunc, makes the animation uniform across platforms and will use MUCH less CPU on higher performance
    platforms... */
-void timerCall(int value) {
-  eangle += eangleDelta;
-  if(eangle >= 360.0)
-    eangle -= 360.0;
-   glutPostRedisplay();
-   /* Note we have to start the timer up again after it fires. */
-   glutTimerFunc(TIMER_CONST_MSEC /*msecs*/, timerCall, 0 /*value to pass*/);
-   /*printf("TIMER CALL\n");*/
-} /* end func timerCall */
+void animationTimer(int value) 
+{
+
+  glutPostRedisplay();
+  glutTimerFunc(ANIMATAION_TIMER_CONST_MSEC, animationTimer, 0);
+
+} /* end func mouseIdleTimer */
+
+void mouseIdleTimer(int value) 
+{
+
+  mouseActive = false;
+  glutPostRedisplay();
+  glutTimerFunc(MOUSE_IDLE_TIMER_CONST_MSEC /*msecs*/, mouseIdleTimer, 0 /*value to pass*/);
+
+} /* end func mouseIdleTimer */
 
 /**********************************************************************************************************************************/
 
@@ -649,7 +665,8 @@ int main(int argc, char *argv[])
   mainWindow = glutCreateWindow("Flakey!");
   glutDisplayFunc(displayCall);
 /*  glutIdleFunc(idleCall); */
-  glutTimerFunc(TIMER_CONST_MSEC /*msecs*/, timerCall, 0 /*value to pass*/);
+  glutTimerFunc(ANIMATAION_TIMER_CONST_MSEC, animationTimer, 0 );
+  glutTimerFunc(MOUSE_IDLE_TIMER_CONST_MSEC, mouseIdleTimer, 0 );
   glutKeyboardFunc(keyboardCall);
 
 /* Use the following to detect key releases
