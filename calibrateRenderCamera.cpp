@@ -588,6 +588,9 @@ void drawMouse()
   case (static_cast<int>(SHAPE_CIRCLE)):
     drawCircle( screenMouseX, screenMouseY, mouseRotZ, mouseScale, drawColorEnum );
     break;
+  case (static_cast<int>(SHAPE_SCALENE)):
+    drawScalene( screenMouseX, screenMouseY, mouseRotZ, mouseScale, drawColorEnum );
+    break;
   case (static_cast<int>(SHAPE_SQUARE)):
     drawSquare( screenMouseX, screenMouseY, mouseRotZ, mouseScale, drawColorEnum );
   default:
