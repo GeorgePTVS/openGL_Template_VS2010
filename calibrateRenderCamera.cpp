@@ -32,9 +32,15 @@ using namespace std;
 static float eangle = 0.0;
 static float eangleDelta = 0.5;
 int mainWindow;
+
+static const int WINDOW_WIDTH  = 500;
+static const int WINDOW_HEIGHT = 500;
+
 static const int TIMER_CONST_MSEC = 15;
 static const int NUM_FLAKE_BLADES = 6;
-static const float BRUSH_SIZE = 15.f;
+
+static const float BRUSH_SIZE = 15.f/WINDOW_WIDTH;  // assuming square window for now
+
 static const float LINE_HEIGHT_SCALAR = 0.1f;
 static int mouseX = 100;
 static int mouseY = 200;
@@ -54,14 +60,14 @@ static ShapeType mouseShape = SHAPE_SQUARE;
 
 typedef struct ShapeDef
 {
-  int x;
-  int y;
+  float x;
+  float y;
   float scale;
   ShapeType shapeType;
   ShapeDef()
   {
-    x = 0;
-    y = 0;
+    x = 0.f;
+    y = 0.f;
     scale = 1.f;
     shapeType = mouseShape;
   }
@@ -74,11 +80,12 @@ void mouseWheel( int dir );
 void init();
 void close();
 void drawMouse();
-void addShape( int _x, int _y );
-void drawTriangle();
+void addShape( float _x, float _y );
+void drawTriangle( float _x, float _y );
 void drawSquare();
 void drawLine();
 void drawCircle();
+float screenToOrtho( int _screen );
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -139,7 +146,8 @@ void displayCall() {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glOrtho(0, 500-1, 500-1, 0, -100.0, 100.0);
+  glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+//  glOrtho(0, 500-1, 500-1, 0, -100.0, 100.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -165,7 +173,7 @@ void displayCall() {
       switch ( shapeVector[s].shapeType )
       {
       case (SHAPE_TRIANGLE):
-        drawTriangle();
+        drawTriangle( shapeVector[s].x, shapeVector[s].y );
         break;
       case (SHAPE_LINE):
         drawLine();
@@ -295,7 +303,7 @@ void mouseCall(int button, int state, int x, int y) {
 
     if ( button == GLUT_LEFT_BUTTON )
     {
-      addShape( x, y );
+      addShape( screenToOrtho(x), screenToOrtho(y) );
     }
 
   } else if(state == GLUT_UP) {
@@ -465,11 +473,14 @@ void close()
 
 void drawMouse()
 {
+  // convert to glOrtho coords
+  float screenMouseX = screenToOrtho( mouseX );
+  float screenMouseY = screenToOrtho( mouseY );
 
   switch (static_cast<int>(mouseShape))
   {
   case (static_cast<int>(SHAPE_TRIANGLE)):
-    drawTriangle();
+    drawTriangle( screenMouseX, screenMouseY );
     break;
   case (static_cast<int>(SHAPE_LINE)):
     drawLine();
@@ -502,7 +513,7 @@ int main(int argc, char *argv[])
 {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-  glutInitWindowSize(500, 500);
+  glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
   glutInitWindowPosition(650, 200);
   mainWindow = glutCreateWindow("User Interaction Demo");
   glutDisplayFunc(displayCall);
@@ -531,7 +542,7 @@ int main(int argc, char *argv[])
 } /* end func main */
 
 
-void addShape( int _x, int _y )
+void addShape( float _x, float _y )
 {
   printf("Add shape: %d\n", mouseShape );
   Shape shape;
@@ -543,13 +554,13 @@ void addShape( int _x, int _y )
 
 }
 
-void drawTriangle()
+void drawTriangle( float _x, float _y )
 {
   static const float rad3Over2 = 0.8660254f;
   static const float rad3Over4 = rad3Over2/2.f;
 
   glColor3f(1.f, 0.f, 0.f);
-  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
+  glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
   glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
   glBegin(GL_TRIANGLES);
   glVertex2f( -BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
@@ -589,4 +600,10 @@ void drawLine()
 void drawCircle()
 {
   drawSquare();
+}
+
+float screenToOrtho( int _screen )
+{
+  float orthoVal = (_screen) * 2.0f/(WINDOW_WIDTH-1) - 1.0f;
+  return orthoVal;
 }
