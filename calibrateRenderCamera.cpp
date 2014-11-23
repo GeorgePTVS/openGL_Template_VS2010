@@ -63,12 +63,14 @@ typedef struct ShapeDef
   float x;
   float y;
   float scale;
+  float rotZ;
   ShapeType shapeType;
   ShapeDef()
   {
     x = 0.f;
     y = 0.f;
     scale = 1.f;
+    rotZ = 0.f;
     shapeType = mouseShape;
   }
 
@@ -80,11 +82,11 @@ void mouseWheel( int dir );
 void init();
 void close();
 void drawMouse();
-void addShape( float _x, float _y );
-void drawTriangle( float _x, float _y );
-void drawSquare();
-void drawLine();
-void drawCircle();
+void addShape( float _x, float _y, float _rotZ );
+void drawTriangle( float _x, float _y, float _rotZ );
+void drawSquare( float _x, float _y, float _rotZ );
+void drawLine( float _x, float _y, float _rotZ );
+void drawCircle( float _x, float _y, float _rotZ );
 float screenToOrtho( int _screen );
 
 /**********************************************************************************************************************************/
@@ -173,17 +175,17 @@ void displayCall() {
       switch ( shapeVector[s].shapeType )
       {
       case (SHAPE_TRIANGLE):
-        drawTriangle( shapeVector[s].x, shapeVector[s].y );
+        drawTriangle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
         break;
       case (SHAPE_LINE):
-        drawLine();
+        drawLine( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
         break;
       case (SHAPE_CIRCLE):
-        drawCircle();
+        drawCircle( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
         break;
       default:
       case (SHAPE_SQUARE):
-        drawSquare();
+        drawSquare( shapeVector[s].x, shapeVector[s].y, shapeVector[s].rotZ );
         break;
       }
     }
@@ -303,7 +305,7 @@ void mouseCall(int button, int state, int x, int y) {
 
     if ( button == GLUT_LEFT_BUTTON )
     {
-      addShape( screenToOrtho(x), screenToOrtho(y) );
+      addShape( screenToOrtho(x), screenToOrtho(y), mouseRotZ );
     }
 
   } else if(state == GLUT_UP) {
@@ -480,16 +482,16 @@ void drawMouse()
   switch (static_cast<int>(mouseShape))
   {
   case (static_cast<int>(SHAPE_TRIANGLE)):
-    drawTriangle( screenMouseX, screenMouseY );
+    drawTriangle( screenMouseX, screenMouseY, mouseRotZ );
     break;
   case (static_cast<int>(SHAPE_LINE)):
-    drawLine();
+    drawLine( screenMouseX, screenMouseY, mouseRotZ );
     break;
   case (static_cast<int>(SHAPE_CIRCLE)):
-    drawCircle();
+    drawCircle( screenMouseX, screenMouseY, mouseRotZ );
     break;
   case (static_cast<int>(SHAPE_SQUARE)):
-    drawSquare();
+    drawSquare( screenMouseX, screenMouseY, mouseRotZ );
   default:
     break;
   }
@@ -542,26 +544,27 @@ int main(int argc, char *argv[])
 } /* end func main */
 
 
-void addShape( float _x, float _y )
+void addShape( float _x, float _y, float _rotZ )
 {
   printf("Add shape: %d\n", mouseShape );
   Shape shape;
   shape.shapeType = mouseShape;
   shape.x = _x;
   shape.y = _y;
-  
+  shape.rotZ = _rotZ;
+
   shapeVector.push_back( shape );
 
 }
 
-void drawTriangle( float _x, float _y )
+void drawTriangle( float _x, float _y, float _rotZ )
 {
   static const float rad3Over2 = 0.8660254f;
   static const float rad3Over4 = rad3Over2/2.f;
 
   glColor3f(1.f, 0.f, 0.f);
   glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
-  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+  glRotatef( _rotZ, 0.f, 0.f, 1.f );
   glBegin(GL_TRIANGLES);
   glVertex2f( -BRUSH_SIZE,  -BRUSH_SIZE * rad3Over2 );
   glVertex2f(  0.f       ,   BRUSH_SIZE * rad3Over2 );
@@ -569,11 +572,11 @@ void drawTriangle( float _x, float _y )
   glEnd();
 }
 
-void drawSquare()
+void drawSquare(float _x, float _y, float _rotZ)
 {
   glColor3f(1.f, 0.f, 0.f);
-  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
-  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+  glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
+  glRotatef( _rotZ, 0.f, 0.f, 1.f );
   glBegin(GL_QUADS);
   glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE );
   glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE );
@@ -583,11 +586,11 @@ void drawSquare()
 
 }
 
-void drawLine()
+void drawLine(float _x, float _y, float _rotZ)
 {
   glColor3f(1.f, 0.f, 0.f);
-  glTranslatef( (GLfloat)mouseX, (GLfloat)mouseY, 0.f );
-  glRotatef( mouseRotZ, 0.f, 0.f, 1.f );
+  glTranslatef( (GLfloat)_x, (GLfloat)_y, 0.f );
+  glRotatef( _rotZ, 0.f, 0.f, 1.f );
   glBegin(GL_QUADS);
   glVertex2f( -BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR );
   glVertex2f(  BRUSH_SIZE,  BRUSH_SIZE * LINE_HEIGHT_SCALAR);
@@ -597,9 +600,9 @@ void drawLine()
 
 }
 
-void drawCircle()
+void drawCircle(float _x, float _y, float _rotZ)
 {
-  drawSquare();
+  drawSquare(_x, _y, _rotZ);
 }
 
 float screenToOrtho( int _screen )
