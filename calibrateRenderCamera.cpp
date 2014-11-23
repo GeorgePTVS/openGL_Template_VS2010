@@ -87,7 +87,7 @@ void drawTriangle( float _x, float _y, float _rotZ );
 void drawSquare( float _x, float _y, float _rotZ );
 void drawLine( float _x, float _y, float _rotZ );
 void drawCircle( float _x, float _y, float _rotZ );
-float screenToOrtho( int _screen );
+void screenToOrtho( float& _screenX, float& _screenY );
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -305,7 +305,10 @@ void mouseCall(int button, int state, int x, int y) {
 
     if ( button == GLUT_LEFT_BUTTON )
     {
-      addShape( screenToOrtho(x), screenToOrtho(y), mouseRotZ );
+      float screenX = (float)x;
+      float screenY = (float)y;
+      screenToOrtho( screenX, screenY );
+      addShape( screenX, screenY, mouseRotZ );
     }
 
   } else if(state == GLUT_UP) {
@@ -476,8 +479,9 @@ void close()
 void drawMouse()
 {
   // convert to glOrtho coords
-  float screenMouseX = screenToOrtho( mouseX );
-  float screenMouseY = screenToOrtho( mouseY );
+  float screenMouseX = (float)mouseX;
+  float screenMouseY = (float)mouseY;
+  screenToOrtho( screenMouseX, screenMouseY );
 
   switch (static_cast<int>(mouseShape))
   {
@@ -605,8 +609,11 @@ void drawCircle(float _x, float _y, float _rotZ)
   drawSquare(_x, _y, _rotZ);
 }
 
-float screenToOrtho( int _screen )
+void screenToOrtho( float& _screenX, float& _screenY )
 {
-  float orthoVal = (_screen) * 2.0f/(WINDOW_WIDTH-1) - 1.0f;
-  return orthoVal;
+  float orthoValX = (_screenX) * 2.0f/(WINDOW_WIDTH-1) - 1.0f;
+  _screenX = orthoValX;
+
+  float orthoValY = -((_screenY) * 2.0f/(WINDOW_HEIGHT-1) - 1.0f);
+  _screenY = orthoValY;
 }
