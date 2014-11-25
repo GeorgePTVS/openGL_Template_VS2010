@@ -83,6 +83,7 @@ enum ColorType
   COLOR_CYAN,
   COLOR_WHITE,
   COLOR_BLACK,
+  COLOR_FOREST_GREEN,
   COLOR_ERASE,
   COLOR_COUNT
 };
@@ -109,6 +110,7 @@ typedef struct ShapeDef
 } Shape;
 
 static vector<Shape> shapeVector;
+static vector<Shape> shapeVectorToRedo;
 
 
 
@@ -124,6 +126,11 @@ void drawCircle( float _x, float _y, float _rotZ, float _scale, ColorType _drawC
 void drawScalene(float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum);
 void screenToOrtho( float& _screenX, float& _screenY );
 void setColor( ColorType _drawColorEnum );
+void doUndo();
+void doRedo();
+void clearRedo();
+
+
 
 /**********************************************************************************************************************************/
 void displayCall() {
@@ -268,18 +275,43 @@ void keyboardCall(unsigned char key, int x, int y) {
   } else {
     m = "NONE";
   } /* end if */
-  printf("KEY: %c with mod: %s\n", key, m);
+  printf("KEY: %c with mod: %s  hex %x  int %d  uint %u \n", key, m, key, static_cast<int>(key), static_cast<unsigned int>(key));
 
   // ESC or q is quit
-  if( (key == 'q') || (key == 0x1B)) 
+  if( (key == 'q') || (key == 'Q') || (key == 0x1B)) 
   {
     close();
   }
-  else if ( key == 's' )
+  else if ( (key == 's') || (key == 'S'))
   {
     mouseShape = static_cast<ShapeType>(static_cast<int>(mouseShape) + 1);
     mouseShape = static_cast<ShapeType>(static_cast<int>(mouseShape) % SHAPE_COUNT); 
     printf("mouseShape = %d\n", mouseShape );
+  }
+  else if ( (key == 0x1a) )
+  {
+    printf("Got 0x1a for CTRL+z/Z\n");
+    doUndo();
+  }
+  else if ( (key == 0x19) )
+  {
+    printf("Got 0x19 for CTRL+y/Y\n");
+    doRedo();
+  }
+
+  else if ( (key == 'Z') || (key == 'z') )
+  {
+    if ( kbMod == GLUT_ACTIVE_CTRL ) 
+    {
+      doUndo();
+    }
+  }
+  else if ( (key == 'y') || (key == 'Y') )
+  {
+    if ( kbMod == GLUT_ACTIVE_CTRL ) 
+    {
+      doRedo();
+    }
   }
   else if ( key == '1' )
   {
@@ -304,6 +336,10 @@ void keyboardCall(unsigned char key, int x, int y) {
   else if ( key == '6' )
   {
     drawColorEnum = COLOR_CYAN;
+  }
+  else if ( key == '7' )
+  {
+    drawColorEnum = COLOR_FOREST_GREEN;
   }
   else if ( key == '8' )
   {
@@ -593,6 +629,7 @@ void mouseWheel( int _dir, int _shift )
 void init()
 {
   shapeVector.clear();
+  clearRedo();
 }
 
 void close()
@@ -680,6 +717,7 @@ int main(int argc, char *argv[])
 
 void addShape( float _x, float _y, float _rotZ, float _scale, ColorType _drawColorEnum )
 {
+  clearRedo();  // if we don't clear redo, drawing gets out of order and stuff that user probably wanted gone remains in redo queue.
   printf("Add shape: %d\n", mouseShape );
   Shape shape;
   shape.shapeType = mouseShape;
@@ -821,6 +859,9 @@ void setColor( ColorType _drawColorEnum )
   case (COLOR_CYAN):
     glColor4f( 0.f, 1.f, 1.f, 1.0f );
     break;
+  case (COLOR_FOREST_GREEN):
+    glColor4f( 24.f/255.f, 96.f/255.f, 0.f, 1.0f );
+    break;
   case (COLOR_ERASE):
     glColor4f( 0.f, 0.f, 0.f, 0.0f );  // // oops I need to be more sophisticated than this. draw shapes to framebuffer object then blend fbo onto background.
     break;
@@ -835,4 +876,31 @@ void setColor( ColorType _drawColorEnum )
     glColor4f( 1.0f, 0.0f, 0.0f, 1.0f );
     break;
   }
+}
+
+void doUndo()
+{
+  printf("undo\n");
+  mouseActive = false;
+  if ( shapeVector.size() > 0 )
+  {
+    shapeVectorToRedo.push_back( shapeVector.back() );
+    shapeVector.pop_back();
+  }
+}
+
+void doRedo()
+{
+  printf("redo\n");
+  mouseActive = false;
+  if ( shapeVectorToRedo.size() > 0 )
+  {
+    shapeVector.push_back( shapeVectorToRedo.back() );
+    shapeVectorToRedo.pop_back();
+  }
+}
+
+void clearRedo()
+{
+  shapeVectorToRedo.clear();
 }
