@@ -23,7 +23,7 @@ html {
   background-color:#aaaaaa;
 }
 body {
-  width: 500px;
+//  width: 70%;
 //  margin: 10px auto 0 auto;
   margin: 10px auto 0 auto;
 }
@@ -38,6 +38,7 @@ body {
 }
 
 .main_content {
+//  height:500px;
   padding: 10px 10px 10px 10px;
   background-color:#dddddd;
 }
