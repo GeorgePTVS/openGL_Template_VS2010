@@ -19,15 +19,27 @@ a:hover {
   color:green;
 }
 
+html {
+  background-color:#aaaaaa;
+}
 body {
   width: 500px;
   margin: 10px auto 0 auto;
 }
+
 .header {
   padding: 10px 10px 10px 10px;
   background-color:#446688;
 }
+.header h1{
+  color:#AAAAFF;
+  text-align:center;
+}
 
+.main_content {
+  padding: 10px 10px 10px 10px;
+  background-color:#dddddd;
+}
 button {
   opacity:1.0;
   padding-bottom:30px;
