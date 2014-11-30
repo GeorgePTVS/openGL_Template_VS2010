@@ -51,13 +51,19 @@ ol {
   padding-left:100px;
 }
 
-.nav {
+.nav_content {
   padding-left:30px;
 }
-.nav ul{
+.nav_content ul{
   margin-left:30px;
 }
-.nav  a{
+.nav_content  a{
   color:#1122dd;
   text-decoration:none;
 }
+.nav_content li{
+  display: inline;
+  font-size:1em;
+  padding: 10px 15px 10px 0;
+}
+
