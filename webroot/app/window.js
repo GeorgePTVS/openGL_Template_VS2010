@@ -4,7 +4,7 @@ function onWindowResize()
   var winHeight = $( window ).height();
   
   // set main_content width rel to window and height rel to width
-  var MAIN_W_SCALAR = 0.7;
+  var MAIN_W_SCALAR = 0.8;
   var mainWidth  = MAIN_W_SCALAR * winWidth;
   var mainHeight = mainWidth;
 
