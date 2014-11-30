@@ -80,6 +80,9 @@ ol {
   border: 0px;
   border-image-width: 0px;
   width:100px;
-  height:100px; 
+  height:100px;
+  opacity:1.0;  
 }
-
+.highlight {
+  opacity: 0.7;
+}
