@@ -3,8 +3,8 @@ $(document).ready(function(){
   
   $(window).resize(onWindowResize);
   onWindowResize();  
-  $(".thumbnail").on('mouseenter', function() {
-    $(this).addClass('highlight');
+  $(".thumbnail").on('mouseenter mouseleave', function() {
+    $(this).toggleClass('highlight');
     //alert('thumbnail hover')
   });
 });
