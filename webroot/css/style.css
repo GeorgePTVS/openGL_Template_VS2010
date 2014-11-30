@@ -24,6 +24,7 @@ html {
 }
 body {
   width: 500px;
+//  margin: 10px auto 0 auto;
   margin: 10px auto 0 auto;
 }
 
@@ -40,6 +41,7 @@ body {
   padding: 10px 10px 10px 10px;
   background-color:#dddddd;
 }
+
 button {
   opacity:1.0;
   padding-bottom:30px;
@@ -51,11 +53,15 @@ ol {
   padding-left:100px;
 }
 
+.nav_div {
+  border: 0px;
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  background-color:#00ff00;
+}
+
 .nav_content {
   padding-left:30px;
-}
-.nav_content ul{
-  margin-left:30px;
 }
 .nav_content  a{
   color:#1122dd;
