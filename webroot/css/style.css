@@ -16,7 +16,19 @@ a:hover {
 
 button {
   opacity:1.0;
+  padding-bottom:30px;
 }
 button:hover {
   opacity:0.5;
+}
+ol {
+  padding-left:100px;
+}
+
+.nav {
+  padding-left:30px;
+}
+.nav  a{
+  color:#1122dd;
+  text-decoration:none;
 }
