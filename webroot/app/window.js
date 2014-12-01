@@ -24,7 +24,7 @@ function onWindowResize()
     mainHeight = MAIN_W_SCALAR * winHeight;
     mainWidth = mainHeight;
   }
-  $("body").css("width",  mainWidth);
+  $(".main_body").css("width",  mainWidth);
   // $(".main_content").css("width",  mainWidth);
   $(".main_content").css("height", mainHeight);
 
