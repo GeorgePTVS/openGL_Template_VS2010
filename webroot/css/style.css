@@ -43,6 +43,11 @@ body {
   background-color:#dddddd;
 }
 
+.main_content.flakey {
+  padding: 10px 10px 10px 10px;
+  background-color:#dd9999;
+}
+
 button {
   opacity:1.0;
   padding-bottom:30px;
@@ -52,6 +57,21 @@ button:hover {
 }
 ol {
   padding-left:100px;
+}
+
+.colorChooserDiv {
+  opacity:1.0;
+  background-color:#000000;
+}
+.colorChooserDiv:hover {
+  display:inline;
+  opacity:0.5;
+}
+#green.colorChooserDiv  {
+  background-color:#008844;
+}
+#red.colorChooserDiv {
+  background-color:#880044;
 }
 
 .nav_div {
