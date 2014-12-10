@@ -62,6 +62,8 @@ ol {
 .colorChooserDiv {
   opacity:1.0;
   background-color:#000000;
+  float:right;
+  display:inline-block;
 }
 .colorChooserDiv:hover {
   display:inline;
