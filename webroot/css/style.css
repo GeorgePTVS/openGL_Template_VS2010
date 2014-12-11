@@ -104,11 +104,26 @@ ol {
 .colorChooserDiv:hover {
   opacity:0.5;
 }
-#green.colorChooserDiv  {
-  background-color:#008844;
-}
 #red.colorChooserDiv {
-  background-color:#880044;
+  background-color:#FF0000;
+}
+#green.colorChooserDiv  {
+  background-color:#00FF00;
+}
+#blue.colorChooserDiv {
+  background-color:#004488;
+}
+#magenta.colorChooserDiv {
+  background-color:#884488;
+}
+#yellow.colorChooserDiv {
+  background-color:#FFFF00;
+}
+#cyan.colorChooserDiv {
+  background-color:#008888;
+}
+#forest-green.colorChooserDiv {
+  background-color:#186000;
 }
 
 #canvasPlaceholder {
