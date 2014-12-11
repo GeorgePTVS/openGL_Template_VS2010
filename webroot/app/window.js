@@ -33,7 +33,7 @@ function onWindowResize()
   var canvasPlaceholderHeight = mainHeight - 50;
   var buttonBarPlaceholderWidth  = colorChooserWidth;
   var buttonBarPlaceholderHeight = canvasPlaceholderHeight;
-  
+  var buttonBarMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
   
   $(".main_body").css("width",  mainWidth);
   $(".main_content").css("width",  contentWidth);
@@ -50,10 +50,11 @@ function onWindowResize()
     "width": buttonBarPlaceholderWidth, 
     "height": buttonBarPlaceholderHeight,
     "background" : "#8866FF",
-    "margin-top": "0px",
-    "margin-right": whitespaceFudge,
-    "margin-bottom": "0px",
-    "margin-left": negWhitespaceFudge,
+    "margin" : buttonBarMarginString
+    // "margin-top": "0px",
+    // "margin-right": whitespaceFudge,
+    // "margin-bottom": "0px",
+    // "margin-left": negWhitespaceFudge,
     // "margin-top": {"0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px"}
     // "margin": "0px 10px 0px -10px"
     });
