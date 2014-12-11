@@ -9,11 +9,6 @@ function onWindowResize()
   var mainWidth  = MAIN_W_SCALAR * winWidth;
   var mainHeight = mainWidth;
 
-  // if ( !oneTimeOnly )
-    // alert('onWindowResize. winWidth = ' + winWidth + ' winHeight = ' + winHeight + ' mainWidth; ' + mainWidth + ' mainHeight: ' + mainHeight);
-    
-  // var oneTimeOnly = true;  
-  
   var colorChooserWidth = mainWidth * COLOR_CHOOSER_SCALAR;
   // have to account for aspect ratio.  
   if ( winWidth < winHeight )
@@ -51,11 +46,5 @@ function onWindowResize()
     "height": buttonBarPlaceholderHeight,
     "background" : "#8866FF",
     "margin" : buttonBarMarginString
-    // "margin-top": "0px",
-    // "margin-right": whitespaceFudge,
-    // "margin-bottom": "0px",
-    // "margin-left": negWhitespaceFudge,
-    // "margin-top": {"0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px"}
-    // "margin": "0px 10px 0px -10px"
     });
 }    
