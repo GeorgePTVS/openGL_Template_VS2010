@@ -42,6 +42,8 @@ body {
 
 .main_content.flakey {
   padding: 0;
+  border: 0;
+  margin: 0;
   background-color:#eeeeee;
 }
 
@@ -114,7 +116,7 @@ ol {
 #buttonBarPlaceholder {
   padding: 0;
   border: 0;
-  margin: 0;
+  margin: 0 5px 0 -5px;
   float: right;
   /* display: inline-block; */
 }

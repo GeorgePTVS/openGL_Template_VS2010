@@ -47,6 +47,6 @@ function onWindowResize()
   $("#buttonBarPlaceholder").css( {
     "width": buttonBarPlaceholderWidth, 
     "height": buttonBarPlaceholderHeight,
-    "background" : "#6666FF" ,
+    "background" : "#8866FF" ,
     });
 }    
