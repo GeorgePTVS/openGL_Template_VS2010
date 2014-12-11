@@ -26,7 +26,9 @@ function onWindowResize()
     mainHeight = MAIN_W_SCALAR * winHeight;
     mainWidth = mainHeight + colorChooserWidth;
   }
-  var contentWidth = mainWidth + colorChooserWidth + 5;
+  var whitespaceFudge = 10;   // ugh this varied based on font I used in h1...a,p,div, etc
+  var negWhitespaceFudge = -1*whitespaceFudge;
+  var contentWidth = mainWidth + colorChooserWidth + whitespaceFudge;
   var canvasPlaceholderWidth  = mainWidth;
   var canvasPlaceholderHeight = mainHeight - 50;
   var buttonBarPlaceholderWidth  = colorChooserWidth;
@@ -47,6 +49,12 @@ function onWindowResize()
   $("#buttonBarPlaceholder").css( {
     "width": buttonBarPlaceholderWidth, 
     "height": buttonBarPlaceholderHeight,
-    "background" : "#8866FF" ,
+    "background" : "#8866FF",
+    "margin-top": "0px",
+    "margin-right": whitespaceFudge,
+    "margin-bottom": "0px",
+    "margin-left": negWhitespaceFudge,
+    // "margin-top": {"0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px"}
+    // "margin": "0px 10px 0px -10px"
     });
 }    

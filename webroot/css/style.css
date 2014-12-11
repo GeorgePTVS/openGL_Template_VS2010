@@ -3,6 +3,10 @@ html, body, h1, h2, h3, h4, ul, ol, li, p, a {
   border: 0;
   margin: 0;
 }
+h1, h2, h3, h4, p, a, div {
+    /* font-family: "Verdana", Geneva, sans-serif; */
+    font-family: "Lucida Console", Monaco, monospace;
+}
 p {
   text-decoration: underline;
   color: red;
@@ -116,7 +120,7 @@ ol {
 #buttonBarPlaceholder {
   padding: 0;
   border: 0;
-  margin: 0 5px 0 -5px;
+  /* margin: 0 5px 0 -5px; */
   float: right;
   /* display: inline-block; */
 }
