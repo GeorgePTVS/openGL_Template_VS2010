@@ -111,19 +111,25 @@ ol {
   background-color:#00FF00;
 }
 #blue.colorChooserDiv {
-  background-color:#004488;
+  background-color:#0000FF;
 }
 #magenta.colorChooserDiv {
-  background-color:#884488;
+  background-color:#FF00FF;
 }
 #yellow.colorChooserDiv {
   background-color:#FFFF00;
 }
 #cyan.colorChooserDiv {
-  background-color:#008888;
+  background-color:#00FFFF;
 }
 #forest-green.colorChooserDiv {
   background-color:#186000;
+}
+#white.colorChooserDiv {
+  background-color:#FFFFFF;
+}
+#black.colorChooserDiv {
+  background-color:#000000;
 }
 
 #canvasPlaceholder {
