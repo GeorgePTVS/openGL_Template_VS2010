@@ -26,10 +26,19 @@ function onWindowResize()
     mainHeight = MAIN_W_SCALAR * winHeight;
     mainWidth = mainHeight + colorChooserWidth;
   }
+  var contentWidth = mainWidth + colorChooserWidth;
+  var canvasPlaceholderWidth  = mainWidth  - 20;
+  var canvasPlaceholderHeight = mainHeight - 20;
+  
   $(".main_body").css("width",  mainWidth);
-  // $(".main_content").css("width",  mainWidth);
+  $(".main_content").css("width",  contentWidth);
   $(".main_content").css("height", mainHeight);
 
   $(".colorChooserDiv").css("width",  colorChooserWidth);
   $(".colorChooserDiv").css("height", colorChooserWidth);
+  $("#canvasPlaceholder").css( {
+    "width": canvasPlaceholderWidth, 
+    "height": canvasPlaceholderHeight,
+    "background-color" : "#333333" ,
+    });
 }    
