@@ -21,7 +21,7 @@ function onWindowResize()
     mainHeight = MAIN_W_SCALAR * winHeight;
     mainWidth = mainHeight + colorChooserWidth;
   }
-  var whitespaceFudge = 10;   // ugh this varied based on font I used in h1...a,p,div, etc
+  var whitespaceFudge = 0;   // ugh this varied based on font I used in h1...a,p,div, etc
   var negWhitespaceFudge = -1*whitespaceFudge;
   var contentWidth = mainWidth + colorChooserWidth + whitespaceFudge;
   var canvasPlaceholderWidth  = mainWidth;
