@@ -27,8 +27,11 @@ function onWindowResize()
     mainWidth = mainHeight + colorChooserWidth;
   }
   var contentWidth = mainWidth + colorChooserWidth;
-  var canvasPlaceholderWidth  = mainWidth  - 20;
-  var canvasPlaceholderHeight = mainHeight - 20;
+  var canvasPlaceholderWidth  = mainWidth  - 50;
+  var canvasPlaceholderHeight = mainHeight - 50;
+  var buttonBarPlaceholderWidth  = colorChooserWidth + 30;
+  var buttonBarPlaceholderHeight = canvasPlaceholderHeight;
+  
   
   $(".main_body").css("width",  mainWidth);
   $(".main_content").css("width",  contentWidth);
@@ -39,6 +42,11 @@ function onWindowResize()
   $("#canvasPlaceholder").css( {
     "width": canvasPlaceholderWidth, 
     "height": canvasPlaceholderHeight,
-    "background-color" : "#333333" ,
+    "background" : "#333333" ,
+    });
+  $("#buttonBarPlaceholder").css( {
+    "width": buttonBarPlaceholderWidth, 
+    "height": buttonBarPlaceholderHeight,
+    "background" : "#6666FF" ,
     });
 }    
