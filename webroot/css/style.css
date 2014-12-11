@@ -23,8 +23,6 @@ html {
   background-color:#aaaaaa;
 }
 body {
-//  width: 70%;
-//  margin: 10px auto 0 auto;
   margin: 10px auto 0 auto;
 }
 
@@ -38,13 +36,12 @@ body {
 }
 
 .main_content {
-//  height:500px;
-  padding: 10px 10px 10px 10px;
+  padding: 0 0 0 0;
   background-color:#dddddd;
 }
 
 .main_content.flakey {
-  padding: 10px 0 10px 0;
+  padding: 0;
   background-color:#eeeeee;
 }
 

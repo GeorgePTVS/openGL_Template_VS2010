@@ -26,10 +26,10 @@ function onWindowResize()
     mainHeight = MAIN_W_SCALAR * winHeight;
     mainWidth = mainHeight + colorChooserWidth;
   }
-  var contentWidth = mainWidth + colorChooserWidth;
-  var canvasPlaceholderWidth  = mainWidth  - 50;
+  var contentWidth = mainWidth + colorChooserWidth + 5;
+  var canvasPlaceholderWidth  = mainWidth;
   var canvasPlaceholderHeight = mainHeight - 50;
-  var buttonBarPlaceholderWidth  = colorChooserWidth + 30;
+  var buttonBarPlaceholderWidth  = colorChooserWidth;
   var buttonBarPlaceholderHeight = canvasPlaceholderHeight;
   
   
