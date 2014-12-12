@@ -102,7 +102,8 @@ ol {
   float: right;
 }
 .colorChooserDiv:hover {
-  opacity:0.5;
+  /* opacity:0.5; */
+  /* border: 5px inset red; */
 }
 #red.colorChooserDiv {
   background-color:#FF0000;
