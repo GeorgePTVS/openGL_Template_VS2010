@@ -4,8 +4,8 @@ $(document).ready(function(){
   
   $(window).resize(onWindowResize);
   onWindowResize();  
-  $(".colorButton").on('click', function() {
-  alert("Flakey color button");
+  $(".colorChooserDiv").on('click', function() {
+  alert("Flakey color button. id=" + $(this).data("color"));
   } );
 
 });
