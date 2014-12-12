@@ -6,14 +6,14 @@ function onWindowResize()
   // set main_content width rel to window and height rel to width
   var MAIN_W_SCALAR = 0.8;
   var COLOR_CHOOSER_SCALAR = 0.05;
-  var mainWidth  = MAIN_W_SCALAR * winWidth;
+  var mainWidth  = Math.round(MAIN_W_SCALAR * winWidth);
   var mainHeight = mainWidth;
 
-  var colorChooserWidth = mainWidth * COLOR_CHOOSER_SCALAR;
+  var colorChooserWidth = Math.round(mainWidth * COLOR_CHOOSER_SCALAR);
   // have to account for aspect ratio.  
   if ( winWidth < winHeight )
   {
-    mainWidth = MAIN_W_SCALAR * winWidth + colorChooserWidth;
+    mainWidth = Math.round(MAIN_W_SCALAR * winWidth + colorChooserWidth);
     mainHeight = mainWidth;
   }
   else
