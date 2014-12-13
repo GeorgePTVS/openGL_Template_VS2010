@@ -56,9 +56,13 @@ $( ".colorChooserDiv" ).hover(
     // //alert('thumbnail hover')
   // });
 
-  canvass.on('mousemove', function() {
+  // canvass.on('mousemove', function() {
+    // $(this).toggleClass('highlight');
+    // //alert('thumbnail hover')
+  // });
+  canvass.on('click', function() {
     $(this).toggleClass('highlight');
-    //alert('thumbnail hover')
+    alert('canvas click');
   });
     
          // var canvas = $("#canvasPlaceholder").get(0);
