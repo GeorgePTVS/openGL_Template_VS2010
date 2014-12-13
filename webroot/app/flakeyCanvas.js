@@ -35,6 +35,10 @@ $( ".colorChooserDiv" ).hover(
 
  console.log('Hi THere')
  
+  // --------------------------
+  // -- Canvas 
+  // --------------------------  
+  
   // Cache elements
    var $canvass = $("#canvasPlaceholder");
    var $ctx;
@@ -51,70 +55,29 @@ $( ".colorChooserDiv" ).hover(
     $ctx.fillRect(50, 25, 150, 100);
     // $ctx.
   });
-  // canvass.on('mousemove', function() {
-    // $(this).toggleClass('highlight');
-    // //alert('mousemove');
-  // });
-    
-         // var canvas = $("#canvasPlaceholder").get(0);
-      // // var ctx = $("#theCanvas").get(0).getContext("2d");
-      // var context = canvas.get(0).getContext('2d');
-
-      // $("#canvasPlaceholder").on("mousemove", function(evt){
-//      $("#canvasPlaceholder").hover(function(){
-      // $("#canvasPlaceholder").on("click", function(){
-      // $(".canvasTest").get(0).on("click", function(){
-      // ctx.on("click", function(){
-      // alert("Hi");
-      // // canvas.addEventListener('mousemove', function(evt) {
-        // // var mousePos = getMousePos(canvas, evt);
-        // // var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-        // // writeMessage(canvas, message);
-      // }, false);
-
-// ------------------------------------------------
-// -- Canvas 
-// ------------------------------------------------
-      // function writeMessage(canvas, message) {
-        // var context = canvas.getContext('2d');
-        // context.clearRect(0, 0, canvas.width, canvas.height);
-        // context.font = '18pt Calibri';
-        // context.fillStyle = 'black';
-        // context.fillText(message, 10, 25);
-      // }
-      // function getMousePos(canvas, evt) {
-        // var rect = canvas.getBoundingClientRect();
-        // return {
-          // x: evt.clientX - rect.left,
-          // y: evt.clientY - rect.top
-        // };
-      // }
-      // var canvas = document.getElementById('myCanvas');
-      // var context = canvas.getContext('2d');
-      // var canvas = $("#canvasPlaceholder");
-      // // var ctx = $("#theCanvas").get(0).getContext("2d");
-      // var context = canvas.get(0).getContext('2d');
-
-      // canvas.on("mousemove", function(evt){
-      // alert("Hi");
-      // // canvas.addEventListener('mousemove', function(evt) {
-        // // var mousePos = getMousePos(canvas, evt);
-        // // var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-        // // writeMessage(canvas, message);
-      // }, false);
 
 
+
+  // -----------------------------------------
+  // animation/draw loop
+  // -----------------------------------------
     var textX = 50;
     var textY = 50;
 
     function update() {
-      textX += 1;
-      textY += 1;
+      textX += 2;
+      textY += 2;
     }
 
+    function clearCanvas() {
+      $ctx.clearRect(0, 0, $canvass.width(), $canvass.height());  
+      // console.log("$canvass.width, $canvass.height = "+ $canvass.width() + "  " + $canvass.height() );
+    }
+    
     function draw() {
-      $ctx.fillStyle = "#000";
-      $ctx.fillText("Sup Bro!", textX, textY);
+      clearCanvas();
+      $ctx.fillStyle = "#FFF";
+      $ctx.fillText("Hello World!", textX, textY);
     }
 
     var FPS = 30;
