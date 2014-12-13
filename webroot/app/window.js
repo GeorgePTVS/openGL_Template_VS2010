@@ -4,8 +4,6 @@ function onWindowResize()
   var winHeight = $( window ).height();
   
   // set main_content width rel to window and height rel to width
-  var MAIN_W_SCALAR = 0.8;
-  var COLOR_CHOOSER_SCALAR = 0.05;
   var mainWidth  = Math.round(MAIN_W_SCALAR * winWidth);
   var mainHeight = mainWidth;
 
@@ -27,8 +25,6 @@ function onWindowResize()
   var canvasPlaceholderWidth  = mainWidth;
   var canvasPlaceholderHeight = mainHeight - 50;
   
-//  alert( "canvas wh = " + canvasPlaceholderWidth + " " + canvasPlaceholderHeight );
-
   var buttonBarPlaceholderWidth  = colorChooserWidth;
   var buttonBarPlaceholderHeight = canvasPlaceholderHeight;
   var buttonBarMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
@@ -44,6 +40,8 @@ function onWindowResize()
     "height": canvasPlaceholderHeight,
     "background" : "#333333" ,
     });
+  $colorChooserBorder = colorChooserWidth / COLOR_CHOOSER_BORDER_SCALAR;
+  if ( $colorChooserBorder < 1 ) $colorChooserBorder = 1;
 
     
   $("#buttonBarPlaceholder").css( {
@@ -53,14 +51,12 @@ function onWindowResize()
     "margin" : buttonBarMarginString
     });
     
-    // put new width into global for use in mouse position calcs etc
+    // put new width into global (context) for use in mouse position calcs etc
    $canvass = $("#canvasPlaceholder");
-//   console.log("New canvas wh = " + $canvass
    if( $canvass.length ) {
-    $ctx = $("#canvasPlaceholder").get(0).getContext('2d');
+    $ctx = $canvass.get(0).getContext('2d');
     $ctx.canvas.width  = canvasPlaceholderWidth;
     $ctx.canvas.height = canvasPlaceholderHeight;
-
    }
    else 
     console.log('Error: Canvas not found with selector #canvas');
