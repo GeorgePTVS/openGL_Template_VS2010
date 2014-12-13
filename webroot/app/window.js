@@ -40,14 +40,30 @@ function onWindowResize()
   $(".colorChooserDiv").css("width",  colorChooserWidth);
   $(".colorChooserDiv").css("height", colorChooserWidth);
   $("#canvasPlaceholder").css( {
-    // "width": canvasPlaceholderWidth, 
-    // "height": canvasPlaceholderHeight,
+    "width": canvasPlaceholderWidth, 
+    "height": canvasPlaceholderHeight,
     "background" : "#333333" ,
     });
+
+    
   $("#buttonBarPlaceholder").css( {
     "width": buttonBarPlaceholderWidth, 
     "height": buttonBarPlaceholderHeight,
     "background" : "#8866FF",
     "margin" : buttonBarMarginString
     });
+    
+    // put new width into global for use in mouse position calcs etc
+   $canvass = $("#canvasPlaceholder");
+//   console.log("New canvas wh = " + $canvass
+   if( $canvass.length ) {
+    $ctx = $("#canvasPlaceholder").get(0).getContext('2d');
+    $ctx.canvas.width  = canvasPlaceholderWidth;
+    $ctx.canvas.height = canvasPlaceholderHeight;
+
+   }
+   else 
+    console.log('Error: Canvas not found with selector #canvas');
+
+    
 }    

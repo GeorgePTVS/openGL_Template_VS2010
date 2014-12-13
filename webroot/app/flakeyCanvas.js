@@ -1,6 +1,6 @@
 $(document).ready(function(){
   
-  $(window).resize(onWindowResize);
+  $(window).resize(onWindowResize );
   onWindowResize();  
   
   // --------------------------
@@ -44,8 +44,8 @@ $( ".colorChooserDiv" ).hover(
   var $textY = 50;
 
   // Cache elements
-   var $canvass = $("#canvasPlaceholder");
-   var $ctx;
+   $canvass = $("#canvasPlaceholder");
+   // var $ctx;
    if( $canvass.length ) 
     $ctx = $("#canvasPlaceholder").get(0).getContext('2d');
    else 
@@ -74,8 +74,8 @@ $( ".colorChooserDiv" ).hover(
       // var mouseY = event.pageY - canvas.offset().top;
       var mouseX = event.clientX - canvas.offset().left;
       var mouseY = event.clientY - canvas.offset().top;
-//      console.log("epx epy " + event.pageX + " " + event.pageY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
-      // console.log("epx epy " + event.clientX + " " + event.clientY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
+      console.log("epageXY " + event.pageX + " " + event.pageY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
+      console.log("eClientxy " + event.clientX + " " + event.clientY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
       return {
           x: mouseX,
           y: mouseY };
