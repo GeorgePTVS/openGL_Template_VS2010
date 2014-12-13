@@ -39,6 +39,10 @@ $( ".colorChooserDiv" ).hover(
   // -- Canvas 
   // --------------------------  
   
+  // globals?
+  var $textX = 50;
+  var $textY = 50;
+
   // Cache elements
    var $canvass = $("#canvasPlaceholder");
    var $ctx;
@@ -49,6 +53,47 @@ $( ".colorChooserDiv" ).hover(
     
     console.log('Hi THere222 ctx = ' + $ctx);
     console.log('Hi THere444 canvass = ' + $canvass);
+
+  // http://stackoverflow.com/questions/17343358/canvas-get-points-on-mouse-events
+  // get mouse pos relative to canvas 
+  // function getMousePos(canvas, evt) {
+      // var rect = canvas.getBoundingClientRect();
+      // return {
+          // x: evt.clientX - rect.left,
+          // y: evt.clientY - rect.top
+      // };
+  // }
+  
+      // // var x = e.pageX - this.offsetLeft;
+      // // var y = e.pageY - this.offsetTop;
+
+    function getMousePos(canvas, event)
+    {
+      // var mouseX = event.pageX - canvas.offset().left;
+      // var mouseY = event.pageY - canvas.offset().top;
+      var mouseX = event.clientX - canvas.offset().left;
+      var mouseY = event.clientY - canvas.offset().top;
+//      console.log("epx epy " + event.pageX + " " + event.pageY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
+      console.log("epx epy " + event.clientX + " " + event.clientY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
+      return {
+          x: mouseX,
+          y: mouseY };
+    }  
+  
+  
+  var x1, y1, x2, y2;     //to store the coords
+
+  // when mouse button is clicked and held    
+  // $('#myCanvas').on('mousedown', function(e){
+      // if (isDown === false) {
+
+          // isDown = true;
+
+          // var pos = getMousePos(canvas, e);
+          // x1 = pos.x;
+          // y1 = pos.y;
+      // }
+  // });
     
   $canvass.on('click', function() {
     $(this).toggleClass('highlight');
@@ -56,17 +101,27 @@ $( ".colorChooserDiv" ).hover(
     // $ctx.
   });
 
+  $canvass.on('mousemove', function(e) {
+    var pos = getMousePos($canvass, e);
+    x1 = pos.x;
+    y1 = pos.y;
+    console.log( "x1 = " + x1 + ", y1 " + y1 );
+
+    clearCanvas();
+    $ctx.fillStyle = "#FFF";
+    $ctx.fillText("Hello World!", x1, y1);
+
+  });
 
 
   // -----------------------------------------
   // animation/draw loop
   // -----------------------------------------
-    var textX = 50;
-    var textY = 50;
 
     function update() {
-      textX += 2;
-      textY += 2;
+      // could read mouse here. 
+      // $textX += 2;
+      // $textY += 2;
     }
 
     function clearCanvas() {
@@ -75,9 +130,9 @@ $( ".colorChooserDiv" ).hover(
     }
     
     function draw() {
-      clearCanvas();
-      $ctx.fillStyle = "#FFF";
-      $ctx.fillText("Hello World!", textX, textY);
+      // clearCanvas();
+      // $ctx.fillStyle = "#FFF";
+      // $ctx.fillText("Hello World!", $textX, $textY);
     }
 
     var FPS = 30;

@@ -26,6 +26,9 @@ function onWindowResize()
   var contentWidth = mainWidth + colorChooserWidth + whitespaceFudge;
   var canvasPlaceholderWidth  = mainWidth;
   var canvasPlaceholderHeight = mainHeight - 50;
+  
+//  alert( "canvas wh = " + canvasPlaceholderWidth + " " + canvasPlaceholderHeight );
+
   var buttonBarPlaceholderWidth  = colorChooserWidth;
   var buttonBarPlaceholderHeight = canvasPlaceholderHeight;
   var buttonBarMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
@@ -37,8 +40,8 @@ function onWindowResize()
   $(".colorChooserDiv").css("width",  colorChooserWidth);
   $(".colorChooserDiv").css("height", colorChooserWidth);
   $("#canvasPlaceholder").css( {
-    "width": canvasPlaceholderWidth, 
-    "height": canvasPlaceholderHeight,
+    // "width": canvasPlaceholderWidth, 
+    // "height": canvasPlaceholderHeight,
     "background" : "#333333" ,
     });
   $("#buttonBarPlaceholder").css( {
