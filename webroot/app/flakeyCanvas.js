@@ -48,7 +48,7 @@ $( ".colorChooserDiv" ).hover(
     
   $canvass.on('click', function() {
     $(this).toggleClass('highlight');
-     alert('$canvas click');
+    $ctx.fillRect(50, 25, 150, 100);
   });
   // canvass.on('mousemove', function() {
     // $(this).toggleClass('highlight');
