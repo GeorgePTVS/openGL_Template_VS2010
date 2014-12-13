@@ -35,35 +35,25 @@ $( ".colorChooserDiv" ).hover(
 
  console.log('Hi THere')
  
-   var ctx;
-   if( $("#canvasPlaceholder").length ) 
-    ctx = $("#canvasPlaceholder").get(0).getContext('2d');
+  // Cache elements
+   var $canvass = $("#canvasPlaceholder");
+   var $ctx;
+   if( $canvass.length ) 
+    $ctx = $("#canvasPlaceholder").get(0).getContext('2d');
    else 
     console.log('Error: Canvas not found with selector #canvas');
     
-//    var canvass = $("#canvasPlaceholder").get(0);
-    var canvass = $("#canvasPlaceholder");
-    console.log('Hi THere222 ctx = ' + ctx);
-    console.log('Hi THere444 canvass = ' + canvass);
+    console.log('Hi THere222 ctx = ' + $ctx);
+    console.log('Hi THere444 canvass = ' + $canvass);
     
-  // $("#canvasPlaceholder").on('mouseenter mouseleave', function() {
-    // $(this).toggleClass('highlight');
-    // //alert('thumbnail hover')
-  // });
-    
-  // $("#canvasPlaceholder").on('mousemove', function() {
-    // $(this).toggleClass('highlight');
-    // //alert('thumbnail hover')
-  // });
-
+  $canvass.on('click', function() {
+    $(this).toggleClass('highlight');
+     alert('$canvas click');
+  });
   // canvass.on('mousemove', function() {
     // $(this).toggleClass('highlight');
-    // //alert('thumbnail hover')
+    // //alert('mousemove');
   // });
-  canvass.on('click', function() {
-    $(this).toggleClass('highlight');
-    alert('canvas click');
-  });
     
          // var canvas = $("#canvasPlaceholder").get(0);
       // // var ctx = $("#theCanvas").get(0).getContext("2d");
