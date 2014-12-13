@@ -49,6 +49,7 @@ $( ".colorChooserDiv" ).hover(
   $canvass.on('click', function() {
     $(this).toggleClass('highlight');
     $ctx.fillRect(50, 25, 150, 100);
+    // $ctx.
   });
   // canvass.on('mousemove', function() {
     // $(this).toggleClass('highlight');
@@ -103,6 +104,24 @@ $( ".colorChooserDiv" ).hover(
       // }, false);
 
 
+    var textX = 50;
+    var textY = 50;
+
+    function update() {
+      textX += 1;
+      textY += 1;
+    }
+
+    function draw() {
+      $ctx.fillStyle = "#000";
+      $ctx.fillText("Sup Bro!", textX, textY);
+    }
+
+    var FPS = 30;
+    setInterval(function() {
+      update();
+      draw();
+    }, 1000/FPS);
 
 
 });
