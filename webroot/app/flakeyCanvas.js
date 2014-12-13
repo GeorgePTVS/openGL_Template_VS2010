@@ -69,12 +69,13 @@ $( ".colorChooserDiv" ).hover(
 
     function getMousePos(canvas, event)
     {
+      // TODO scale or offset based on current canvas width/height; it is currently operating on wh at time of creation.
       // var mouseX = event.pageX - canvas.offset().left;
       // var mouseY = event.pageY - canvas.offset().top;
       var mouseX = event.clientX - canvas.offset().left;
       var mouseY = event.clientY - canvas.offset().top;
 //      console.log("epx epy " + event.pageX + " " + event.pageY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
-      console.log("epx epy " + event.clientX + " " + event.clientY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
+      // console.log("epx epy " + event.clientX + " " + event.clientY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
       return {
           x: mouseX,
           y: mouseY };
@@ -105,7 +106,7 @@ $( ".colorChooserDiv" ).hover(
     var pos = getMousePos($canvass, e);
     x1 = pos.x;
     y1 = pos.y;
-    console.log( "x1 = " + x1 + ", y1 " + y1 );
+    // console.log( "x1 = " + x1 + ", y1 " + y1 );
 
     clearCanvas();
     $ctx.fillStyle = "#FFF";
