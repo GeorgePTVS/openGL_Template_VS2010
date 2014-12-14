@@ -141,14 +141,16 @@ $(document).ready(function () {
     }
   }
   function drawMouse() {
-    $ctx.fillStyle = "#FFF";
-    $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
-  }
-
+    // $ctx.fillStyle = "#FFF";
+    // $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
+    var start = $mouseXY;
+    var size = 10;
+    $ctx.fillRect(start.x, start.y, size, size);
+    }
   function draw() {
     clearCanvas();
     drawScene();
-    //drawMouse();
+    drawMouse();
   }
 
   var FPS = 40;
