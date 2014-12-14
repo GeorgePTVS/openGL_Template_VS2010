@@ -53,20 +53,37 @@ $(document).ready(function () {
 
   // http://stackoverflow.com/questions/8189840/get-mouse-wheel-events-in-jquery
   $(window).bind('wheel DOMMouseScroll', function(event){
+    // (mouse)wheel event
     if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+      // wheel up
       if ( event.shiftKey ) 
-        console.log(" wheel up + shift " );
-      // scroll up
-      $brushScale += BRUSH_SCALE_DELTA;
-      console.log("wheel up. new brushScale = " + $brushScale);
+      {
+        // scale
+        $brushScale += BRUSH_SCALE_DELTA;
+        console.log("wheel up. new brushScale = " + $brushScale);
+      } 
+      else 
+      {
+        // rotate
+        $brushRotation += BRUSH_ROTATION_DELTA;
+        console.log("wheel up. new brushRotation = " + $brushRotation);
+      }
     }
     else {
+      // wheel down
       if ( event.shiftKey ) 
-        console.log(" wheel down + shift " );
-      // scroll down
-      $brushScale -= BRUSH_SCALE_DELTA;
-      console.log("wheel down. new brushScale = " + $brushScale);
-    }
+      {
+        // scale
+        $brushScale -= BRUSH_SCALE_DELTA;
+        console.log("wheel down. new brushScale = " + $brushScale);
+      }
+      else 
+      {
+        // rotate
+        $brushRotation -= BRUSH_ROTATION_DELTA;
+        console.log("wheel down. new brushRotation = " + $brushRotation);
+      }
+    }  // else of wheelDelta etc
   });
   // --------------------------
   // -- Canvas
