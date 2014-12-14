@@ -137,8 +137,9 @@ $(document).ready(function () {
   }
 
   function drawScene() {
-    // $ctx.translate(150, 150);
-    $ctx.translate($ctx.canvas.width / 2, $ctx.canvas.height / 2);
+    var centerX = $ctx.canvas.width / 2;
+    var centerY = $ctx.canvas.height / 2;
+    $ctx.translate(centerX, centerY);
     for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
       // translate context to center of canvas
       // console.log("$canvass.weight = " + $canvass.width + " "  + $canvass.height );
@@ -150,15 +151,13 @@ $(document).ready(function () {
         var size = 10;
         var color = $shapes[i].color;
         $ctx.fillStyle = color;
-        $ctx.fillRect(start.x, start.y, size, size);
+        $ctx.fillRect(start.x - centerX, start.y - centerY, size, size);
         // console.log("i = " + i  + ", $shapes[i].color = " + $shapes[i].color + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
         //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
       } // shapes
     } // flakeRot
     // translate context from center of canvas
-    // $ctx.translate(-$canvass.width / 2, -$canvass.height / 2);
-     // $ctx.translate(-150, -150);
-    $ctx.translate(-$ctx.canvas.width / 2, -$ctx.canvas.height / 2);
+    $ctx.translate(-centerX, -centerY);
   }
   function drawMouse() {
     // $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
