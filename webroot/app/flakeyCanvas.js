@@ -37,14 +37,32 @@ $(document).ready(function () {
   // --------------------------
   // -- Brush
   // --------------------------
+  // var $shiftKeyDown = false;
+  // $(window).on('keydown', function(event){
+    // if (event.which == 16) 
+      // $shiftKeyDown = true;
+      // console.log("Shift key pressed" );
+      // } );
+  // $(window).on('keyup', function(event){
+    // if (event.which == 16) 
+      // $shiftKeyDown = false;
+      // console.log("Shift key released" );
+      // } );
+  
+
+
   // http://stackoverflow.com/questions/8189840/get-mouse-wheel-events-in-jquery
   $(window).bind('wheel DOMMouseScroll', function(event){
     if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+      if ( event.shiftKey ) 
+        console.log(" wheel up + shift " );
       // scroll up
       $brushScale += BRUSH_SCALE_DELTA;
       console.log("wheel up. new brushScale = " + $brushScale);
     }
     else {
+      if ( event.shiftKey ) 
+        console.log(" wheel down + shift " );
       // scroll down
       $brushScale -= BRUSH_SCALE_DELTA;
       console.log("wheel down. new brushScale = " + $brushScale);
