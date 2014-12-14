@@ -137,15 +137,28 @@ $(document).ready(function () {
   }
 
   function drawScene() {
-    for (var i = 0; i < $shapes.length; i++) {
-      var start = $shapes[i].mouseXY;
-      var size = 10;
-      var color = $shapes[i].color;
-      $ctx.fillStyle = color;
-      $ctx.fillRect(start.x, start.y, size, size);
-      // console.log("i = " + i  + ", $shapes[i].color = " + $shapes[i].color + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
-      //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
-    }
+    // $ctx.translate(150, 150);
+    $ctx.translate($ctx.canvas.width / 2, $ctx.canvas.height / 2);
+    for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
+      // translate context to center of canvas
+      // console.log("$canvass.weight = " + $canvass.width + " "  + $canvass.height );
+      // $ctx.translate($canvass.width / 2, $canvass.height / 2);
+      // rotate 45 degrees clockwise
+      $ctx.rotate(Math.PI / 3);
+      for (var i = 0; i < $shapes.length; i++) {
+        var start = $shapes[i].mouseXY;
+        var size = 10;
+        var color = $shapes[i].color;
+        $ctx.fillStyle = color;
+        $ctx.fillRect(start.x, start.y, size, size);
+        // console.log("i = " + i  + ", $shapes[i].color = " + $shapes[i].color + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
+        //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
+      } // shapes
+    } // flakeRot
+    // translate context from center of canvas
+    // $ctx.translate(-$canvass.width / 2, -$canvass.height / 2);
+     // $ctx.translate(-150, -150);
+    $ctx.translate(-$ctx.canvas.width / 2, -$ctx.canvas.height / 2);
   }
   function drawMouse() {
     // $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
