@@ -33,6 +33,23 @@ $(document).ready(function () {
     $(this).css("border", "0");
   });
 
+  
+  
+  // --------------------------
+  // -- Brush
+  // --------------------------
+  // http://stackoverflow.com/questions/8189840/get-mouse-wheel-events-in-jquery
+  $(window).bind('wheel DOMMouseScroll', function(event){
+    if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
+        // scroll up
+        console.log("wheel up");
+        
+    }
+    else {
+        // scroll down
+        console.log("wheel down");
+    }
+  });
   // --------------------------
   // -- Canvas
   // --------------------------
