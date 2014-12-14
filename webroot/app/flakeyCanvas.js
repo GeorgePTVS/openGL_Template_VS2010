@@ -108,9 +108,9 @@ $(document).ready(function () {
   $canvass.on('click', function (e) {
     console.log("click, adding shape");
     addShape(getMousePos($canvass, e));
-    for (var i = 0; i < $shapes.length; i++) {
-      console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
-    }
+    // for (var i = 0; i < $shapes.length; i++) {
+      // console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
+    // }
   });
 
   $canvass.on('mousemove', function (e) {
@@ -134,6 +134,9 @@ $(document).ready(function () {
 
   function drawScene() {
     for (var i = 0; i < $shapes.length; i++) {
+      var start = $shapes[i].mouseXY;
+      var size = 10;
+      $ctx.fillRect(start.x, start.y, size, size);
       //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
     }
   }
