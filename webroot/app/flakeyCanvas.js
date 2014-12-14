@@ -41,10 +41,29 @@ $( ".colorChooserDiv" ).hover(
   // globals?
   var $textX = 50;
   var $textY = 50;
+  
+  var defaults = {
+    mode: 1,
+    title: 'Awesome'
+  };
+  var shapeDefault = {
+    mouseXY: { x:0, y:0 },
+    scale: 1.0,
+    color: '#440000',
+    title: 'Awesome'
+  };
+  var $shapes = new Array( shapeDefault );
+  console.log( "$shapes.length = " + $shapes.length + "... props: " + $shapes[0].mouseXY.x + " " + $shapes[0].mouseXY.y + " " + $shapes[0].scale + " " + $shapes[0].color + " " + $shapes[0].title );
 
   // $canvass and $ctx are defined in globals.js and are updated in window resizing
   
   
+  // --------------------------
+  // -- Canvas draw shape
+  // --------------------------  
+  function addShape()
+  {
+  }
   // --------------------------
   // -- Canvas mouse
   // --------------------------  
@@ -59,12 +78,10 @@ $( ".colorChooserDiv" ).hover(
         y: mouseY };
   }  
   
-//  var $mouseXY = { x:0, y:0 };
   var $mouseXY = { x:0, y:0 };
   
   $canvass.on('click', function() {
-    $(this).toggleClass('highlight');
-    $ctx.fillRect(50, 25, 150, 100);
+    addShape();
   });
 
   $canvass.on('mousemove', function(e) {
