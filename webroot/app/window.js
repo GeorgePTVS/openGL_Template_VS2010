@@ -16,7 +16,7 @@ function onWindowResize()
   }
   else
   {
-    mainHeight = MAIN_W_SCALAR * winHeight;
+    mainHeight = Math.round(MAIN_W_SCALAR * winHeight);
     mainWidth = mainHeight + colorChooserWidth;
   }
   var whitespaceFudge = 0;   // ugh this varied based on font I used in h1...a,p,div, etc
@@ -40,7 +40,7 @@ function onWindowResize()
     "height": canvasPlaceholderHeight,
     "background" : "#333333" ,
     });
-  $colorChooserBorder = colorChooserWidth / COLOR_CHOOSER_BORDER_SCALAR;
+  $colorChooserBorder = Math.round(colorChooserWidth / COLOR_CHOOSER_BORDER_SCALAR);
   if ( $colorChooserBorder < 1 ) $colorChooserBorder = 1;
 
     
