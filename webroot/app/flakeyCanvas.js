@@ -13,7 +13,7 @@ $(document).ready(function(){
   } );
 
 
-// put a solid border around color chooser during hover.  Have to manip size since border starts as 0.  
+// put a solid border around color chooser during hover.  Have to manipulate size since border starts as 0.  
 $( ".colorChooserDiv" ).hover(
   // TODO Use addClass removeClass (or toggleClass) in each of these fns)
   function() {
@@ -33,7 +33,6 @@ $( ".colorChooserDiv" ).hover(
   }
  );  
 
- console.log('Hi THere')
  
   // --------------------------
   // -- Canvas 
@@ -44,45 +43,41 @@ $( ".colorChooserDiv" ).hover(
   var $textY = 50;
 
   // $canvass and $ctx are defined in globals.js and are updated in window resizing
-   
+  
+  
+  // --------------------------
+  // -- Canvas mouse
+  // --------------------------  
+  
   function getMousePos(canvas, event)
   {
-    // var mouseX = event.pageX - canvas.offset().left;
-    // var mouseY = event.pageY - canvas.offset().top;
+    // can/should also use event.pageX, event.scrollX?  event.screenX?
     var mouseX = event.clientX - canvas.offset().left;
     var mouseY = event.clientY - canvas.offset().top;
-    // console.log("epageXY " + event.pageX + " " + event.pageY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
-    // console.log("eClientxy " + event.clientX + " " + event.clientY + "  canvas.offset().left, Top: " + canvas.offset().left + " " + canvas.offset().top); 
     return {
         x: mouseX,
         y: mouseY };
   }  
   
+//  var $mouseXY = { x:0, y:0 };
+  var $mouseXY = { x:0, y:0 };
   
-  var x1, y1, x2, y2;     //to store the coords
-
   $canvass.on('click', function() {
     $(this).toggleClass('highlight');
     $ctx.fillRect(50, 25, 150, 100);
   });
 
   $canvass.on('mousemove', function(e) {
-    var pos = getMousePos($canvass, e);
-    x1 = pos.x;
-    y1 = pos.y;
-
-    clearCanvas();
-    $ctx.fillStyle = "#FFF";
-    $ctx.fillText("Hello World!", x1, y1);
-
+    $mouseXY = getMousePos($canvass, e);
   });
 
 
   // -----------------------------------------
-  // animation/draw loop
+  // Canvas animation/draw loop
   // -----------------------------------------
 
     function update() {
+    // animation update
       // could read mouse here. 
       // $textX += 2;
       // $textY += 2;
@@ -90,17 +85,25 @@ $( ".colorChooserDiv" ).hover(
 
     function clearCanvas() {
       $ctx.clearRect(0, 0, $canvass.width(), $canvass.height());  
-      // console.log("$canvass.width, $canvass.height = "+ $canvass.width() + "  " + $canvass.height() );
     }
     
+    function drawScene() {
+    }
+
+    function drawMouse() {
+      $ctx.fillStyle = "#FFF";
+      $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
+    }
+
     function draw() {
-      // clearCanvas();
-      // $ctx.fillStyle = "#FFF";
-      // $ctx.fillText("Hello World!", $textX, $textY);
+      clearCanvas();
+      // drawScene();
+      drawMouse();
     }
 
     var FPS = 30;
     setInterval(function() {
+    // this is for timer-driven drawing. There is also event-driven (e.g. mousemove)
       update();
       draw();
     }, 1000/FPS);
