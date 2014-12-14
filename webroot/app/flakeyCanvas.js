@@ -43,6 +43,11 @@ $(document).ready(function () {
     mode : 1,
     title : 'Awesome'
   };
+
+  // --------------------------
+  // -- Canvas "classes"
+  // --------------------------
+  // use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
   var shape = {
     mouseXY : {
       x : 0,
@@ -53,39 +58,15 @@ $(document).ready(function () {
     title : 'Awesome',
     type : 'square'
   };
-  var $shapes = new Array(shape);
-  for (var i = 0; i < $shapes.length; i++)
-  {
-    console.log("$shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
-  }
-  // // --------------------------
-  // // -- Canvas classes
-  // // --------------------------
-  // // http://jsperf.com/jquery-class-create-vs-pure-js-function/3
-  // <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js">
-  // </script>
-  // <script src="http://digg.googlecode.com/files/Class-0.0.2.js">
-  // </script>
-  // <script src="//ajax.googleapis.com/ajax/libs/prototype/1/prototype.js"></script>
-
-  // <script>
-  // Benchmark.prototype.setup = function() {
-  // var result = '';
-  // };
-  // </script>
-
-  // var Animal = Class.create({
-  // init: function(name, sound) {
-  // this.name = name;
-  // this.sound = sound;
-  // },
-  // speak: function() {
-  // result = (this.name + " says: " + this.sound + "!");
+  
+  var $shapes = [];
+  
+  // $shapes.push( shape );
+  // $shapes.push(shape);
+  // for (var i = 0; i < $shapes.length; i++) {
+    // console.log("$shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
   // }
-  // });
 
-  // var cat = new Animal('Kitty', 'Meow');
-  // cat.speak();
 
 
   // $canvass and $ctx are defined in globals.js and are updated in window resizing
@@ -94,7 +75,17 @@ $(document).ready(function () {
   // --------------------------
   // -- Canvas draw shape
   // --------------------------
-  function addShape() {}
+  function addShape(mouseXY) {
+    // var shapeNew = shape;
+    // // Deep copy
+    // var newObject = jQuery.extend(true, {}, oldObject);
+    // Deep copy
+    var shapeNew = jQuery.extend(true, {}, shape);
+    shapeNew.mouseXY = mouseXY;
+    $shapes.push( shapeNew );   
+  }
+  
+  
   // --------------------------
   // -- Canvas mouse
   // --------------------------
@@ -114,8 +105,12 @@ $(document).ready(function () {
     y : 0
   };
 
-  $canvass.on('click', function () {
-    addShape();
+  $canvass.on('click', function (e) {
+    console.log("click, adding shape");
+    addShape(getMousePos($canvass, e));
+    for (var i = 0; i < $shapes.length; i++) {
+      console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
+    }
   });
 
   $canvass.on('mousemove', function (e) {
@@ -137,8 +132,11 @@ $(document).ready(function () {
     $ctx.clearRect(0, 0, $canvass.width(), $canvass.height());
   }
 
-  function drawScene() {}
-
+  function drawScene() {
+    for (var i = 0; i < $shapes.length; i++) {
+      //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
+    }
+  }
   function drawMouse() {
     $ctx.fillStyle = "#FFF";
     $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
@@ -146,11 +144,11 @@ $(document).ready(function () {
 
   function draw() {
     clearCanvas();
-    // drawScene();
-    drawMouse();
+    drawScene();
+    //drawMouse();
   }
 
-  var FPS = 30;
+  var FPS = 1;
   setInterval(function () {
     // this is for timer-driven drawing. There is also event-driven (e.g. mousemove)
     update();
