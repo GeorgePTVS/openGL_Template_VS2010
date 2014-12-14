@@ -151,7 +151,7 @@ $(document).ready(function () {
     //drawMouse();
   }
 
-  var FPS = 1;
+  var FPS = 40;
   setInterval(function () {
     // this is for timer-driven drawing. There is also event-driven (e.g. mousemove)
     update();
