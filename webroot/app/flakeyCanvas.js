@@ -11,7 +11,6 @@ $(document).ready(function () {
     var newColor = $(this).css("background-color");
     $brushColor = newColor;
     console.log("button click  color = " + $brushColor );
-    // $("#yellow").css("background-color", newColor);
   });
   
   // put a solid border around color chooser during hover.  Have to manipulate size since border starts as 0.
@@ -41,50 +40,23 @@ $(document).ready(function () {
   // http://stackoverflow.com/questions/8189840/get-mouse-wheel-events-in-jquery
   $(window).bind('wheel DOMMouseScroll', function(event){
     if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
-        // scroll up
-        console.log("wheel up");
-        
+      // scroll up
+      $brushScale += BRUSH_SCALE_DELTA;
+      console.log("wheel up. new brushScale = " + $brushScale);
     }
     else {
-        // scroll down
-        console.log("wheel down");
+      // scroll down
+      $brushScale -= BRUSH_SCALE_DELTA;
+      console.log("wheel down. new brushScale = " + $brushScale);
     }
   });
   // --------------------------
   // -- Canvas
   // --------------------------
 
-  // globals?
-  var $textX = 50;
-  var $textY = 50;
-
-  var defaults = {
-    mode : 1,
-    title : 'Awesome'
-  };
-
   // --------------------------
   // -- Canvas "classes"
   // --------------------------
-  // use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
-  var shape = {
-    mouseXY : {
-      x : 0,
-      y : 0
-    },
-    scale : 1.0,
-    color : '#440000',
-    title : 'Awesome',
-    type : 'square'
-  };
-  
-  var $shapes = [];
-  
-  // $shapes.push( shape );
-  // $shapes.push(shape);
-  // for (var i = 0; i < $shapes.length; i++) {
-    // console.log("$shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
-  // }
 
 
 
@@ -92,17 +64,18 @@ $(document).ready(function () {
 
 
   // --------------------------
-  // -- Canvas draw shape
+  // -- Canvas draw $shape
   // --------------------------
   function addShape(mouseXY) {
-    // var shapeNew = shape;
+    // var shapeNew = $shape;
     // // Deep copy
     // var newObject = jQuery.extend(true, {}, oldObject);
     // Deep copy
-    var shapeNew = jQuery.extend(true, {}, shape);
+    var shapeNew = jQuery.extend(true, {}, $shape);
     shapeNew.mouseXY = mouseXY;
     console.log("addShape  color = " + $brushColor );
     shapeNew.color = $brushColor;
+    shapeNew.scale = $brushScale;
     $shapes.push( shapeNew );   
   }
   
@@ -127,11 +100,8 @@ $(document).ready(function () {
   };
 
   $canvass.on('click', function (e) {
-    console.log("click, adding shape");
+    console.log("click, adding $shape");
     addShape(getMousePos($canvass, e));
-    // for (var i = 0; i < $shapes.length; i++) {
-      // console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
-    // }
   });
 
   $canvass.on('mousemove', function (e) {
@@ -145,8 +115,6 @@ $(document).ready(function () {
   function update() {
     // animation update
     // could read mouse here.
-    // $textX += 2;
-    // $textY += 2;
   }
 
   function clearCanvas() {
@@ -154,21 +122,23 @@ $(document).ready(function () {
   }
 
   function drawScene() {
+    // translate context to center of canvas
     var centerX = $ctx.canvas.width / 2;
     var centerY = $ctx.canvas.height / 2;
     $ctx.translate(centerX, centerY);
+    
+    // repeat each shape 6 times around the center
     for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
-      // translate context to center of canvas
-      // console.log("$canvass.weight = " + $canvass.width + " "  + $canvass.height );
-      // $ctx.translate($canvass.width / 2, $canvass.height / 2);
-      // rotate 45 degrees clockwise
+      // rotate 1/6 of a rotation clockwise
       $ctx.rotate(Math.PI / 3);
       for (var i = 0; i < $shapes.length; i++) {
         var start = $shapes[i].mouseXY;
         var size = 10;
         var color = $shapes[i].color;
         $ctx.fillStyle = color;
-        $ctx.fillRect(start.x - centerX, start.y - centerY, size, size);
+        // Note also have to subtract center from mouse points
+        var scaledSize = size * $shapes[i].scale;
+        $ctx.fillRect(start.x - centerX, start.y - centerY, scaledSize, scaledSize);
         // console.log("i = " + i  + ", $shapes[i].color = " + $shapes[i].color + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
         //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
       } // shapes
@@ -176,13 +146,15 @@ $(document).ready(function () {
     // translate context from center of canvas
     $ctx.translate(-centerX, -centerY);
   }
+
   function drawMouse() {
-    // $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
     var start = $mouseXY;
     var size = 10;
     $ctx.fillStyle = $brushColor;
-    $ctx.fillRect(start.x, start.y, size, size);
+    $ctx.fillRect(start.x, start.y, size*$brushScale, size*$brushScale);
     }
+    
+    
   function draw() {
     clearCanvas();
     drawScene();

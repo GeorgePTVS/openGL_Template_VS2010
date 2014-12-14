@@ -6,8 +6,24 @@ var COLOR_CHOOSER_BORDER_SCALAR = 10;
 var MAIN_W_SCALAR = 0.8;
 var COLOR_CHOOSER_SCALAR = 0.05;
 var CANVAS_BRUSH_COLOR_INIT = "#FF0000";
+var BRUSH_SCALE_DELTA = 0.25;
 
 var $canvass;
 var $ctx;
 var $colorChooserBorder = 5;  // px
 var $brushColor = CANVAS_BRUSH_COLOR_INIT;
+var $brushScale = 1.0;
+
+// use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
+var $shape = {
+  mouseXY : {
+    x : 0,
+    y : 0
+  },
+  scale : 1.0,
+  color : '#440000',
+  title : 'Awesome',
+  type : 'square'
+};
+  
+var $shapes = [];
