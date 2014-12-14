@@ -55,6 +55,51 @@ $( ".colorChooserDiv" ).hover(
   var $shapes = new Array( shapeDefault );
   console.log( "$shapes.length = " + $shapes.length + "... props: " + $shapes[0].mouseXY.x + " " + $shapes[0].mouseXY.y + " " + $shapes[0].scale + " " + $shapes[0].color + " " + $shapes[0].title );
 
+  
+  
+  // // --------------------------
+  // // -- Canvas classes
+  // // -------------------------- 
+// // http://jsperf.com/jquery-class-create-vs-pure-js-function/3  
+// <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js">
+// </script>
+// <script src="http://digg.googlecode.com/files/Class-0.0.2.js">
+// </script>
+// <script src="//ajax.googleapis.com/ajax/libs/prototype/1/prototype.js"></script>
+ 
+// <script>
+  // Benchmark.prototype.setup = function() {
+    // var result = '';
+  // };
+// </script>
+  
+  // var Animal = Class.create({
+    // init: function(name, sound) {
+      // this.name = name;
+      // this.sound = sound;
+    // },
+    // speak: function() {
+      // result = (this.name + " says: " + this.sound + "!");
+    // }
+  // });
+
+  // var cat = new Animal('Kitty', 'Meow');
+  // cat.speak();
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   // $canvass and $ctx are defined in globals.js and are updated in window resizing
   
   
