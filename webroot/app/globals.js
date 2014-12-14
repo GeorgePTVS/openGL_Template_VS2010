@@ -10,4 +10,4 @@ var COLOR_CHOOSER_SCALAR = 0.05;
 var $canvass;
 var $ctx;
 var $colorChooserBorder = 5;  // px
-
+var $brushColor = "#0000ff";

@@ -9,9 +9,11 @@ $(document).ready(function () {
   $(".colorChooserDiv").on('click', function () {
 
     var newColor = $(this).css("background-color");
-    $("#yellow").css("background-color", newColor);
+    $brushColor = newColor;
+    console.log("button click  color = " + $brushColor );
+    // $("#yellow").css("background-color", newColor);
   });
-
+  
   // put a solid border around color chooser during hover.  Have to manipulate size since border starts as 0.
   $(".colorChooserDiv").hover(
     // TODO Use addClass removeClass (or toggleClass) in each of these fns)
@@ -82,6 +84,8 @@ $(document).ready(function () {
     // Deep copy
     var shapeNew = jQuery.extend(true, {}, shape);
     shapeNew.mouseXY = mouseXY;
+    console.log("addShape  color = " + $brushColor );
+    shapeNew.color = $brushColor;
     $shapes.push( shapeNew );   
   }
   
@@ -136,12 +140,14 @@ $(document).ready(function () {
     for (var i = 0; i < $shapes.length; i++) {
       var start = $shapes[i].mouseXY;
       var size = 10;
+      var color = $shapes[i].color;
+      $ctx.fillStyle = color;
       $ctx.fillRect(start.x, start.y, size, size);
+      // console.log("i = " + i  + ", $shapes[i].color = " + $shapes[i].color + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
       //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
     }
   }
   function drawMouse() {
-    // $ctx.fillStyle = "#FFF";
     // $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
     var start = $mouseXY;
     var size = 10;
