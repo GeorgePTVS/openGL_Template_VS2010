@@ -151,6 +151,7 @@ $(document).ready(function () {
     // $ctx.fillText("Hello WWWorld!", $mouseXY.x, $mouseXY.y);
     var start = $mouseXY;
     var size = 10;
+    $ctx.fillStyle = $brushColor;
     $ctx.fillRect(start.x, start.y, size, size);
     }
   function draw() {

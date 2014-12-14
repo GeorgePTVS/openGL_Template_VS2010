@@ -5,9 +5,9 @@ console.log("Global canvas elements");
 var COLOR_CHOOSER_BORDER_SCALAR = 10;
 var MAIN_W_SCALAR = 0.8;
 var COLOR_CHOOSER_SCALAR = 0.05;
-
+var CANVAS_BRUSH_COLOR_INIT = "#FF0000";
 
 var $canvass;
 var $ctx;
 var $colorChooserBorder = 5;  // px
-var $brushColor = "#0000ff";
+var $brushColor = CANVAS_BRUSH_COLOR_INIT;
