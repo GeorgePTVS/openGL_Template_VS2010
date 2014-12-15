@@ -111,6 +111,7 @@ $(document).ready(function () {
     console.log("addShape  color = " + $brushColor );
     shapeNew.color = $brushColor;
     shapeNew.scale = $brushScale;
+    shapeNew.rotation = $brushRotation;
     $shapes.push( shapeNew );   
   }
   
@@ -160,13 +161,20 @@ $(document).ready(function () {
     // translate context to center of canvas
     var centerX = $ctx.canvas.width / 2;
     var centerY = $ctx.canvas.height / 2;
-    $ctx.translate(centerX, centerY);
     
     // repeat each shape 6 times around the center
     for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
       // rotate 1/6 of a rotation clockwise
+      $ctx.translate(centerX, centerY);
       $ctx.rotate(Math.PI / 3);
+      $ctx.translate(-centerX, -centerY);
       for (var i = 0; i < $shapes.length; i++) {
+        var start = $shapes[i].mouseXY;
+        var size = BRUSH_SIZE_BASE;
+        var color = $shapes[i].color;
+        $ctx.fillStyle = color;
+
+
         var start = $shapes[i].mouseXY;
         var size = 10;
         var color = $shapes[i].color;
@@ -174,12 +182,23 @@ $(document).ready(function () {
         // Note also have to subtract center from mouse points
         var scaledSize = size * $shapes[i].scale;
         $ctx.fillRect(start.x - centerX, start.y - centerY, scaledSize, scaledSize);
+        
         // console.log("i = " + i  + ", $shapes[i].color = " + $shapes[i].color + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
         //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
+
+        $ctx.save();
+        // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
+        $ctx.translate( start.x, start.y );
+        $ctx.rotate( Math.PI * $shapes[i].rotation / 180.0 );
+        $ctx.scale( $shapes[i].scale, $shapes[i].scale );
+        $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+        $ctx.restore();
+
       } // shapes
+
     } // flakeRot
     // translate context from center of canvas
-    $ctx.translate(-centerX, -centerY);
+  //  $ctx.translate(-centerX, -centerY);
   }
 
   function drawMouse() {
@@ -189,11 +208,8 @@ $(document).ready(function () {
 
     $ctx.save();
     // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
-    // $ctx.translate( -$mouseXY.x, -$mouseXY.y );
-//    $ctx.translate( $mouseXY.x + size/2, $mouseXY.y + size/2 );
     $ctx.translate( $mouseXY.x, $mouseXY.y );
     $ctx.rotate( Math.PI * $brushRotation / 180.0 );
-    // $ctx.rotate( Math.PI * $brushRotation / 180.0 );
     $ctx.scale( $brushScale, $brushScale );
     $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
     $ctx.restore();

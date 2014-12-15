@@ -15,7 +15,7 @@ var $ctx;
 var $colorChooserBorder = 5;  // px
 var $brushColor = CANVAS_BRUSH_COLOR_INIT;
 var $brushScale    = 1.0;
-var $brushRotation = 0;
+var $brushRotation = 0.0;
 
 // use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
 var $shape = {
