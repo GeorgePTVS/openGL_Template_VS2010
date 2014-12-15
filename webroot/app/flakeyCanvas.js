@@ -163,16 +163,19 @@ $(document).ready(function () {
     var centerY = $ctx.canvas.height / 2;
     $ctx.save();
     
-    // repeat each shape 6 times around the center
-    for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
-      // rotate 1/6 of a rotation clockwise
-      // tricky: 0, 0 is in upper left.  have to draw, then move back from middle of canvas to 0, 0, then rotate 60 degrees then move back out. 
-      // order of ops is like OpenGL: those closest to drawing happen first.
-      $ctx.translate(centerX, centerY);  // move back out
-      $ctx.rotate(Math.PI / 3);          // rotate 60 degs
-      $ctx.translate(-centerX, -centerY);// move from middle of canvas to 0,0 upper left
-      // draw
-      for (var i = 0; i < $shapes.length; i++) {
+    for (var i = 0; i < $shapes.length; i++) {
+    
+    
+      // repeat each shape 6 times around the center
+      for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
+        // rotate 1/6 of a rotation clockwise
+        // tricky: 0, 0 is in upper left.  have to draw, then move back from middle of canvas to 0, 0, then rotate 60 degrees then move back out. 
+        // order of ops is like OpenGL: those closest to drawing happen first.
+        $ctx.translate(centerX, centerY);  // move back out
+        $ctx.rotate(Math.PI / 3);          // rotate 60 degs
+        $ctx.translate(-centerX, -centerY);// move from middle of canvas to 0,0 upper left
+
+        // draw
         var start = $shapes[i].mouseXY;
         var size = BRUSH_SIZE_BASE;
         var color = $shapes[i].color;
@@ -185,10 +188,10 @@ $(document).ready(function () {
         $ctx.scale( $shapes[i].scale, $shapes[i].scale );
         $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
         $ctx.restore();
+      }  // flakeRot
 
-      } // shapes
+    } // shapes
 
-    } // flakeRot
 
     $ctx.restore();
     
