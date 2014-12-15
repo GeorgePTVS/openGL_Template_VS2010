@@ -184,16 +184,18 @@ $(document).ready(function () {
 
   function drawMouse() {
     var start = $mouseXY;
-    var size = 10;
+    var size = BRUSH_SIZE_BASE;
     $ctx.fillStyle = $brushColor;
 
     $ctx.save();
     // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
     // $ctx.translate( -$mouseXY.x, -$mouseXY.y );
+//    $ctx.translate( $mouseXY.x + size/2, $mouseXY.y + size/2 );
     $ctx.translate( $mouseXY.x, $mouseXY.y );
     $ctx.rotate( Math.PI * $brushRotation / 180.0 );
     // $ctx.rotate( Math.PI * $brushRotation / 180.0 );
-    $ctx.fillRect(0, 0, size*$brushScale, size*$brushScale);
+    $ctx.scale( $brushScale, $brushScale );
+    $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
     $ctx.restore();
     
     }
