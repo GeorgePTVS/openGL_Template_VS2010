@@ -161,30 +161,22 @@ $(document).ready(function () {
     // translate context to center of canvas
     var centerX = $ctx.canvas.width / 2;
     var centerY = $ctx.canvas.height / 2;
+    $ctx.save();
     
     // repeat each shape 6 times around the center
     for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
       // rotate 1/6 of a rotation clockwise
-      $ctx.translate(centerX, centerY);
-      $ctx.rotate(Math.PI / 3);
-      $ctx.translate(-centerX, -centerY);
+      // tricky: 0, 0 is in upper left.  have to draw, then move back from middle of canvas to 0, 0, then rotate 60 degrees then move back out. 
+      // order of ops is like OpenGL: those closest to drawing happen first.
+      $ctx.translate(centerX, centerY);  // move back out
+      $ctx.rotate(Math.PI / 3);          // rotate 60 degs
+      $ctx.translate(-centerX, -centerY);// move from middle of canvas to 0,0 upper left
+      // draw
       for (var i = 0; i < $shapes.length; i++) {
         var start = $shapes[i].mouseXY;
         var size = BRUSH_SIZE_BASE;
         var color = $shapes[i].color;
         $ctx.fillStyle = color;
-
-
-        var start = $shapes[i].mouseXY;
-        var size = 10;
-        var color = $shapes[i].color;
-        $ctx.fillStyle = color;
-        // Note also have to subtract center from mouse points
-        var scaledSize = size * $shapes[i].scale;
-        $ctx.fillRect(start.x - centerX, start.y - centerY, scaledSize, scaledSize);
-        
-        // console.log("i = " + i  + ", $shapes[i].color = " + $shapes[i].color + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
-        //console.log("i = " + i  + ", $shapes.length = " + $shapes.length + "... props: " + $shapes[i].mouseXY.x + " " + $shapes[i].mouseXY.y + " " + $shapes[i].scale + " " + $shapes[i].color + " " + $shapes[i].title + " " + $shapes[i].type);
 
         $ctx.save();
         // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
@@ -197,8 +189,9 @@ $(document).ready(function () {
       } // shapes
 
     } // flakeRot
-    // translate context from center of canvas
-  //  $ctx.translate(-centerX, -centerY);
+
+    $ctx.restore();
+    
   }
 
   function drawMouse() {
