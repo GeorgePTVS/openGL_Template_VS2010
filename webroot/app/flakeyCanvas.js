@@ -186,7 +186,16 @@ $(document).ready(function () {
     var start = $mouseXY;
     var size = 10;
     $ctx.fillStyle = $brushColor;
-    $ctx.fillRect(start.x, start.y, size*$brushScale, size*$brushScale);
+
+    $ctx.save();
+    // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
+    // $ctx.translate( -$mouseXY.x, -$mouseXY.y );
+    $ctx.translate( $mouseXY.x, $mouseXY.y );
+    $ctx.rotate( Math.PI * $brushRotation / 180.0 );
+    // $ctx.rotate( Math.PI * $brushRotation / 180.0 );
+    $ctx.fillRect(0, 0, size*$brushScale, size*$brushScale);
+    $ctx.restore();
+    
     }
     
     
