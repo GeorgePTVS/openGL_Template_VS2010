@@ -200,17 +200,33 @@ $(document).ready(function () {
   function drawMouse() {
     var start = $mouseXY;
     var size = BRUSH_SIZE_BASE;
+    var centerX = $ctx.canvas.width / 2;
+    var centerY = $ctx.canvas.height / 2;
+    $ctx.save();
     $ctx.fillStyle = $brushColor;
 
-    $ctx.save();
-    // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
-    $ctx.translate( $mouseXY.x, $mouseXY.y );
-    $ctx.rotate( Math.PI * $brushRotation / 180.0 );
-    $ctx.scale( $brushScale, $brushScale );
-    $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+    // repeat each shape 6 times around the center
+    for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
+      // rotate 1/6 of a rotation clockwise
+      // tricky: 0, 0 is in upper left.  have to draw, then move back from middle of canvas to 0, 0, then rotate 60 degrees then move back out. 
+      // order of ops is like OpenGL: those closest to drawing happen first.
+      $ctx.translate(centerX, centerY);  // move back out
+      $ctx.rotate(Math.PI / 3);          // rotate 60 degs
+      $ctx.translate(-centerX, -centerY);// move from middle of canvas to 0,0 upper left
+
+  
+      // draw
+      $ctx.save();
+      // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
+      $ctx.translate( $mouseXY.x, $mouseXY.y );
+      $ctx.rotate( Math.PI * $brushRotation / 180.0 );
+      $ctx.scale( $brushScale, $brushScale );
+      $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+      $ctx.restore();
+      }  // flakeRot
     $ctx.restore();
-    
-    }
+      
+    }  // drawMouse
     
     
   function draw() {
