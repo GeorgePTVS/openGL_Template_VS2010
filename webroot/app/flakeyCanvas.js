@@ -122,8 +122,8 @@ $(document).ready(function () {
 
   function getMousePos(canvas, event) {
     // can/should also use event.pageX, event.scrollX?  event.screenX?
-    console.log('event.clientXY ' + event.clientX + ' ' + event.clientY + ' ' + 'event.pageXY ' + event.pageX + ' ' + event.pageY + ' ' + 'event.scrollXY ' + event.scrollX + ' ' + event.scrollY + ' ' + 'event.screenXY ' + event.sceenX + ' ' + event.screenY + ' ' ); 
-    console.log('canvas.offset().left top ' + canvas.offset().left + ' ' + canvas.offset().top );
+    // console.log('event.clientXY ' + event.clientX + ' ' + event.clientY + ' ' + 'event.pageXY ' + event.pageX + ' ' + event.pageY + ' ' + 'event.scrollXY ' + event.scrollX + ' ' + event.scrollY + ' ' + 'event.screenXY ' + event.sceenX + ' ' + event.screenY + ' ' ); 
+    // console.log('canvas.offset().left top ' + canvas.offset().left + ' ' + canvas.offset().top );
     var mouseX = event.clientX - canvas.offset().left;
     var mouseY = event.clientY - canvas.offset().top;
     return {
@@ -133,10 +133,11 @@ $(document).ready(function () {
   }
 
   function getTouchPos(canvas, event) {
+  
     var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
     // can/should also use event.pageX, event.scrollX?  event.screenX?
-    console.log('touch.clientXY ' + touch.clientX + ' ' + touch.clientY + ' ' + 'touch.pageXY ' + touch.pageX + ' ' + touch.pageY + ' ' + 'touch.scrollXY ' + touch.scrollX + ' ' + touch.scrollY + ' ' + 'touch.screenXY ' + touch.sceenX + ' ' + touch.screenY + ' ' ); 
-    console.log('canvas.offset().left top ' + canvas.offset().left + ' ' + canvas.offset().top );
+    // console.log('touch.clientXY ' + touch.clientX + ' ' + touch.clientY + ' ' + 'touch.pageXY ' + touch.pageX + ' ' + touch.pageY + ' ' + 'touch.scrollXY ' + touch.scrollX + ' ' + touch.scrollY + ' ' + 'touch.screenXY ' + touch.sceenX + ' ' + touch.screenY + ' ' ); 
+    // console.log('canvas.offset().left top ' + canvas.offset().left + ' ' + canvas.offset().top );
     var mouseX = touch.clientX - canvas.offset().left;
     var mouseY = touch.clientY - canvas.offset().top;
     return {
@@ -157,22 +158,32 @@ $(document).ready(function () {
   
   $canvass.on('touchstart', function (e) {
     e.preventDefault();
-    console.log("touchstart e = " + e);
-    $touchstarted = true;
+    touchersCount = e.originalEvent.touches.length;
+    touchStartCount++;
+    $("#debugHeader").text("tSt= " + touchStartCount + ",end= " + touchEndCount + ", sz=" + touchersCount);
+    console.log("touchstart:  touchStartCount = " + touchStartCount + "    e = " + e);
     $mouseXY = getTouchPos($canvass, e);
+    // test multitouch
+    if ( touchStartCount > 1)
+       addShape($mouseXY);
+
   });
 
   $canvass.on('touchmove', function (e) {
     e.preventDefault();
-    console.log("touchmove e = " + e);
+//    console.log("touchmove e = " + e);
     $mouseXY = getTouchPos($canvass, e);
   });
 
   $canvass.on('touchend', function (e) {
-    console.log("touchend, adding $shape");
     e.preventDefault();
+    touchersCount = e.originalEvent.touches.length;
+    touchEndCount++;
+    $("#debugHeader").text("tSt= " + touchStartCount + ",end= " + touchEndCount + ", sz=" + touchersCount);
+    console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
+//    console.log("touchend, adding $shape");
     // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape.
-    addShape(getTouchPos($canvass, e));
+    //addShape(getTouchPos($canvass, e));
   });
   
   $canvass.on('click', function (e) {
@@ -264,9 +275,25 @@ $(document).ready(function () {
       $ctx.scale( $brushScale, $brushScale );
       $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
       $ctx.restore();
+      
+      
+      if ( touchersCount > 1 )
+      {
+        // draw
+        $ctx.save();
+        // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
+        $ctx.translate( $mouseXY.x + 30, $mouseXY.y );
+        $ctx.rotate( Math.PI * $brushRotation / 180.0 );
+        $ctx.scale( $brushScale, $brushScale );
+        $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+        $ctx.restore();
+      
+      }
+
       }  // flakeRot
     $ctx.restore();
-      
+
+    
     }  // drawMouse
     
     
