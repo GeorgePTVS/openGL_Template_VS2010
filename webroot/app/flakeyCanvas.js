@@ -122,6 +122,8 @@ $(document).ready(function () {
 
   function getMousePos(canvas, event) {
     // can/should also use event.pageX, event.scrollX?  event.screenX?
+    console.log('event.clientXY ' + event.clientX + ' ' + event.clientY + ' ' + 'event.pageXY ' + event.pageX + ' ' + event.pageY + ' ' + 'event.scrollXY ' + event.scrollX + ' ' + event.scrollY + ' ' + 'event.screenXY ' + event.sceenX + ' ' + event.screenY + ' ' ); 
+    console.log('canvas.offset().left top ' + canvas.offset().left + ' ' + canvas.offset().top );
     var mouseX = event.clientX - canvas.offset().left;
     var mouseY = event.clientY - canvas.offset().top;
     return {
@@ -130,18 +132,57 @@ $(document).ready(function () {
     };
   }
 
+  function getTouchPos(canvas, event) {
+    var touch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
+    // can/should also use event.pageX, event.scrollX?  event.screenX?
+    console.log('touch.clientXY ' + touch.clientX + ' ' + touch.clientY + ' ' + 'touch.pageXY ' + touch.pageX + ' ' + touch.pageY + ' ' + 'touch.scrollXY ' + touch.scrollX + ' ' + touch.scrollY + ' ' + 'touch.screenXY ' + touch.sceenX + ' ' + touch.screenY + ' ' ); 
+    console.log('canvas.offset().left top ' + canvas.offset().left + ' ' + canvas.offset().top );
+    var mouseX = touch.clientX - canvas.offset().left;
+    var mouseY = touch.clientY - canvas.offset().top;
+    return {
+      x : mouseX,
+      y : mouseY
+    };
+  }
+  
+
+  
+  
+  
   var $mouseXY = {
     x : 0,
     y : 0
   };
+  
+  
+  $canvass.on('touchstart', function (e) {
+    e.preventDefault();
+    console.log("touchstart e = " + e);
+    $touchstarted = true;
+    $mouseXY = getTouchPos($canvass, e);
+  });
 
+  $canvass.on('touchmove', function (e) {
+    e.preventDefault();
+    console.log("touchmove e = " + e);
+    $mouseXY = getTouchPos($canvass, e);
+  });
+
+  $canvass.on('touchend', function (e) {
+    console.log("touchend, adding $shape");
+    e.preventDefault();
+    // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape.
+    addShape(getTouchPos($canvass, e));
+  });
+  
   $canvass.on('click', function (e) {
     console.log("click, adding $shape");
     addShape(getMousePos($canvass, e));
   });
 
   $canvass.on('mousemove', function (e) {
-    $mouseXY = getMousePos($canvass, e);
+  e.preventDefault();
+  $mouseXY = getMousePos($canvass, e);
   });
 
   // -----------------------------------------
