@@ -149,7 +149,7 @@ $(document).ready(function () {
       };
       touchResult.push( mouseXY );
     }
-        // // test multitouch
+    // multitouch to adjust scale
     if ( touchLen > 1)
     {
       // calculate scale and rot
@@ -165,8 +165,25 @@ $(document).ready(function () {
       var ysquared = (mouseY1 - mouseY0) * (mouseY1 - mouseY0);
       
       var disty = Math.sqrt( xsquared + ysquared );
-      $brushScale = BRUSH_SIZE_TOUCH_SCALAR * disty;
-    }
+
+      if ( wasMultitouching ) 
+      {
+        // increase scale
+        $brushScale = $brushScale * disty / scaleDistanceBaseline;
+        scaleDistanceBaseline = disty;
+      }
+      else
+      {
+        wasMultitouching = true;
+        // set scale baseline
+        scaleDistanceBaseline = disty;
+      }
+      
+    }  // if ( touchLen > 1)
+    else
+    {
+      wasMultitouching = false;
+    }  // else if ( touchLen > 1)
 
     return touchResult;
   }
@@ -204,6 +221,8 @@ $(document).ready(function () {
     e.preventDefault();
     touchersCount = e.originalEvent.touches.length;
     touchEndCount++;
+    wasMultitouching = false;
+
     $("#debugHeader").text("touchsz=" + touchersCount + " scale =" + $brushScale);
     console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
 //    console.log("touchend, adding $shape");
@@ -293,8 +312,9 @@ $(document).ready(function () {
 
       if ( touchersCount > 0 )
       {
-        // draw touch
-        for ( var i = 0; i < touchersCount; i++ )
+        // draw touch. To draw at each touching point, use i < touchersCount
+        // for ( var i = 0; i < touchersCount; i++ )
+        for ( var i = 0; i < 1; i++ )
         {
           $ctx.save();
           // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
