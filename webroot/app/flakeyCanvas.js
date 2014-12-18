@@ -6,7 +6,7 @@ $(document).ready(function () {
   // --------------------------
   // -- Color chooser
   // --------------------------
-  $(".colorChooserDiv").on('click', function () {
+  $(".colorChooser").on('click', function () {
 
     var newColor = $(this).css("background-color");
     $brushColor = newColor;
@@ -14,7 +14,7 @@ $(document).ready(function () {
   });
   
   // put a solid border around color chooser during hover.  Have to manipulate size since border starts as 0.
-  $(".colorChooserDiv").hover(
+  $(".colorChooser").hover(
     // TODO Use addClass removeClass (or toggleClass) in each of these fns)
     function () {
     // var $colorChooserBorder = 5;  // px

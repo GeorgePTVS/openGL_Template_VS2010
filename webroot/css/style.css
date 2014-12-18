@@ -96,54 +96,86 @@ ol {
 }
 
 
-.colorChooserDiv {
+.colorChooser {
   opacity:1.0;
   background-color:#000000;
   float: right;
 }
-.colorChooserDiv:hover {
+.colorChooser:hover {
   /* opacity:0.5; */
   /* border: 5px inset red; */
 }
-#red.colorChooserDiv {
+
+#red.colorChooser {
   background-color:#FF0000;
 }
-#green.colorChooserDiv  {
+#green.colorChooser  {
   background-color:#00FF00;
 }
-#blue.colorChooserDiv {
+#blue.colorChooser {
   background-color:#0000FF;
 }
-#magenta.colorChooserDiv {
+#magenta.colorChooser {
   background-color:#FF00FF;
 }
-#yellow.colorChooserDiv {
+#yellow.colorChooser {
   background-color:#FFFF00;
 }
-#cyan.colorChooserDiv {
+#cyan.colorChooser {
   background-color:#00FFFF;
 }
-#forest-green.colorChooserDiv {
+#forest-green.colorChooser {
   background-color:#186000;
 }
-#maroon.colorChooserDiv {
+#maroon.colorChooser {
   background-color:#800000;
 }
-#teal.colorChooserDiv {
+#teal.colorChooser {
   background-color:#008080;
 }
-#gray.colorChooserDiv {
+#gray.colorChooser {
   background-color:#808080;
 }
-#silver.colorChooserDiv {
+#silver.colorChooser {
   background-color:#c0c0c0;
 }
-#white.colorChooserDiv {
+#white.colorChooser {
   background-color:#FFFFFF;
 }
-#black.colorChooserDiv {
+#black.colorChooser {
   background-color:#000000;
 }
+
+
+
+
+
+
+
+.brushChooser {
+  opacity:1.0;
+  background-color:#000000;
+  float: right;
+}
+.brushChooser:hover {
+  /* opacity:0.5; */
+  /* border: 5px inset red; */
+}
+.brushImg {
+  padding: 0px 0px 0px 0px;
+  margin:  0px 0px 0px 0px;
+  border: 0px;
+  border-image-width: 0px;
+  width:100px;
+  height:100px;
+  opacity:1.0;  
+}
+
+
+
+
+
+
 
 #canvasPlaceholder {
   padding: 0;

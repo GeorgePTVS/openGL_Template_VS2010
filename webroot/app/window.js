@@ -38,8 +38,13 @@ function onWindowResize()
   $(".main_content").css("width",  contentWidth);
   $(".main_content").css("height", mainHeight);
 
-  $(".colorChooserDiv").css("width",  colorChooserWidth);
-  $(".colorChooserDiv").css("height", colorChooserWidth);
+  $(".colorChooser").css("width",  colorChooserWidth);
+  $(".colorChooser").css("height", colorChooserWidth);
+  $(".brushChooser").css("width",  colorChooserWidth);
+  $(".brushChooser").css("height", colorChooserWidth);
+  $(".brushImg").css("width",  colorChooserWidth);
+  $(".brushImg").css("height", colorChooserWidth);
+  
   $("#canvasPlaceholder").css( {
     "width": canvasPlaceholderWidth, 
     "height": canvasPlaceholderHeight,
