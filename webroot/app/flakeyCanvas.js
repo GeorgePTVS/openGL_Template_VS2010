@@ -329,14 +329,14 @@ $(document).ready(function () {
 
   function drawSquare( size )
   {
-   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+   $ctx.fillRect(0 - size, 0 - size, 2 * size, 2 * size);
   }
   function drawTriangle( size )
   {
     $ctx.beginPath();
-    $ctx.moveTo(-size, size * rad3Over2);
-    $ctx.lineTo(0,     -size * rad3Over2);
-    $ctx.lineTo( size, size * rad3Over2);
+    $ctx.moveTo(-size,  size * rad3Over2);
+    $ctx.lineTo( 0,    -size * rad3Over2);
+    $ctx.lineTo( size,  size * rad3Over2);
     $ctx.closePath();
     $ctx.fill();
   }
@@ -352,7 +352,12 @@ $(document).ready(function () {
   }
   function drawScalene( size )
   {
-   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+    $ctx.beginPath();
+    $ctx.moveTo(-size      , -size       );
+    $ctx.lineTo( size * 0.8,  size * 0.8 );
+    $ctx.lineTo(-size * 0.8,  size       );
+    $ctx.closePath();
+    $ctx.fill();
   }
   function drawSpur( size )
   {
