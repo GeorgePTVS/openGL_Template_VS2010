@@ -16,9 +16,6 @@ var ROTATE_DETENT = 10;
 var $canvass;
 var $ctx;
 var $colorChooserBorder = 5;  // px
-var $brushColor = CANVAS_BRUSH_COLOR_INIT;
-var $brushScale    = 1.0;
-var $brushRotation = 0.0;
 
 var touchStartCount = 0;
 var touchEndCount = 0;
@@ -26,6 +23,7 @@ var touchersCount = 0;  // number of fingers/things touching device.
 var wasMultitouching = false;
 var scaleDistanceBaseline = 1.0;  // not sure of units.  
 var angleBaseline = 0.0;
+var rad3Over2 = 0.8660254;
 
 var usingMouse = false;
 
@@ -43,3 +41,9 @@ var $shape = {
 };
   
 var $shapes = [];
+var $brushShape = jQuery.extend(true, {}, $shape);
+$brushShape.color = CANVAS_BRUSH_COLOR_INIT;
+$brushShape.scale    = 1.0;
+$brushShape.rotation = 0.0;
+
+

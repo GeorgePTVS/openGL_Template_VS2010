@@ -8,8 +8,8 @@ $(document).ready(function () {
   // --------------------------
   $(".colorChooser").on('click', function () {
     var newColor = $(this).css("background-color");
-    $brushColor = newColor;
-    console.log("button click  color = " + $brushColor );
+    $brushShape.color = newColor;
+    console.log("button click  color = " + $brushShape.color );
   });
   
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
@@ -72,14 +72,14 @@ $(document).ready(function () {
       if ( event.shiftKey ) 
       {
         // scale
-        $brushScale += BRUSH_SCALE_DELTA;
-        console.log("wheel up. new brushScale = " + $brushScale);
+        $brushShape.scale += BRUSH_SCALE_DELTA;
+        console.log("wheel up. new brushScale = " + $brushShape.scale);
       } 
       else 
       {
         // rotate
-        $brushRotation += BRUSH_ROTATION_DELTA;
-        console.log("wheel up. new brushRotation = " + $brushRotation);
+        $brushShape.rotation += BRUSH_ROTATION_DELTA;
+        console.log("wheel up. new brushRotation = " + $brushShape.rotation);
       }
     }
     else {
@@ -87,14 +87,14 @@ $(document).ready(function () {
       if ( event.shiftKey ) 
       {
         // scale
-        $brushScale -= BRUSH_SCALE_DELTA;
-        console.log("wheel down. new brushScale = " + $brushScale);
+        $brushShape.scale -= BRUSH_SCALE_DELTA;
+        console.log("wheel down. new brushScale = " + $brushShape.scale);
       }
       else 
       {
         // rotate
-        $brushRotation -= BRUSH_ROTATION_DELTA;
-        console.log("wheel down. new brushRotation = " + $brushRotation);
+        $brushShape.rotation -= BRUSH_ROTATION_DELTA;
+        console.log("wheel down. new brushRotation = " + $brushShape.rotation);
       }
     }  // else of wheelDelta etc
   });
@@ -118,10 +118,10 @@ $(document).ready(function () {
     // Deep copy
     var shapeNew = jQuery.extend(true, {}, $shape);
     shapeNew.mouseXY = mouseXY;
-    console.log("addShape  color = " + $brushColor );
-    shapeNew.color = $brushColor;
-    shapeNew.scale = $brushScale;
-    shapeNew.rotation = $brushRotation;
+    console.log("addShape  color = " + $brushShape.color );
+    shapeNew.color = $brushShape.color;
+    shapeNew.scale = $brushShape.scale;
+    shapeNew.rotation = $brushShape.rotation;
     $shapes.push( shapeNew );   
   }
   
@@ -188,10 +188,10 @@ $(document).ready(function () {
       // if ( wasMultitouching ) 
       // {
         // // change scale
-        // $brushScale = $brushScale * disty / scaleDistanceBaseline;
+        // $brushShape.scale = $brushShape.scale * disty / scaleDistanceBaseline;
         
         // // change angle
-        // $brushRotation = $brushRotation + (angle - angleBaseline);
+        // $brushShape.rotation = $brushShape.rotation + (angle - angleBaseline);
       // }
       // else
       // {
@@ -201,8 +201,8 @@ $(document).ready(function () {
       // scaleDistanceBaseline = disty;
       // angleBaseline = angle;
 
-      // $brushScale = 1.23;
-      // $brushRotation = angle * (180.0/Math.PI);
+      // $brushShape.scale = 1.23;
+      // $brushShape.rotation = angle * (180.0/Math.PI);
     // }  // if touchLen == 1
     
     
@@ -231,10 +231,10 @@ $(document).ready(function () {
       if ( wasMultitouching ) 
       {
         // change scale
-        $brushScale = $brushScale * disty / scaleDistanceBaseline;
+        $brushShape.scale = $brushShape.scale * disty / scaleDistanceBaseline;
         
         // change angle
-        $brushRotation = $brushRotation + (angle - angleBaseline);
+        $brushShape.rotation = $brushShape.rotation + (angle - angleBaseline);
       }
       else
       {
@@ -269,7 +269,7 @@ $(document).ready(function () {
     touchersCount = e.originalEvent.touches.length;
     touchStartCount++;
     console.log("touchstart:  touchStartCount = " + touchStartCount + "    e = " + e);
-    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushScale.toFixed(3) + " ang= " + $brushRotation.toFixed(6));
+    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushShape.scale.toFixed(3) + " ang= " + $brushShape.rotation.toFixed(6));
     $touchXY = getTouchPos($canvass, e);
     });
 
@@ -285,7 +285,7 @@ $(document).ready(function () {
     touchEndCount++;
     wasMultitouching = false;
 
-    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushScale.toFixed(3) + " ang= " + $brushRotation.toFixed(6));
+    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushShape.scale.toFixed(3) + " ang= " + $brushShape.rotation.toFixed(6));
     console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
 //    console.log("touchend, adding $shape");
     // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape. 
@@ -320,6 +320,11 @@ $(document).ready(function () {
     $ctx.clearRect(0, 0, $canvass.width(), $canvass.height());
   }
 
+  function drawShape( shape ) {
+   var size = BRUSH_SIZE_BASE;
+   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+  }
+  
   function drawScene() {
     // translate context to center of canvas
     var centerX = $ctx.canvas.width / 2;
@@ -341,7 +346,6 @@ $(document).ready(function () {
 
         // draw
         var start = $shapes[i].mouseXY;
-        var size = BRUSH_SIZE_BASE;
         var color = $shapes[i].color;
         $ctx.fillStyle = color;
 
@@ -350,7 +354,7 @@ $(document).ready(function () {
         $ctx.translate( start.x, start.y );
         $ctx.rotate( Math.PI * shapeRot / 180.0 );
         $ctx.scale( $shapes[i].scale, $shapes[i].scale );
-        $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+        drawShape( $shapes[i] );
         $ctx.restore();
       }  // flakeRot
 
@@ -369,8 +373,8 @@ $(document).ready(function () {
     var centerX = $ctx.canvas.width / 2;
     var centerY = $ctx.canvas.height / 2;
     $ctx.save();
-    $ctx.fillStyle = $brushColor;
-    var ctxRotation = getDetentRotation( $brushRotation );
+    $ctx.fillStyle = $brushShape.color;
+    var ctxRotation = getDetentRotation( $brushShape.rotation );
 
     // repeat each shape 6 times around the center
     for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
@@ -391,8 +395,8 @@ $(document).ready(function () {
           // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
           $ctx.translate( $touchXY[i].x, $touchXY[i].y );
           $ctx.rotate( ctxRotation * Math.PI / 180.0 );
-          $ctx.scale( $brushScale, $brushScale );
-          $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+          $ctx.scale( $brushShape.scale, $brushShape.scale );
+          drawShape( $brushShape );
           $ctx.restore();
         }  // touchersCount
       
@@ -404,8 +408,8 @@ $(document).ready(function () {
         // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
         $ctx.translate( $mouseXY.x, $mouseXY.y );
         $ctx.rotate( ctxRotation * Math.PI / 180.0 );
-        $ctx.scale( $brushScale, $brushScale );
-        $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+        $ctx.scale( $brushShape.scale, $brushShape.scale );
+        drawShape( $brushShape );
         $ctx.restore();
       }
       
