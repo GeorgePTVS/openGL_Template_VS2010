@@ -4,7 +4,7 @@ $(document).ready(function () {
   onWindowResize();
 
   // --------------------------
-  // -- Color chooser
+  // -- Color & brush choosers
   // --------------------------
   $(".colorChooser").on('click', function () {
     var newColor = $(this).css("background-color");
@@ -12,6 +12,12 @@ $(document).ready(function () {
     console.log("button click  color = " + $brushShape.color );
   });
   
+  $(".brushChooser").on('click', function () {
+    var newBrush = $(this).attr('id');
+    $brushShape.type = newBrush;
+    console.log("brush click  type = " + $brushShape.type );
+  });
+
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
   $(".colorChooser,.brushChooser").hover(
     // TODO Use addClass removeClass (or toggleClass) in each of these fns)
@@ -320,9 +326,48 @@ $(document).ready(function () {
     $ctx.clearRect(0, 0, $canvass.width(), $canvass.height());
   }
 
+  function drawSquare( size )
+  {
+   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+  }
+  function drawTriangle( size )
+  {
+   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+  }
+  function drawLine( size )
+  {
+   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+  }
+  function drawScalene( size )
+  {
+   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+  }
+  function drawSpur( size )
+  {
+   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+  }
+  function drawCircle( size )
+  {
+   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+  }
+
   function drawShape( shape ) {
    var size = BRUSH_SIZE_BASE;
-   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+   if ( shape.type == "square" ) 
+     drawSquare( size );
+   else if ( shape.type == "triangle" ) 
+     drawTriangle( size );
+   else if ( shape.type == "line" ) 
+     drawLine( size );
+   else if ( shape.type == "scalene" ) 
+     drawScalene( size );
+   else if ( shape.type == "spur" ) 
+     drawSpur( size );
+   else if ( shape.type == "circle" ) 
+     drawCircle( size );
+   else 
+     drawSquare( size );
+
   }
   
   function drawScene() {
