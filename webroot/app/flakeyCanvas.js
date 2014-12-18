@@ -116,6 +116,10 @@ $(document).ready(function () {
   // --------------------------
   // -- Canvas mouse
   // --------------------------
+    function getDetentRotation( rot ) {
+     var adjRot = ROTATE_DETENT * Math.round( rot / ROTATE_DETENT );
+     return adjRot;
+    }
 
   function getMousePos(canvas, event) {
     // can/should also use event.pageX, event.scrollX?  event.screenX?
@@ -310,6 +314,7 @@ $(document).ready(function () {
     
     for (var i = 0; i < $shapes.length; i++) {
     
+      var shapeRot = getDetentRotation( $shapes[i].rotation );
     
       // repeat each shape 6 times around the center
       for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
@@ -329,7 +334,7 @@ $(document).ready(function () {
         $ctx.save();
         // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
         $ctx.translate( start.x, start.y );
-        $ctx.rotate( Math.PI * $shapes[i].rotation / 180.0 );
+        $ctx.rotate( Math.PI * shapeRot / 180.0 );
         $ctx.scale( $shapes[i].scale, $shapes[i].scale );
         $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
         $ctx.restore();
@@ -348,6 +353,7 @@ $(document).ready(function () {
     var centerY = $ctx.canvas.height / 2;
     $ctx.save();
     $ctx.fillStyle = $brushColor;
+    var ctxRotation = getDetentRotation( $brushRotation );
 
     // repeat each shape 6 times around the center
     for (var flakeRot = 0; flakeRot < 6; flakeRot++) {
@@ -367,7 +373,7 @@ $(document).ready(function () {
           $ctx.save();
           // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
           $ctx.translate( $touchXY[i].x, $touchXY[i].y );
-          $ctx.rotate( Math.PI * $brushRotation / 180.0 );
+          $ctx.rotate( ctxRotation * Math.PI / 180.0 );
           $ctx.scale( $brushScale, $brushScale );
           $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
           $ctx.restore();
@@ -380,7 +386,7 @@ $(document).ready(function () {
         $ctx.save();
         // rotate about current mouse position: Transform to origin, rotate, then transform back to position.
         $ctx.translate( $mouseXY.x, $mouseXY.y );
-        $ctx.rotate( Math.PI * $brushRotation / 180.0 );
+        $ctx.rotate( ctxRotation * Math.PI / 180.0 );
         $ctx.scale( $brushScale, $brushScale );
         $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
         $ctx.restore();
