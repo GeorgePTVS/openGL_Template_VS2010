@@ -95,11 +95,8 @@ $(document).ready(function () {
 
 
 
-  // $canvass and $ctx are defined in globals.js and are updated in window resizing
-
-
   // --------------------------
-  // -- Canvas draw $shape
+  // -- Canvas draw shape
   // --------------------------
   function addShape(mouseXY) {
     // var shapeNew = $shape;
@@ -149,6 +146,50 @@ $(document).ready(function () {
       };
       touchResult.push( mouseXY );
     }
+
+
+    
+     // // use this to test on a non-touch. Comment out/remove in production
+    // if ( touchLen == 1 )
+    // {
+      // // calculate scale and rot
+      // var touch0  = event.originalEvent.touches[0];
+      // var mouseX0 = touch0.clientX - canvas.offset().left;
+      // var mouseY0 = touch0.clientY - canvas.offset().top;
+
+      // var mouseX1 = 53;
+      // var mouseY1 = 234;
+
+      // var xsquared = (mouseX1 - mouseX0) * (mouseX1 - mouseX0);
+      // var ysquared = (mouseY1 - mouseY0) * (mouseY1 - mouseY0);
+      
+      // var disty = Math.sqrt( xsquared + ysquared );
+      // var angle = 0.0;
+      // if ( (mouseX1 - mouseX0) != 0 ) 
+       // angle = Math.atan2( (mouseY1 - mouseY0),(mouseX1 - mouseX0) );
+
+      // if ( wasMultitouching ) 
+      // {
+        // // change scale
+        // $brushScale = $brushScale * disty / scaleDistanceBaseline;
+        
+        // // change angle
+        // $brushRotation = $brushRotation + (angle - angleBaseline);
+      // }
+      // else
+      // {
+        // wasMultitouching = true;
+      // }
+      // // set baselines
+      // scaleDistanceBaseline = disty;
+      // angleBaseline = angle;
+
+      // $brushScale = 1.23;
+      // $brushRotation = angle * (180.0/Math.PI);
+    // }  // if touchLen == 1
+    
+    
+    
     // multitouch to adjust scale
     if ( touchLen > 1)
     {
@@ -165,19 +206,26 @@ $(document).ready(function () {
       var ysquared = (mouseY1 - mouseY0) * (mouseY1 - mouseY0);
       
       var disty = Math.sqrt( xsquared + ysquared );
+      var angle = 0.0;
+      if ( (mouseX1 - mouseX0) != 0 ) 
+       angle = (180.0/ Math.PI) * Math.atan2( (mouseY1 - mouseY0),(mouseX1 - mouseX0) );
+       
 
       if ( wasMultitouching ) 
       {
-        // increase scale
+        // change scale
         $brushScale = $brushScale * disty / scaleDistanceBaseline;
-        scaleDistanceBaseline = disty;
+        
+        // change angle
+        $brushRotation = $brushRotation + (angle - angleBaseline);
       }
       else
       {
         wasMultitouching = true;
-        // set scale baseline
-        scaleDistanceBaseline = disty;
       }
+      // set baselines
+      scaleDistanceBaseline = disty;
+      angleBaseline = angle;
       
     }  // if ( touchLen > 1)
     else
@@ -204,11 +252,8 @@ $(document).ready(function () {
     touchersCount = e.originalEvent.touches.length;
     touchStartCount++;
     console.log("touchstart:  touchStartCount = " + touchStartCount + "    e = " + e);
-    $("#debugHeader").text("touchsz=" + touchersCount + " scale =" + $brushScale);
+    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushScale.toFixed(3) + " ang= " + $brushRotation.toFixed(6));
     $touchXY = getTouchPos($canvass, e);
-
-    // $("#debugHeader").text("touchsz=" + touchersCount + " scale =" + $brushScale);
-
     });
 
   $canvass.on('touchmove', function (e) {
@@ -223,10 +268,11 @@ $(document).ready(function () {
     touchEndCount++;
     wasMultitouching = false;
 
-    $("#debugHeader").text("touchsz=" + touchersCount + " scale =" + $brushScale);
+    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushScale.toFixed(3) + " ang= " + $brushRotation.toFixed(6));
     console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
 //    console.log("touchend, adding $shape");
-    // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape.
+    // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape. 
+    // Currently you can just drag off the canvas and it appears that no shape gets added, but might still be getting added.
     console.log("touchend:  touchies[0]: " + $touchXY[0].x + " " + $touchXY[0].y);
     console.log("touchend:  touchieslength: " + $touchXY.length );
     if ( touchersCount == 0 )
@@ -297,7 +343,6 @@ $(document).ready(function () {
   }
 
   function drawMouse() {
-    // var start = $mouseXY;
     var size = BRUSH_SIZE_BASE;
     var centerX = $ctx.canvas.width / 2;
     var centerY = $ctx.canvas.height / 2;

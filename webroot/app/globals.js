@@ -23,6 +23,7 @@ var touchEndCount = 0;
 var touchersCount = 0;  // number of fingers/things touching device.
 var wasMultitouching = false;
 var scaleDistanceBaseline = 1.0;  // not sure of units.  
+var angleBaseline = 0.0;
 
 // use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
 var $shape = {
