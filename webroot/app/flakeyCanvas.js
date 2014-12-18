@@ -149,6 +149,25 @@ $(document).ready(function () {
       };
       touchResult.push( mouseXY );
     }
+        // // test multitouch
+    if ( touchLen > 1)
+    {
+      // calculate scale and rot
+      // var touch0  = event.originalEvent.touches[0];
+      // var mouseX0 = touch0.clientX - canvas.offset().left;
+      // var mouseY0 = touch0.clientY - canvas.offset().top;
+
+      // var touch1  = event.originalEvent.touches[1];
+      // var mouseX1 = touch1.clientX - canvas.offset().left;
+      // var mouseY1 = touch1.clientY - canvas.offset().top;
+
+      // var xsquared = (mouseX1 - mouseX0) * (mouseX1 - mouseX0);
+      // var ysquared = (mouseY1 - mouseY0) * (mouseY1 - mouseY0);
+      
+      // var disty = Math.sqry( xsquared + ysquared );
+//      $brushScale = BRUSH_SIZE_BASE * disty;
+      $brushScale = 2.345;
+    }
 
     return touchResult;
   }
@@ -168,14 +187,13 @@ $(document).ready(function () {
     e.preventDefault();
     touchersCount = e.originalEvent.touches.length;
     touchStartCount++;
-    $("#debugHeader").text("tSt= " + touchStartCount + ",end= " + touchEndCount + ", sz=" + touchersCount);
     console.log("touchstart:  touchStartCount = " + touchStartCount + "    e = " + e);
+    $("#debugHeader").text("touchsz=" + touchersCount + " scale =" + $brushScale);
     $touchXY = getTouchPos($canvass, e);
-    // // test multitouch
-    // if ( touchStartCount > 1)
-       // addShape($mouseXY);
 
-  });
+    // $("#debugHeader").text("touchsz=" + touchersCount + " scale =" + $brushScale);
+
+    });
 
   $canvass.on('touchmove', function (e) {
     e.preventDefault();
@@ -187,7 +205,7 @@ $(document).ready(function () {
     e.preventDefault();
     touchersCount = e.originalEvent.touches.length;
     touchEndCount++;
-    $("#debugHeader").text("tSt= " + touchStartCount + ",end= " + touchEndCount + ", sz=" + touchersCount);
+    $("#debugHeader").text("touchsz=" + touchersCount + " scale =" + $brushScale);
     console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
 //    console.log("touchend, adding $shape");
     // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape.
