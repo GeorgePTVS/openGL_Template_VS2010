@@ -227,7 +227,9 @@ $(document).ready(function () {
     console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
 //    console.log("touchend, adding $shape");
     // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape.
-    //addShape(getTouchPos($canvass, e));
+    console.log("touchend:  touchies[0]: " + $touchXY[0].x + " " + $touchXY[0].y);
+    console.log("touchend:  touchieslength: " + $touchXY.length );
+    addShape($touchXY[0]);
   });
   
   $canvass.on('click', function (e) {
