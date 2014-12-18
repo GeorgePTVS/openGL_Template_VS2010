@@ -126,6 +126,18 @@ ol {
 #forest-green.colorChooserDiv {
   background-color:#186000;
 }
+#maroon.colorChooserDiv {
+  background-color:#800000;
+}
+#teal.colorChooserDiv {
+  background-color:#008080;
+}
+#gray.colorChooserDiv {
+  background-color:#808080;
+}
+#silver.colorChooserDiv {
+  background-color:#c0c0c0;
+}
 #white.colorChooserDiv {
   background-color:#FFFFFF;
 }
