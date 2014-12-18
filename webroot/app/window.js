@@ -18,12 +18,11 @@ function onWindowResize()
   else
   {
     mainHeight = Math.round(MAIN_W_SCALAR * winHeight);
-    mainWidth = mainHeight * ( 1.0 + 1.0/NUM_COLORS);
+    mainWidth = Math.round(mainHeight * ( 1.0 + 1.0/NUM_COLORS));
     colorChooserWidth = Math.round(mainHeight * 1.0/NUM_COLORS);
   }
 
   var whitespaceFudge = 0;   // ugh this varied based on font I used in h1...a,p,div, etc
-  var negWhitespaceFudge = -1*whitespaceFudge;
   var contentWidth = mainWidth + colorChooserWidth + whitespaceFudge;
   var canvasPlaceholderWidth  = mainWidth;
   var canvasPlaceholderHeight = mainHeight + 1;
