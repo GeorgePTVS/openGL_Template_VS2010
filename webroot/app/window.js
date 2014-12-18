@@ -73,5 +73,4 @@ function onWindowResize()
    else 
     console.log('Error: Canvas not found with selector #canvas');
 
-    
 }    

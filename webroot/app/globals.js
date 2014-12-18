@@ -3,7 +3,7 @@
 // Cache elements
 console.log("Global canvas elements");
 var COLOR_CHOOSER_BORDER_SCALAR = 10;
-var MAIN_W_SCALAR = 0.8;
+var MAIN_W_SCALAR = 0.7;
 var NUM_COLORS = 12;
 var COLOR_CHOOSER_SCALAR = 0.05;
 var CANVAS_BRUSH_COLOR_INIT = "#FFFFFF";
