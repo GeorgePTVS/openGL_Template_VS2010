@@ -12,6 +12,7 @@ var BRUSH_SIZE_TOUCH_SCALAR = 0.001;
 var BRUSH_SCALE_DELTA = 0.25;
 var BRUSH_ROTATION_DELTA = 10;  // degrees
 var ROTATE_DETENT = 10;  
+var LINE_HEIGHT_SCALAR = 0.1;
 
 var $canvass;
 var $ctx;
