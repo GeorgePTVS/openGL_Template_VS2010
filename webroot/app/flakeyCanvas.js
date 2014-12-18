@@ -332,7 +332,13 @@ $(document).ready(function () {
   }
   function drawTriangle( size )
   {
-   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+    $ctx.beginPath();
+    // $ctx.moveTo(0, 0);
+    $ctx.moveTo(-size, size * rad3Over2);
+    $ctx.lineTo(0,     -size * rad3Over2);
+    $ctx.lineTo( size, size * rad3Over2);
+    $ctx.closePath();
+    $ctx.fill();
   }
   function drawLine( size )
   {
