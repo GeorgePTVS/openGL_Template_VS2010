@@ -8,10 +8,11 @@ function onWindowResize()
   var mainHeight = mainWidth;
 
   var colorChooserWidth = 30;
+  var numBars = 2;  // color chooser bar and shape chooser bar
   // have to account for aspect ratio.  
   if ( winWidth < winHeight )
   {
-    mainWidth = Math.round(MAIN_W_SCALAR * winWidth * ( 1.0 + 1.0/NUM_COLORS));
+    mainWidth = Math.round(MAIN_W_SCALAR * winWidth * ( 1.0 + numBars/NUM_COLORS));
     colorChooserWidth = Math.round(mainWidth * 1.0/NUM_COLORS);
     mainWidth = colorChooserWidth * NUM_COLORS;
     mainHeight = mainWidth;
@@ -19,13 +20,13 @@ function onWindowResize()
   else
   {
     mainHeight = Math.round(MAIN_W_SCALAR * winHeight);
-    mainWidth = Math.round(mainHeight * ( 1.0 + 1.0/NUM_COLORS));
+    mainWidth = Math.round(mainHeight * ( 1.0 + numBars/NUM_COLORS));
     colorChooserWidth = Math.round(mainHeight * 1.0/NUM_COLORS);
     mainHeight = colorChooserWidth * NUM_COLORS;
   }
 
   var whitespaceFudge = 0;   // ugh this varied based on font I used in h1...a,p,div, etc
-  var contentWidth = mainWidth + colorChooserWidth + whitespaceFudge;
+  var contentWidth = mainWidth + numBars * colorChooserWidth + whitespaceFudge;
   var canvasPlaceholderWidth  = mainWidth;
   var canvasPlaceholderHeight = mainHeight;
   
@@ -55,6 +56,13 @@ function onWindowResize()
     "margin" : buttonBarMarginString
     });
     
+  $("#toolBarPlaceholder").css( {
+    "width": buttonBarPlaceholderWidth, 
+    "height": buttonBarPlaceholderHeight,
+    "background" : "#886600",
+    "margin" : buttonBarMarginString
+    });
+
     // put new width into global (context) for use in mouse position calcs etc
    $canvass = $("#canvasPlaceholder");
    if( $canvass.length ) {
