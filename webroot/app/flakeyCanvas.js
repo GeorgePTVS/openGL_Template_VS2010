@@ -12,8 +12,8 @@ $(document).ready(function () {
     console.log("button click  color = " + $brushColor );
   });
   
-  // put a solid border around color chooser during hover.  Have to manipulate size since border starts as 0.
-  $(".colorChooser").hover(
+  // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
+  $(".colorChooser,.brushChooser").hover(
     // TODO Use addClass removeClass (or toggleClass) in each of these fns)
     function () {
     // var $colorChooserBorder = 5;  // px
@@ -22,6 +22,13 @@ $(document).ready(function () {
     $(this).css("width", oldWidth - $colorChooserBorder * 2);
     $(this).css("height", oldHeight - $colorChooserBorder * 2);
     $(this).css("border", $colorChooserBorder + "px solid gray");
+
+    var bImg = $(this).find(".brushImg");
+    oldWidth  = bImg.width();
+    oldHeight = bImg.height();
+    bImg.css("width", oldWidth - $colorChooserBorder * 2);
+    bImg.css("height", oldHeight - $colorChooserBorder * 2);
+    
   }, function () {
     // var $colorChooserBorder = 5;  // px
     var oldWidth = $(this).width();
@@ -29,6 +36,12 @@ $(document).ready(function () {
     $(this).css("width", oldWidth + $colorChooserBorder * 2);
     $(this).css("height", oldHeight + $colorChooserBorder * 2);
     $(this).css("border", "0");
+
+    var bImg = $(this).find(".brushImg");
+    oldWidth  = bImg.width();
+    oldHeight = bImg.height();
+    bImg.css("width", oldWidth + $colorChooserBorder * 2);
+    bImg.css("height", oldHeight + $colorChooserBorder * 2);
   });
 
   
