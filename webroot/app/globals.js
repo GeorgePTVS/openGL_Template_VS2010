@@ -27,6 +27,8 @@ var wasMultitouching = false;
 var scaleDistanceBaseline = 1.0;  // not sure of units.  
 var angleBaseline = 0.0;
 
+var usingMouse = false;
+
 // use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
 var $shape = {
   mouseXY : {

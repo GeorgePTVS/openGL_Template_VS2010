@@ -7,7 +7,6 @@ $(document).ready(function () {
   // -- Color chooser
   // --------------------------
   $(".colorChooser").on('click', function () {
-
     var newColor = $(this).css("background-color");
     $brushColor = newColor;
     console.log("button click  color = " + $brushColor );
@@ -54,6 +53,7 @@ $(document).ready(function () {
   // http://stackoverflow.com/questions/8189840/get-mouse-wheel-events-in-jquery
   $(window).bind('wheel DOMMouseScroll', function(event){
     // (mouse)wheel event
+    usingMouse = true;
     if (event.originalEvent.wheelDelta > 0 || event.originalEvent.detail < 0) {
       // wheel up
       if ( event.shiftKey ) 
@@ -290,6 +290,7 @@ $(document).ready(function () {
 
   $canvass.on('mousemove', function (e) {
   e.preventDefault();
+  usingMouse = true;
   $mouseXY = getMousePos($canvass, e);
   });
 
@@ -348,6 +349,9 @@ $(document).ready(function () {
   }
 
   function drawMouse() {
+    if ( !usingMouse && touchersCount < 1 ) 
+      return;
+      
     var size = BRUSH_SIZE_BASE;
     var centerX = $ctx.canvas.width / 2;
     var centerY = $ctx.canvas.height / 2;
