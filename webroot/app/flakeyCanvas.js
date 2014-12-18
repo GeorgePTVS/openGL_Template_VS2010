@@ -153,20 +153,19 @@ $(document).ready(function () {
     if ( touchLen > 1)
     {
       // calculate scale and rot
-      // var touch0  = event.originalEvent.touches[0];
-      // var mouseX0 = touch0.clientX - canvas.offset().left;
-      // var mouseY0 = touch0.clientY - canvas.offset().top;
+      var touch0  = event.originalEvent.touches[0];
+      var mouseX0 = touch0.clientX - canvas.offset().left;
+      var mouseY0 = touch0.clientY - canvas.offset().top;
 
-      // var touch1  = event.originalEvent.touches[1];
-      // var mouseX1 = touch1.clientX - canvas.offset().left;
-      // var mouseY1 = touch1.clientY - canvas.offset().top;
+      var touch1  = event.originalEvent.touches[1];
+      var mouseX1 = touch1.clientX - canvas.offset().left;
+      var mouseY1 = touch1.clientY - canvas.offset().top;
 
-      // var xsquared = (mouseX1 - mouseX0) * (mouseX1 - mouseX0);
-      // var ysquared = (mouseY1 - mouseY0) * (mouseY1 - mouseY0);
+      var xsquared = (mouseX1 - mouseX0) * (mouseX1 - mouseX0);
+      var ysquared = (mouseY1 - mouseY0) * (mouseY1 - mouseY0);
       
-      // var disty = Math.sqry( xsquared + ysquared );
-//      $brushScale = BRUSH_SIZE_BASE * disty;
-      $brushScale = 2.345;
+      var disty = Math.sqrt( xsquared + ysquared );
+      $brushScale = BRUSH_SIZE_TOUCH_SCALAR * disty;
     }
 
     return touchResult;
