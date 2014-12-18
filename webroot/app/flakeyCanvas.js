@@ -128,6 +128,7 @@ $(document).ready(function () {
     shapeNew.color = $brushShape.color;
     shapeNew.scale = $brushShape.scale;
     shapeNew.rotation = $brushShape.rotation;
+    shapeNew.type = $brushShape.type;
     $shapes.push( shapeNew );   
   }
   
