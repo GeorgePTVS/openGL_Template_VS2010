@@ -13,6 +13,7 @@ var BRUSH_SCALE_DELTA = 0.25;
 var BRUSH_ROTATION_DELTA = 10;  // degrees
 var ROTATE_DETENT = 10;  
 var LINE_HEIGHT_SCALAR = 0.1;
+var NUM_CIRCLE_SECTIONS = 12;
 
 var $canvass;
 var $ctx;

@@ -361,7 +361,19 @@ $(document).ready(function () {
   }
   function drawSpur( size )
   {
-   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+    $ctx.save();
+    var rotAngle = (2.0 * Math.PI) / NUM_CIRCLE_SECTIONS;
+    for (var i = 0; i < NUM_CIRCLE_SECTIONS; i++ )
+    {
+      $ctx.rotate( rotAngle );
+      $ctx.beginPath();
+      $ctx.moveTo( 0   , 0    );
+      $ctx.lineTo( 0   , size );
+      $ctx.lineTo( size, size );
+      $ctx.closePath();
+      $ctx.fill();
+    }
+    $ctx.restore();
   }
   function drawCircle( size )
   {
