@@ -377,7 +377,18 @@ $(document).ready(function () {
   }
   function drawCircle( size )
   {
-   $ctx.fillRect(0 - size/2, 0 - size/2, size, size);
+    $ctx.save();
+    var rotAngle = (2.0 * Math.PI) / NUM_CIRCLE_SECTIONS;
+    $ctx.beginPath();
+    $ctx.moveTo( -size  , 0    );
+    for (var i = 0; i < NUM_CIRCLE_SECTIONS; i++ )
+    {
+      $ctx.rotate( rotAngle );
+      $ctx.lineTo( -size   , 0 );
+    }
+    $ctx.closePath();
+    $ctx.fill();
+    $ctx.restore();
   }
 
   function drawShape( shape ) {
