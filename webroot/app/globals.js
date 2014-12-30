@@ -37,6 +37,11 @@ var rad3Over2 = 0.8660254;
 var usingMouse = false;
 var mouseTimeout;
 
+var undoRepeatVar;
+var redoRepeatVar;
+var UNDO_REPEAT_TIMEOUT = 75;
+var REDO_REPEAT_TIMEOUT = UNDO_REPEAT_TIMEOUT;
+
 // use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
 var $shape = {
   mouseXY : {

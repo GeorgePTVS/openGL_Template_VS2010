@@ -9,6 +9,12 @@ $(document).ready(function () {
   // --------------------------
   // -- actions
   // --------------------------
+  function repeatActionUndo()
+  {
+    actionUndo();
+    clearTimeout( undoRepeatVar );
+    undoRepeatVar = setTimeout( repeatActionUndo, UNDO_REPEAT_TIMEOUT );
+  }
   function actionUndo()
   {
     usingMouse = false;
@@ -19,6 +25,12 @@ $(document).ready(function () {
     }
   }
   
+  function repeatActionRedo()
+  {
+    actionRedo();
+    clearTimeout( redoRepeatVar );
+    redoRepeatVar = setTimeout( repeatActionRedo, REDO_REPEAT_TIMEOUT );
+  }
   function actionRedo()
   {
     usingMouse = false;
@@ -44,13 +56,20 @@ $(document).ready(function () {
     console.log("brush click  type = " + $brushShape.type );
   });
 
-  $("#undo").on('click', function () {
-      actionUndo();
-  });
+  // $("#undo").on('click', function () {
+      // actionUndo();
+  // });
 
-  $("#redo").on('click', function () {
-      actionRedo();
-  });
+  $("#undo").on('mousedown', function () { actionUndo(); repeatActionUndo(); })
+  .on('mouseup mouseout', function () { clearTimeout( undoRepeatVar ); })
+
+
+  // $("#redo").on('click', function () {
+      // actionRedo();
+  // });
+
+  $("#redo").on('mousedown', function () { actionUndo(); repeatActionRedo(); })
+  .on('mouseup mouseout', function () { clearTimeout( redoRepeatVar ); })
 
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
   $(".chooser").hover(
