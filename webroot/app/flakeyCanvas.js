@@ -44,16 +44,12 @@ $(document).ready(function () {
     console.log("brush click  type = " + $brushShape.type );
   });
 
-  $(".actionChooser").on('click', function () {
-    var newAction = $(this).attr('id');
-    if ( newAction == "undo" )
-    {
+  $("#undo").on('click', function () {
       actionUndo();
-    } 
-    else if ( newAction == "redo" )
-    {
+  });
+
+  $("#redo").on('click', function () {
       actionRedo();
-    }  
   });
 
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
