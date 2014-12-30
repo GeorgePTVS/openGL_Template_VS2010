@@ -38,15 +38,9 @@ function onWindowResize()
   $(".main_content").css("width",  contentWidth);
   $(".main_content").css("height", mainHeight);
 
-  // TODO Make these all the same class: chooser
-  $(".colorChooser").css("width",  colorChooserWidth);
-  $(".colorChooser").css("height", colorChooserWidth);
-  $(".brushChooser").css("width",  colorChooserWidth);
-  $(".brushChooser").css("height", colorChooserWidth);
-  $(".actionChooser").css("width",  colorChooserWidth);
-  $(".actionChooser").css("height", colorChooserWidth);
+  $(".chooser").css("width",  colorChooserWidth);
+  $(".chooser").css("height", colorChooserWidth);
 
-  // TODO make these all the same class: chooserImg
   $(".buttonImg").css("width",  colorChooserWidth);
   $(".buttonImg").css("height", colorChooserWidth);
   
