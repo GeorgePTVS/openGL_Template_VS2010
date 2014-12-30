@@ -19,7 +19,7 @@ $(document).ready(function () {
   });
 
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
-  $(".colorChooser,.brushChooser").hover(
+  $(".colorChooser,.brushChooser,.actionChooser").hover(
     // TODO Use addClass removeClass (or toggleClass) in each of these fns)
     function () {
     // var $colorChooserBorder = 5;  // px
