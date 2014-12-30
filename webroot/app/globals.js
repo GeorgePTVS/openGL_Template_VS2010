@@ -17,6 +17,7 @@ var BRUSH_ROTATION_DELTA = 10;  // degrees
 var ROTATE_DETENT = 10;  
 var LINE_HEIGHT_SCALAR = 0.1;
 var NUM_CIRCLE_SECTIONS = 12;
+var MOUSE_TIMEOUT = 2500;
 
 var $canvass;
 var $ctx;
@@ -31,6 +32,7 @@ var angleBaseline = 0.0;
 var rad3Over2 = 0.8660254;
 
 var usingMouse = false;
+var mouseTimeout;
 
 // use this as the prototype for all shapes, just changing properties on it and doing $shapes.push(shape) to add a new one (e.g. in click), and .pop to remove.
 var $shape = {

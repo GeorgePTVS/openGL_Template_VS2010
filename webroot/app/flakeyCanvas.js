@@ -308,9 +308,22 @@ $(document).ready(function () {
     addShape(getMousePos($canvass, e));
   });
 
+  function setMouseTimeout()
+  { 
+    clearTimeout( mouseTimeout );
+    mouseTimeout = setTimeout( setUsingMouseFalse, MOUSE_TIMEOUT );
+  }
+
+  function setUsingMouseFalse()
+  {
+    usingMouse = false;
+    setMouseTimeout();
+  }
+
   $canvass.on('mousemove', function (e) {
   e.preventDefault();
   usingMouse = true;
+  setMouseTimeout();
   $mouseXY = getMousePos($canvass, e);
   });
 
@@ -513,6 +526,11 @@ $(document).ready(function () {
     drawMouse();
   }
 
+// <button onclick = "setTimeout(function(){alert('Hello')},3000)">Try it</button>
+// window.setTimeout("javascript function", milliseconds);
+// The window.setTimeout() method can be written without the window prefix.
+// window.clearTimeout(timeoutVariable)
+  
   var FPS = 40;
   setInterval(function () {
     // this is for timer-driven drawing. There is also event-driven (e.g. mousemove)
@@ -520,5 +538,6 @@ $(document).ready(function () {
     draw();
   }, 1000 / FPS);
 
+  setMouseTimeout();  
 });
  
