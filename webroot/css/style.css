@@ -175,3 +175,20 @@ ol {
   float: left;
   /* display: inline-block; */
 }
+
+.helpOverlay {
+  display: none;
+}
+
+.helpOverlay {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 200px;
+    min-height: 200px;
+    z-index: 10000;
+    background-color: #7D7D7D;
+/*     border: 10px solid #CFCFCF;
+    color: #fff;
+ */
+ }

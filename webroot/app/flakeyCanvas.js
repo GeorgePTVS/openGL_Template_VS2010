@@ -44,12 +44,15 @@ $(document).ready(function () {
   // --------------------------
   // -- Color & brush choosers
   // --------------------------
+  
+  // TODO put e.preventDefault(); in these clicks so touch doesnt try to do all the mouse stuff too?
   $(".colorChooser").on('click', function () {
     var newColor = $(this).css("background-color");
     $brushShape.color = newColor;
     console.log("button click  color = " + $brushShape.color );
   });
   
+  // TODO put e.preventDefault(); in these clicks so touch doesnt try to do all the mouse stuff too?
   $(".brushChooser").on('click', function () {
     var newBrush = $(this).attr('id');
     $brushShape.type = newBrush;
@@ -71,6 +74,12 @@ $(document).ready(function () {
   $("#redo").on('mousedown', function () { actionUndo(); repeatActionRedo(); })
   .on('mouseup mouseout', function () { clearTimeout( redoRepeatVar ); })
 
+  
+  $("#helpppp").on('click', function () { 
+    console.log("click on help");
+    $("#help").css({ display : 'block'});})
+  
+  
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
   $(".chooser").hover(
     // TODO Use addClass removeClass (or toggleClass) in each of these fns)
