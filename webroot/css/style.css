@@ -96,12 +96,12 @@ ol {
 }
 
 
-.colorChooser {
+.chooser {
   opacity:1.0;
   background-color:#000000;
   float: right;
 }
-.colorChooser:hover {
+.chooser:hover {
   /* opacity:0.5; */
   /* border: 5px inset red; */
 }
@@ -148,47 +148,6 @@ ol {
 
 
 
-
-
-
-
-.brushChooser {
-  opacity:1.0;
-  background-color:#000000;
-  float: right;
-}
-.brushChooser:hover {
-  /* opacity:0.5; */
-  /* border: 5px inset red; */
-}
-.buttonImg {
-  padding: 0px 0px 0px 0px;
-  margin:  0px 0px 0px 0px;
-  border: 0px;
-  border-image-width: 0px;
-  width:100px;
-  height:100px;
-  opacity:1.0;  
-}
-
-.actionChooser {
-  opacity:1.0;
-  background-color:#000000;
-  float: right;
-}
-.actionChooser:hover {
-  /* opacity:0.5; */
-  /* border: 5px inset red; */
-}
-.buttonImg {
-  padding: 0px 0px 0px 0px;
-  margin:  0px 0px 0px 0px;
-  border: 0px;
-  border-image-width: 0px;
-  width:100px;
-  height:100px;
-  opacity:1.0;  
-}
 
 
 
