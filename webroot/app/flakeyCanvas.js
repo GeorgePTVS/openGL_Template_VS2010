@@ -75,9 +75,10 @@ $(document).ready(function () {
   .on('mouseup mouseout', function () { clearTimeout( redoRepeatVar ); })
 
   
-  $("#helpppp").on('click', function () { 
+  $("#help").on('click', function () { 
     console.log("click on help");
-    $("#help").css({ display : 'block'});})
+    $("#helpBox").css({ display : 'block'});
+    })
   
   
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.

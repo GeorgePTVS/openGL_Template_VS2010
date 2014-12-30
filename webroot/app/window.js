@@ -47,6 +47,12 @@ function onWindowResize()
     "height": canvasIDHeight,
     "background" : "#333333" ,
     });
+    
+  $("#helpBox").css( {
+    "width": canvasIDWidth, 
+    "height": canvasIDHeight,
+    });
+    
   $colorChooserBorder = Math.round(CHOOSER_WIDTH / COLOR_CHOOSER_BORDER_SCALAR);
   if ( $colorChooserBorder < 1 ) $colorChooserBorder = 1;
 
