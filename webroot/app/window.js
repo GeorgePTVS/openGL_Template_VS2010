@@ -27,11 +27,11 @@ function onWindowResize()
 
   var whitespaceFudge = 0;   // ugh this varied based on font I used in h1...a,p,div, etc
   var contentWidth = mainWidth + numBars * colorChooserWidth + whitespaceFudge;
-  var canvasPlaceholderWidth  = mainWidth;
-  var canvasPlaceholderHeight = mainHeight;
+  var canvasIDWidth  = mainWidth;
+  var canvasIDHeight = mainHeight;
   
   var barPlaceholderWidth  = colorChooserWidth;
-  var barPlaceholderHeight = canvasPlaceholderHeight;
+  var barPlaceholderHeight = canvasIDHeight;
   var barMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
   
   $(".main_body").css("width",  mainWidth);
@@ -44,9 +44,9 @@ function onWindowResize()
   $(".buttonImg").css("width",  colorChooserWidth);
   $(".buttonImg").css("height", colorChooserWidth);
   
-  $("#canvasPlaceholder").css( {
-    "width": canvasPlaceholderWidth, 
-    "height": canvasPlaceholderHeight,
+  $("#canvasID").css( {
+    "width": canvasIDWidth, 
+    "height": canvasIDHeight,
     "background" : "#333333" ,
     });
   $colorChooserBorder = Math.round(colorChooserWidth / COLOR_CHOOSER_BORDER_SCALAR);
@@ -61,11 +61,11 @@ function onWindowResize()
     });
     
     // put new width into global (context) for use in mouse position calcs etc
-   $canvass = $("#canvasPlaceholder");
+   $canvass = $("#canvasID");
    if( $canvass.length ) {
     $ctx = $canvass.get(0).getContext('2d');
-    $ctx.canvas.width  = canvasPlaceholderWidth;
-    $ctx.canvas.height = canvasPlaceholderHeight;
+    $ctx.canvas.width  = canvasIDWidth;
+    $ctx.canvas.height = canvasIDHeight;
     $ctx.fillStyle = CANVAS_BRUSH_COLOR_INIT;
    }
    else 
