@@ -4,6 +4,19 @@ $(document).ready(function () {
   onWindowResize();
 
   // --------------------------
+  // -- actions
+  // --------------------------
+  function actionUndo()
+  {
+    console.log("action function  type = undo" );
+  }
+  
+  function actionRedo()
+  {
+    console.log("action function  type = redo" );
+  }
+
+  // --------------------------
   // -- Color & brush choosers
   // --------------------------
   $(".colorChooser").on('click', function () {
@@ -16,6 +29,20 @@ $(document).ready(function () {
     var newBrush = $(this).attr('id');
     $brushShape.type = newBrush;
     console.log("brush click  type = " + $brushShape.type );
+  });
+
+  $(".actionChooser").on('click', function () {
+    var newAction = $(this).attr('id');
+    if ( newAction == "undo" )
+    {
+      actionUndo();
+      console.log("action click  type = undo" );
+    } 
+    else if ( newAction == "redo" )
+    {
+      actionRedo();
+      console.log("action click  type = redo" );
+    }  
   });
 
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
