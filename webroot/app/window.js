@@ -7,30 +7,28 @@ function onWindowResize()
   var mainWidth  = Math.round(MAIN_W_SCALAR * winWidth);
   var mainHeight = mainWidth;
 
-  var colorChooserWidth = 30;
-  var numBars = 2;  // color chooser bar and shape chooser bar
   // have to account for aspect ratio.  
   if ( winWidth < winHeight )
   {
-    mainWidth = Math.round(MAIN_W_SCALAR * winWidth * ( 1.0 + numBars/NUM_COLORS));
-    colorChooserWidth = Math.round(mainWidth * 1.0/NUM_COLORS);
-    mainWidth = colorChooserWidth * NUM_COLORS;
+    mainWidth = Math.round(MAIN_W_SCALAR * winWidth * ( 1.0 + NUM_BARS/NUM_COLORS));
+    CHOOSER_WIDTH = Math.round(mainWidth * 1.0/NUM_COLORS);
+    mainWidth = CHOOSER_WIDTH * NUM_COLORS;
     mainHeight = mainWidth;
   }
   else
   {
     mainHeight = Math.round(MAIN_W_SCALAR * winHeight);
-    mainWidth = Math.round(mainHeight * ( 1.0 + numBars/NUM_COLORS));
-    colorChooserWidth = Math.round(mainHeight * 1.0/NUM_COLORS);
-    mainHeight = colorChooserWidth * NUM_COLORS;
+    mainWidth = Math.round(mainHeight * ( 1.0 + NUM_BARS/NUM_COLORS));
+    CHOOSER_WIDTH = Math.round(mainHeight * 1.0/NUM_COLORS);
+    mainHeight = CHOOSER_WIDTH * NUM_COLORS;
   }
 
   var whitespaceFudge = 0;   // ugh this varied based on font I used in h1...a,p,div, etc
-  var contentWidth = mainWidth + numBars * colorChooserWidth + whitespaceFudge;
+  var contentWidth = mainWidth + NUM_BARS * CHOOSER_WIDTH + whitespaceFudge;
   var canvasIDWidth  = mainWidth;
   var canvasIDHeight = mainHeight;
   
-  var barPlaceholderWidth  = colorChooserWidth;
+  var barPlaceholderWidth  = CHOOSER_WIDTH;
   var barPlaceholderHeight = canvasIDHeight;
   var barMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
   
@@ -38,18 +36,18 @@ function onWindowResize()
   $(".main_content").css("width",  contentWidth);
   $(".main_content").css("height", mainHeight);
 
-  $(".chooser").css("width",  colorChooserWidth);
-  $(".chooser").css("height", colorChooserWidth);
+  $(".chooser").css("width",  CHOOSER_WIDTH);
+  $(".chooser").css("height", CHOOSER_WIDTH);
 
-  $(".buttonImg").css("width",  colorChooserWidth);
-  $(".buttonImg").css("height", colorChooserWidth);
+  $(".buttonImg").css("width",  CHOOSER_WIDTH);
+  $(".buttonImg").css("height", CHOOSER_WIDTH);
   
   $("#canvasID").css( {
     "width": canvasIDWidth, 
     "height": canvasIDHeight,
     "background" : "#333333" ,
     });
-  $colorChooserBorder = Math.round(colorChooserWidth / COLOR_CHOOSER_BORDER_SCALAR);
+  $colorChooserBorder = Math.round(CHOOSER_WIDTH / COLOR_CHOOSER_BORDER_SCALAR);
   if ( $colorChooserBorder < 1 ) $colorChooserBorder = 1;
 
     
