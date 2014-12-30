@@ -54,8 +54,12 @@ function onWindowResize()
   $(".barPlaceholder").css( {
     "width": barPlaceholderWidth, 
     "height": barPlaceholderHeight,
-    "background" : "#8866FF",
+    "background" : BAR_PLACEHOLDER_COLOR,
     "margin" : barMarginString
+    });
+  
+  $(".dummyChooser").css( {
+    "background" : BAR_PLACEHOLDER_COLOR,
     });
     
     // put new width into global (context) for use in mouse position calcs etc
