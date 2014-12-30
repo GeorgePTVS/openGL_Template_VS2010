@@ -48,6 +48,7 @@ var $shape = {
 };
   
 var $shapes = [];
+var $shapesUndo = [];
 var $brushShape = jQuery.extend(true, {}, $shape);
 $brushShape.color = CANVAS_BRUSH_COLOR_INIT;
 $brushShape.scale    = 1.0;

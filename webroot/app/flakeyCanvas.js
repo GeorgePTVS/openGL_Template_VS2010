@@ -8,12 +8,20 @@ $(document).ready(function () {
   // --------------------------
   function actionUndo()
   {
-    console.log("action function  type = undo" );
+    if ( $shapes.length )
+    {
+      var shapePopped = $shapes.pop();
+      $shapesUndo.push( shapePopped );    
+    }
   }
   
   function actionRedo()
   {
-    console.log("action function  type = redo" );
+    if ( $shapesUndo.length )
+    {
+      var shapePopped = $shapesUndo.pop();
+      $shapes.push( shapePopped );
+    }
   }
 
   // --------------------------
@@ -36,12 +44,10 @@ $(document).ready(function () {
     if ( newAction == "undo" )
     {
       actionUndo();
-      console.log("action click  type = undo" );
     } 
     else if ( newAction == "redo" )
     {
       actionRedo();
-      console.log("action click  type = redo" );
     }  
   });
 
