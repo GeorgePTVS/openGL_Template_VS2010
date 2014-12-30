@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+  var ver = VERSION_NUMBER;
+  $("#debugHeader").text("Flakey! Version " + ver);
+
   $(window).resize(onWindowResize);
   onWindowResize();
 
@@ -8,6 +11,7 @@ $(document).ready(function () {
   // --------------------------
   function actionUndo()
   {
+    usingMouse = false;
     if ( $shapes.length )
     {
       var shapePopped = $shapes.pop();
@@ -17,6 +21,7 @@ $(document).ready(function () {
   
   function actionRedo()
   {
+    usingMouse = false;
     if ( $shapesUndo.length )
     {
       var shapePopped = $shapesUndo.pop();
@@ -308,8 +313,8 @@ $(document).ready(function () {
     e.preventDefault();
     touchersCount = e.originalEvent.touches.length;
     touchStartCount++;
-    console.log("touchstart:  touchStartCount = " + touchStartCount + "    e = " + e);
-    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushShape.scale.toFixed(3) + " ang= " + $brushShape.rotation.toFixed(6));
+    // console.log("touchstart:  touchStartCount = " + touchStartCount + "    e = " + e);
+    // $("#debugHeader").text("t=" + touchersCount + " scale" + $brushShape.scale.toFixed(3) + " ang= " + $brushShape.rotation.toFixed(6));
     $touchXY = getTouchPos($canvass, e);
     });
 
@@ -325,8 +330,8 @@ $(document).ready(function () {
     touchEndCount++;
     wasMultitouching = false;
 
-    $("#debugHeader").text("t=" + touchersCount + " scale" + $brushShape.scale.toFixed(3) + " ang= " + $brushShape.rotation.toFixed(6));
-    console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
+    // $("#debugHeader").text("t=" + touchersCount + " scale" + $brushShape.scale.toFixed(3) + " ang= " + $brushShape.rotation.toFixed(6));
+    // console.log("touchend:  touchStartCount = " + touchStartCount + "    e = " + e);
 //    console.log("touchend, adding $shape");
     // TODO add a "no add" zone, and check to see if we're over it. If so, do not add shape. 
     // Currently you can just drag off the canvas and it appears that no shape gets added, but might still be getting added.

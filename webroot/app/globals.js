@@ -2,6 +2,9 @@
 // Global canvas elements.  Need access to them in window resize function so that pixel/mouse params are sized to new width/height.
 // Cache elements
 console.log("Global canvas elements");
+
+var VERSION_NUMBER = "0.1.0";
+
 var COLOR_CHOOSER_BORDER_SCALAR = 10;
 var MAIN_W_SCALAR = 0.7;
 var NUM_COLORS = 12;
