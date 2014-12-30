@@ -44,6 +44,8 @@ function onWindowResize()
   $(".brushChooser").css("height", colorChooserWidth);
   $(".brushImg").css("width",  colorChooserWidth);
   $(".brushImg").css("height", colorChooserWidth);
+  $(".actionImg").css("width",  colorChooserWidth);
+  $(".actionImg").css("height", colorChooserWidth);
   
   $("#canvasPlaceholder").css( {
     "width": canvasPlaceholderWidth, 
