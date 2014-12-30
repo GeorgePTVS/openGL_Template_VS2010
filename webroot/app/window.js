@@ -47,10 +47,8 @@ function onWindowResize()
   $(".actionChooser").css("height", colorChooserWidth);
 
   // TODO make these all the same class: chooserImg
-  $(".brushImg").css("width",  colorChooserWidth);
-  $(".brushImg").css("height", colorChooserWidth);
-  $(".actionImg").css("width",  colorChooserWidth);
-  $(".actionImg").css("height", colorChooserWidth);
+  $(".buttonImg").css("width",  colorChooserWidth);
+  $(".buttonImg").css("height", colorChooserWidth);
   
   $("#canvasPlaceholder").css( {
     "width": canvasPlaceholderWidth, 

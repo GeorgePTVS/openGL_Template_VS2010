@@ -29,7 +29,7 @@ $(document).ready(function () {
     $(this).css("height", oldHeight - $colorChooserBorder * 2);
     $(this).css("border", $colorChooserBorder + "px solid gray");
 
-    var bImg = $(this).find(".brushImg");
+    var bImg = $(this).find(".buttonImg");
     oldWidth  = bImg.width();
     oldHeight = bImg.height();
     bImg.css("width", oldWidth - $colorChooserBorder * 2);
@@ -43,7 +43,7 @@ $(document).ready(function () {
     $(this).css("height", oldHeight + $colorChooserBorder * 2);
     $(this).css("border", "0");
 
-    var bImg = $(this).find(".brushImg");
+    var bImg = $(this).find(".buttonImg");
     oldWidth  = bImg.width();
     oldHeight = bImg.height();
     bImg.css("width", oldWidth + $colorChooserBorder * 2);
