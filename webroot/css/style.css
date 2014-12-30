@@ -161,15 +161,7 @@ ol {
   margin: 0;
   display: inline-block;
 }
-#buttonBarPlaceholder {
-  padding: 0;
-  border: 0;
-  /* margin: 0 5px 0 -5px; */
-  float: right;
-  /* display: inline-block; */
-}
-
-#toolBarPlaceholder {
+.barPlaceholder {
   padding: 0;
   border: 0;
   /* margin: 0 5px 0 -5px; */

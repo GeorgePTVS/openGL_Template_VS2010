@@ -30,9 +30,9 @@ function onWindowResize()
   var canvasPlaceholderWidth  = mainWidth;
   var canvasPlaceholderHeight = mainHeight;
   
-  var buttonBarPlaceholderWidth  = colorChooserWidth;
-  var buttonBarPlaceholderHeight = canvasPlaceholderHeight;
-  var buttonBarMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
+  var barPlaceholderWidth  = colorChooserWidth;
+  var barPlaceholderHeight = canvasPlaceholderHeight;
+  var barMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
   
   $(".main_body").css("width",  mainWidth);
   $(".main_content").css("width",  contentWidth);
@@ -53,20 +53,13 @@ function onWindowResize()
   if ( $colorChooserBorder < 1 ) $colorChooserBorder = 1;
 
     
-  $("#buttonBarPlaceholder").css( {
-    "width": buttonBarPlaceholderWidth, 
-    "height": buttonBarPlaceholderHeight,
+  $(".barPlaceholder").css( {
+    "width": barPlaceholderWidth, 
+    "height": barPlaceholderHeight,
     "background" : "#8866FF",
-    "margin" : buttonBarMarginString
+    "margin" : barMarginString
     });
     
-  $("#toolBarPlaceholder").css( {
-    "width": buttonBarPlaceholderWidth, 
-    "height": buttonBarPlaceholderHeight,
-    "background" : "#886600",
-    "margin" : buttonBarMarginString
-    });
-
     // put new width into global (context) for use in mouse position calcs etc
    $canvass = $("#canvasPlaceholder");
    if( $canvass.length ) {
