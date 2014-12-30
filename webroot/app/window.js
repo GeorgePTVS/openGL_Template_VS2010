@@ -32,7 +32,7 @@ function onWindowResize()
   var barPlaceholderHeight = canvasIDHeight;
   var barMarginString = "0px " + whitespaceFudge + "px 0px -" + whitespaceFudge + "px";
   
-  $(".main_body").css("width",  mainWidth);
+  $(".main_body").css("width",  contentWidth);
   $(".main_content").css("width",  contentWidth);
   $(".main_content").css("height", mainHeight);
 
