@@ -74,6 +74,7 @@ function onWindowResize()
     $ctx = $canvass.get(0).getContext('2d');
     $ctx.canvas.width  = canvasPlaceholderWidth;
     $ctx.canvas.height = canvasPlaceholderHeight;
+    $ctx.fillStyle = CANVAS_BRUSH_COLOR_INIT;
    }
    else 
     console.log('Error: Canvas not found with selector #canvas');
