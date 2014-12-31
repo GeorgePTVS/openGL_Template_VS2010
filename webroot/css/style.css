@@ -30,6 +30,9 @@ body {
   margin: 10px auto 0 auto;
 }
 
+.unselectable {
+  user-select: none;
+}
 .header {
   padding: 10px 10px 10px 10px;
   background-color:#446688;
