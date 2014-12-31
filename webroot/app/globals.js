@@ -43,7 +43,7 @@ var mouseTimeout;
 
 var undoRepeatVar;
 var redoRepeatVar;
-var UNDO_REPEAT_TIMEOUT = 75;
+var UNDO_REPEAT_TIMEOUT = 100;
 var REDO_REPEAT_TIMEOUT = UNDO_REPEAT_TIMEOUT;
 
 

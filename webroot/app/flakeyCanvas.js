@@ -63,15 +63,21 @@ $(document).ready(function () {
       // actionUndo();
   // });
 
-  $("#undo").on('mousedown', function () { actionUndo(); repeatActionUndo(); })
-  .on('mouseup mouseout', function () { clearTimeout( undoRepeatVar ); })
+  $("#undo").on('touchstart', function (e) { console.log("touchstart undo");e.preventDefault(); repeatActionUndo(); })
+  .on('touchmove touchend', function (e) { console.log("touchmove end undo"); e.preventDefault(); clearTimeout( undoRepeatVar ); })
+  
+  $("#undo").on('mousedown', function () { console.log("mousedown undo"); repeatActionUndo(); })
+  .on('mouseup mouseout', function () { console.log("mouseup out undo");clearTimeout( undoRepeatVar ); })
 
 
   // $("#redo").on('click', function () {
       // actionRedo();
   // });
 
-  $("#redo").on('mousedown', function () { actionUndo(); repeatActionRedo(); })
+  $("#redo").on('touchstart', function (e) { console.log("touchstart redo");e.preventDefault(); repeatActionRedo(); })
+  .on('touchmove touchend', function (e) { console.log("touchmove end redo"); e.preventDefault(); clearTimeout( redoRepeatVar ); })
+  
+  $("#redo").on('mousedown', function () {  repeatActionRedo(); })
   .on('mouseup mouseout', function () { clearTimeout( redoRepeatVar ); })
 
 
