@@ -30,7 +30,9 @@ body {
   margin: 10px auto 0 auto;
 }
 
-.unselectable {
+.unselectable,.chooser,div, html, body, h1, h2, h3, h4, ul, ol, li, p, a{
+  -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
 }
 .header {

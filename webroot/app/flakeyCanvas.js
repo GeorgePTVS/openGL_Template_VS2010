@@ -64,10 +64,10 @@ $(document).ready(function () {
   // });
 
   $("#undo").on('touchstart', function (e) { console.log("touchstart undo");e.preventDefault(); repeatActionUndo(); })
-  .on('touchmove touchend', function (e) { console.log("touchmove end undo"); e.preventDefault(); clearTimeout( undoRepeatVar ); })
+  .on('touchmove touchend', function (e) { console.log("touchmove end undo"); e.preventDefault(); clearTimeout( undoRepeatVar ); });
   
   $("#undo").on('mousedown', function () { console.log("mousedown undo"); repeatActionUndo(); })
-  .on('mouseup mouseout', function () { console.log("mouseup out undo");clearTimeout( undoRepeatVar ); })
+  .on('mouseup mouseout', function () { console.log("mouseup out undo");clearTimeout( undoRepeatVar ); });
 
 
   // $("#redo").on('click', function () {
@@ -75,10 +75,10 @@ $(document).ready(function () {
   // });
 
   $("#redo").on('touchstart', function (e) { console.log("touchstart redo");e.preventDefault(); repeatActionRedo(); })
-  .on('touchmove touchend', function (e) { console.log("touchmove end redo"); e.preventDefault(); clearTimeout( redoRepeatVar ); })
+  .on('touchmove touchend', function (e) { console.log("touchmove end redo"); e.preventDefault(); clearTimeout( redoRepeatVar ); });
   
   $("#redo").on('mousedown', function () {  repeatActionRedo(); })
-  .on('mouseup mouseout', function () { clearTimeout( redoRepeatVar ); })
+  .on('mouseup mouseout', function () { clearTimeout( redoRepeatVar ); });
 
 
   function showHelp() {
@@ -102,11 +102,11 @@ $(document).ready(function () {
     {
       hideHelp();
     }
-  })
+  });
 
   $('a.close').on('click', function() {
     hideHelp();
-  })  
+  }); 
   
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
   $(".chooser").hover(
@@ -321,7 +321,7 @@ $(document).ready(function () {
       
       var disty = Math.sqrt( xsquared + ysquared );
       var angle = 0.0;
-      if ( (mouseX1 - mouseX0) != 0 ) 
+      if ( (mouseX1 - mouseX0) !== 0 ) 
        angle = (180.0/ Math.PI) * Math.atan2( (mouseY1 - mouseY0),(mouseX1 - mouseX0) );
        
 
@@ -389,7 +389,7 @@ $(document).ready(function () {
     // Currently you can just drag off the canvas and it appears that no shape gets added, but might still be getting added.
     console.log("touchend:  touchies[0]: " + $touchXY[0].x + " " + $touchXY[0].y);
     console.log("touchend:  touchieslength: " + $touchXY.length );
-    if ( touchersCount == 0 )
+    if ( touchersCount === 0 )
       addShape($touchXY[0]);
   });
   
