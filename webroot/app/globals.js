@@ -21,7 +21,7 @@ var ROTATE_DETENT = 10;
 var LINE_HEIGHT_SCALAR = 0.1;
 var NUM_CIRCLE_SECTIONS = 12;
 
-var HELP_TIMEOUT = 4000;
+var HELP_TIMEOUT = 8000;
 var helpTimeout;
 var helpShowing = false;
 

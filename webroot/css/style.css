@@ -193,7 +193,10 @@ ol {
     color: #fff;
  */
  }
-
+.helpOverlay p{
+  font-size:1em;
+  padding: 0 0 0 0;
+}
 .closeToolbar {
   float: right;
 }
