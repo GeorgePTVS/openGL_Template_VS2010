@@ -74,12 +74,33 @@ $(document).ready(function () {
   $("#redo").on('mousedown', function () { actionUndo(); repeatActionRedo(); })
   .on('mouseup mouseout', function () { clearTimeout( redoRepeatVar ); })
 
-  
-  $("#help").on('click', function () { 
-    console.log("click on help");
+
+  function showHelp() {
     $("#helpBox").css({ display : 'block'});
-    })
-  
+    clearTimeout( helpTimeout );
+    helpTimeout = setTimeout( hideHelp, HELP_TIMEOUT );
+    helpShowing = true;
+  }    
+  function hideHelp() {
+    $("#helpBox").css({ display : 'none'});
+    helpShowing = false;
+    clearTimeout( helpTimeout );
+  }    
+
+  $("#help").on('click', function () { 
+    if ( !helpShowing ) 
+    {
+      showHelp();
+    }
+    else
+    {
+      hideHelp();
+    }
+  })
+
+  $('a.close').on('click', function() {
+    hideHelp();
+  })  
   
   // put a solid border around color & brush choosers during hover.  Have to manipulate size since border starts as 0.
   $(".chooser").hover(
@@ -602,5 +623,7 @@ $(document).ready(function () {
   }, 1000 / FPS);
 
   setMouseTimeout();  
+  helpTimeout = setTimeout( hideHelp, HELP_TIMEOUT );
+
 });
  

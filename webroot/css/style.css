@@ -193,3 +193,13 @@ ol {
     color: #fff;
  */
  }
+
+.closeToolbar {
+  float: right;
+}
+a.close {
+    display: inline;
+} 
+ 
+ 
+ 
