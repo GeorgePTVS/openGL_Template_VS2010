@@ -42,11 +42,21 @@ Check output size in video filter list.  Can also preview inside filter settings
 
 12. MOVE TO MAC VIA GOOGLE DRIVE: Upload to Google drive.
 
-13. MACINCLOUD: Get macincloud account: Need OSX Yosemite 10.10.1 or something. Had to upgrade.
+13. MACINCLOUD: Get macincloud account: Need OSX Yosemite 10.10.1 or something. Had to upgrade. NOT DONE YET.
 
 14. DOWNLOAD: In macincloud: Download from Google drive.
 
-15
+15. RECODE TO MP4.  Used something already installed on macincloud: Any Video Converter Ultimate.  
+WARNING: I dont know if this works to produce mp4's that will be accepted by iTunesConnect.  it uses x264 and iTunesConnect wants h.264.
+
+16. SUBMIT.  Needs to be from OSX Yosemite 10.10.1 or something.  NOT YET DONE.
+
+
+I did do all my various icons & screenshots.
+
+END.
+
+
 
 
 
