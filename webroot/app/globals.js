@@ -25,6 +25,21 @@ var HELP_TIMEOUT = 8000;
 var helpTimeout;
 var helpShowing = false;
 
+
+
+
+// vary the background color over time.
+var RED_COLOR_INCREMENT = 0.001;
+var GREEN_COLOR_INCREMENT = 0.0012;
+var BLUE_COLOR_INCREMENT = -0.001;
+var RED_CLEAR = 0.0;
+var GREEN_CLEAR = 0.2;
+var BLUE_CLEAR = 0.8;
+var backgroundRed = RED_CLEAR;
+var backgroundGreen = GREEN_CLEAR;
+var backgroundBlue = BLUE_CLEAR;
+var backgroundColor = "#000000";
+
 var $canvass;
 var $ctx;
 var $colorChooserBorder = 5;  // px

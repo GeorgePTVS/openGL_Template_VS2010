@@ -1,11 +1,25 @@
 $(document).ready(function () {
 
   var ver = VERSION_NUMBER;
-  $("#debugHeader").text("Flakey! Version " + ver);
+  $("#debugHeader").text("Flakey!");
 
   $(window).resize(onWindowResize);
   onWindowResize();
 
+  // --------------------------
+  // -- utils
+  // adapated from : 
+  // http://stackoverflow.com/questions/16179713/converting-float-values-to-a-grayscale-hex-color-value
+  // --------------------------
+  function float2color( redPercent, greenPercent, bluePercent ) {
+      var red_color_part_dec   = 255 * redPercent;
+      var green_color_part_dec = 255 * greenPercent;
+      var blue_color_part_dec  = 255 * bluePercent;
+      var red_color_part_hex   = Number(parseInt( red_color_part_dec , 10)).toString(16);
+      var green_color_part_hex = Number(parseInt( green_color_part_dec , 10)).toString(16);
+      var blue_color_part_hex  = Number(parseInt( blue_color_part_dec , 10)).toString(16);
+      return "#" + red_color_part_hex + green_color_part_hex + blue_color_part_hex;
+  }  
   // --------------------------
   // -- actions
   // --------------------------
@@ -430,6 +444,25 @@ $(document).ready(function () {
     $ctx.clearRect(0, 0, $canvass.width(), $canvass.height());
   }
 
+  
+  // vary the background color over time.
+  function updateBackground() {
+    $ctx.fillStyle = backgroundColor;
+    $ctx.fillRect(0, 0, $canvass.width(), $canvass.height());
+    
+    backgroundRed += RED_COLOR_INCREMENT;
+    if ( backgroundRed > 1.0 ) backgroundRed = 0;
+    if ( backgroundRed < 0.0 ) backgroundRed = 1;
+    backgroundGreen += GREEN_COLOR_INCREMENT;
+    if ( backgroundGreen > 1.0 ) backgroundGreen = 0;
+    if ( backgroundGreen < 0.0 ) backgroundGreen = 1;
+    backgroundBlue += BLUE_COLOR_INCREMENT;
+    if ( backgroundBlue > 1.0 ) backgroundBlue = 0;
+    if ( backgroundBlue < 0.0 ) backgroundBlue = 1;
+    
+    backgroundColor = float2color( backgroundRed, backgroundGreen, backgroundBlue );
+    
+  }
   function drawSquare( size )
   {
    $ctx.fillRect(0 - size, 0 - size, 2 * size, 2 * size);
@@ -514,6 +547,7 @@ $(document).ready(function () {
   }
   
   function drawScene() {
+  
     // translate context to center of canvas
     var centerX = $ctx.canvas.width / 2;
     var centerY = $ctx.canvas.height / 2;
@@ -612,6 +646,7 @@ $(document).ready(function () {
     
   function draw() {
     clearCanvas();
+    updateBackground();
     drawScene();
     drawMouse();
   }
